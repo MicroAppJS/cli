@@ -6,6 +6,7 @@ const opn = require('opn');
 const chalk = require('chalk').default;
 
 const microApp = require('@micro-app/core');
+const logger = microApp.logger;
 
 program
     .version(require('../package').version, '-v, --version')
@@ -26,5 +27,5 @@ microApp.koa.devServer(program, url => {
         opn(url);
     }
 
-    console.info(`Open Browser, URL: ${chalk.yellow(url)}`);
+    logger.info(`Open Browser, URL: ${chalk.yellow(url)}`);
 });

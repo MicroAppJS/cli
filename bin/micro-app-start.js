@@ -5,6 +5,7 @@ const program = require('commander');
 const chalk = require('chalk').default;
 
 const microApp = require('@micro-app/core');
+const logger = microApp.logger;
 
 program
     .version(require('../package').version, '-v, --version')
@@ -34,12 +35,12 @@ if (program.build) {
 
 promise.then(flag => {
     if (flag) {
-        console.info(`Build files: ${chalk.green('Success')}`);
+        logger.success('Build finish');
     }
     microApp.koa.runServer(program, url => {
         // success
-        console.info(`Open Browser, URL: ${chalk.yellow(url)}`);
+        logger.info(`Open Browser, URL: ${chalk.yellow(url)}`);
     });
 }).catch(e => {
-    console.error(`Error: ${chalk.red(e)}`);
+    logger.error(e);
 });
