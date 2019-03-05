@@ -6,6 +6,7 @@ const shelljs = require('shelljs');
 const chalk = require('chalk').default;
 
 const microApp = require('@micro-app/core');
+const CONSTANT = microApp.CONSTANT;
 const logger = microApp.logger;
 
 const path = require('path');
@@ -37,7 +38,7 @@ if (program.list) {
     logger.logo(`${chalk.green('Micros List')}:`);
     if (micros.length) {
         micros.forEach(item => {
-            logger.logo(`   * ${chalk.yellow(item)}`);
+            logger.logo(`   * ${chalk.yellow(item)} --- ${chalk.gray(CONSTANT.SCOPE_NAME + '/' + item)}`);
         });
     } else {
         logger.logo(' [ null ] ');
@@ -54,14 +55,16 @@ if (program.show) {
                 logger.logo(`${chalk.green('Alias List')}:`);
                 micros.forEach(item => {
                     const microConfig = microApp(item);
-                    const aliasName = microConfig.name;
-                    if (aliasName) {
-                        const aliasKey = aliasName[0] !== '@' ? `@${aliasName}` : aliasName;
-                        Object.keys(microConfig.alias).forEach(key => {
-                            if (microConfig.alias[key]) {
-                                logger.logo(`   * ${chalk.yellow(`${aliasKey}/${key}`)}`);
-                            }
-                        });
+                    if (microConfig) {
+                        const aliasName = microConfig.name;
+                        if (aliasName) {
+                            const aliasKey = aliasName[0] !== '@' ? `@${aliasName}` : aliasName;
+                            Object.keys(microConfig.alias).forEach(key => {
+                                if (microConfig.alias[key]) {
+                                    logger.logo(`   * ${chalk.yellow(`${aliasKey}/${key}`)}`);
+                                }
+                            });
+                        }
                     }
                 });
                 // self
@@ -82,14 +85,16 @@ if (program.show) {
                 logger.logo(`${chalk.green('Shared List')}:`);
                 micros.forEach(item => {
                     const microConfig = microApp(item);
-                    const aliasName = microConfig.name;
-                    if (aliasName) {
-                        const aliasKey = aliasName[0] !== '@' ? `@${aliasName}` : aliasName;
-                        Object.keys(microConfig.shared).forEach(key => {
-                            if (microConfig.shared[key]) {
-                                logger.logo(`   * ${chalk.yellow(`${aliasKey}/${key}`)}`);
-                            }
-                        });
+                    if (microConfig) {
+                        const aliasName = microConfig.name;
+                        if (aliasName) {
+                            const aliasKey = aliasName[0] !== '@' ? `@${aliasName}` : aliasName;
+                            Object.keys(microConfig.shared).forEach(key => {
+                                if (microConfig.shared[key]) {
+                                    logger.logo(`   * ${chalk.yellow(`${aliasKey}/${key}`)}`);
+                                }
+                            });
+                        }
                     }
                 });
                 // self
