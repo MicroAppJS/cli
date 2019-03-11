@@ -3,13 +3,13 @@
 ## Install
 
 ```sh
-npm install -g @micro-app/cli
+npm install -g @necfe/micro-app-cli
 ```
 
 or
 
 ```sh
-npm install -D @micro-app/cli
+npm install -D @necfe/micro-app-cli
 ```
 
 ## Usage

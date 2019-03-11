@@ -2,7 +2,7 @@
 'use strict';
 
 const program = require('commander');
-const microApp = require('@micro-app/core');
+const microApp = require('@necfe/micro-app-core');
 const chalk = require('chalk').default;
 
 program

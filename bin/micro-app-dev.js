@@ -5,7 +5,7 @@ const program = require('commander');
 const opn = require('opn');
 const chalk = require('chalk').default;
 
-const microApp = require('@micro-app/core');
+const microApp = require('@necfe/micro-app-core');
 const logger = microApp.logger;
 
 program

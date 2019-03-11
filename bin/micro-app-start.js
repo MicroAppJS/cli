@@ -4,7 +4,7 @@
 const program = require('commander');
 const chalk = require('chalk').default;
 
-const microApp = require('@micro-app/core');
+const microApp = require('@necfe/micro-app-core');
 const logger = microApp.logger;
 
 program

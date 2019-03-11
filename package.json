@@ -1,40 +1,41 @@
 {
-  "name": "@micro-app/cli",
-  "version": "0.0.15",
-  "description": "micro app cli",
-  "bin": {
-    "micro-app": "./bin/micro-app.js",
-    "micro-app-dev": "./bin/micro-app-dev.js",
-    "micro-app-build": "./bin/micro-app-build.js",
-    "micro-app-start": "./bin/micro-app-start.js"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "files": [
-    "bin"
-  ],
-  "keywords": [
-    "micro",
-    "micro-app",
-    "core",
-    "cli"
-  ],
-  "author": {
-    "name": "Zyao89",
-    "email": "zyao89@gmail.com"
-  },
-  "license": "ISC",
-  "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.15.0",
-    "eslint-config-2o3t": "^1.1.4"
-  },
-  "dependencies": {
-    "@micro-app/core": "^0.0.16",
-    "chalk": "^2.4.2",
-    "commander": "^2.19.0",
-    "opn": "^5.4.0",
-    "shelljs": "^0.8.3"
-  }
+    "name": "@necfe/micro-app-cli",
+    "version": "0.0.2",
+    "description": "micro app cli",
+    "bin": {
+        "micro-app": "./bin/micro-app.js",
+        "micro-app-dev": "./bin/micro-app-dev.js",
+        "micro-app-build": "./bin/micro-app-build.js",
+        "micro-app-start": "./bin/micro-app-start.js"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "files": [
+        "bin"
+    ],
+    "keywords": [
+        "necfe",
+        "micro",
+        "micro-app",
+        "core",
+        "cli"
+    ],
+    "author": {
+        "name": "Zyao89",
+        "email": "zyao89@gmail.com"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "babel-eslint": "^10.0.1",
+        "eslint": "^5.15.0",
+        "eslint-config-2o3t": "^1.1.4"
+    },
+    "dependencies": {
+        "@necfe/micro-app-core": "^0.0.1",
+        "chalk": "^2.4.2",
+        "commander": "^2.19.0",
+        "opn": "^5.4.0",
+        "shelljs": "^0.8.3"
+    }
 }

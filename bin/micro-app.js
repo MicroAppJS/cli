@@ -5,7 +5,7 @@ const program = require('commander');
 const shelljs = require('shelljs');
 const chalk = require('chalk').default;
 
-const microApp = require('@micro-app/core');
+const microApp = require('@necfe/micro-app-core');
 const CONSTANT = microApp.CONSTANT;
 const logger = microApp.logger;
 
@@ -22,7 +22,7 @@ program
 global.extraArgs = program.args;
 
 if (program.init) {
-    const mainPath = require.resolve('@micro-app/core');
+    const mainPath = require.resolve('@necfe/micro-app-core');
     const configPath = path.resolve(mainPath, '../../', microApp.CONSTANT.CONFIG_NAME);
     const dest = path.resolve(process.cwd(), microApp.CONSTANT.CONFIG_NAME);
     shelljs.cp('-R', configPath, dest);
