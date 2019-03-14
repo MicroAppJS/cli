@@ -3,13 +3,13 @@
 ## Install
 
 ```sh
-npm install -g @necfe/micro-app-cli
+nnpm install -g @necfe/micro-app-cli
 ```
 
 or
 
 ```sh
-npm install -D @necfe/micro-app-cli
+nnpm install -D @necfe/micro-app-cli
 ```
 
 ## Usage
@@ -97,7 +97,7 @@ micro-app-build
 ## 项目中使用共享接口
 
 ```js
-const api = require('@micro-demo/api');
+const api = require('@micro-app/demo/api');
 ```
 
 ## 其他
