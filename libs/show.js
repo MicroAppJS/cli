@@ -1,7 +1,7 @@
 'use strict';
 
 const chalk = require('chalk').default;
-const microApp = require('@necfe/micro-app-core');
+const microApp = require('@micro-app/core');
 const logger = microApp.logger;
 
 module.exports = name => {

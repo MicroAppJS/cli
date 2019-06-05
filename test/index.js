@@ -1,4 +1,4 @@
 'use strict';
 
-const update = require('../libs/update');
-update('a');
+const deploy = require('../libs/deploy');
+deploy();

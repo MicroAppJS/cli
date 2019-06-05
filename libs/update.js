@@ -2,7 +2,7 @@
 
 const shelljs = require('shelljs');
 const chalk = require('chalk').default;
-const microApp = require('@necfe/micro-app-core');
+const microApp = require('@micro-app/core');
 const logger = microApp.logger;
 
 const path = require('path');
@@ -15,6 +15,10 @@ module.exports = name => {
         const microConfig = microApp(name);
         if (microConfig) {
             const root = microConfig.root;
+            if (!root.startsWith(microAppConfig.nodeModules)) {
+                // 丢弃软链接
+                return;
+            }
 
             const pkgInfo = microAppConfig.package;
             const gitPath = (pkgInfo.devDependencies && pkgInfo.devDependencies[microConfig.name]) || (pkgInfo.dependencies && pkgInfo.dependencies[microConfig.name]) || false;
@@ -34,6 +38,10 @@ module.exports = name => {
             const microConfig = microApp(key);
             if (microConfig) {
                 const root = microConfig.root;
+                if (!root.startsWith(microAppConfig.nodeModules)) {
+                    // 丢弃软链接
+                    return false;
+                }
 
                 const pkgInfo = microAppConfig.package;
                 const gitPath = (pkgInfo.devDependencies && pkgInfo.devDependencies[microConfig.name]) || (pkgInfo.dependencies && pkgInfo.dependencies[microConfig.name]) || false;
