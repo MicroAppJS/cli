@@ -17,6 +17,7 @@ program
     .option('-l, --list', 'Show micros list')
     .option('-s, --show <show>', 'Show alias & shared list')
     .option('-u, --update <update>', 'Update moicros')
+    .option('-d, --deploy', 'Deploy current commit to container')
     .parse(process.argv);
 
 global.extraArgs = program.args;
@@ -53,4 +54,9 @@ if (program.show) {
 if (program.update) {
     const name = program.update;
     require('../libs/update')(name);
+}
+
+if (program.deploy) {
+    const args = {};
+    require('../libs/deploy')(args);
 }

@@ -7,7 +7,7 @@ const microApp = require('@micro-app/core');
 const chalk = require('chalk').default;
 const logger = microApp.logger;
 
-module.exports = () => {
+module.exports = args => {
     const microAppConfig = microApp.self();
     if (!microAppConfig) return;
 
@@ -25,9 +25,11 @@ module.exports = () => {
     const gitPath = gitURL.replace(/^git\+/ig, '').split('#')[0];
     const gitBranch = deployCfg.branch || gitURL.split('#')[1] || 'master';
 
-    const commitHash = ((shelljs.exec('git rev-parse --verify HEAD', { silent: true }) || {}).stdout || '').trim();
+    const currBranch = ((shelljs.exec('git rev-parse --abbrev-ref HEAD', { silent: true }) || {}).stdout || '').trim();
+    const commitHash = ((shelljs.exec(`git rev-parse origin/${currBranch}`, { silent: true }) || {}).stdout || '').trim();
+    // const commitHash = ((shelljs.exec('git rev-parse --verify HEAD', { silent: true }) || {}).stdout || '').trim();
 
-    const gitRoot = path.resolve(microAppConfig.root, '.gittest');
+    const gitRoot = path.resolve(microAppConfig.root, '.git');
     if (fs.statSync(gitRoot).isDirectory()) {
         const deployDir = path.resolve(gitRoot, 'micro-deploy');
         if (fs.existsSync(deployDir)) {
@@ -38,6 +40,7 @@ module.exports = () => {
             const execStr = `git clone "${gitPath}" -b ${gitBranch} "${deployDir}"`;
             logger.logo(`Deploy: ${chalk.blueBright(gitPath)}`);
             logger.logo(`Branch: ${chalk.blueBright(gitBranch)}`);
+            logger.logo(`Hash: ${chalk.blueBright(commitHash)}`);
             const result = shelljs.exec(execStr, { silent: true });
             if (result.code) {
                 logger.logo(`${result.code}: ${chalk.yellow(result.stderr.trim().split('\n').reverse()[0])}`);

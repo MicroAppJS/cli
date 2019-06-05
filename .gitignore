@@ -86,3 +86,6 @@ dist
 *.njsproj
 *.sln
 *.sw*
+
+
+/micro-app.config.js
