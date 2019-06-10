@@ -1,6 +1,6 @@
 {
   "name": "@micro-app/cli",
-  "version": "0.0.19",
+  "version": "0.0.24",
   "description": "micro app cli",
   "bin": {
     "micro-app": "./bin/micro-app.js",

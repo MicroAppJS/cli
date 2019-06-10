@@ -7,7 +7,7 @@ const microApp = require('@micro-app/core');
 const chalk = require('chalk').default;
 const logger = microApp.logger;
 
-module.exports = args => {
+module.exports = isHook => {
     const microAppConfig = microApp.self();
     if (!microAppConfig) return;
 
@@ -24,10 +24,28 @@ module.exports = args => {
     }
     const gitPath = gitURL.replace(/^git\+/ig, '').split('#')[0];
     const gitBranch = deployCfg.branch || gitURL.split('#')[1] || 'master';
+    const gitMessage = deployCfg.message && ` | ${deployCfg.message}` || '';
 
-    const currBranch = ((shelljs.exec('git rev-parse --abbrev-ref HEAD', { silent: true }) || {}).stdout || '').trim();
-    const commitHash = ((shelljs.exec(`git rev-parse origin/${currBranch}`, { silent: true }) || {}).stdout || '').trim();
-    // const commitHash = ((shelljs.exec('git rev-parse --verify HEAD', { silent: true }) || {}).stdout || '').trim();
+    const gitUser = deployCfg.user || {};
+    if (!gitUser.name || typeof gitUser.name !== 'string') {
+        gitUser.name = ((shelljs.exec('git config user.name', { silent: true }) || {}).stdout || '').trim();
+    }
+    if (!gitUser.email || typeof gitUser.email !== 'string') {
+        gitUser.email = ((shelljs.exec('git config user.email', { silent: true }) || {}).stdout || '').trim();
+    }
+
+    let commitHash = '';
+    if (isHook) {
+        commitHash = ((shelljs.exec('git rev-parse --verify HEAD', { silent: true }) || {}).stdout || '').trim();
+    } else {
+        const currBranch = ((shelljs.exec('git rev-parse --abbrev-ref HEAD', { silent: true }) || {}).stdout || '').trim();
+        commitHash = ((shelljs.exec(`git rev-parse origin/${currBranch}`, { silent: true }) || {}).stdout || '').trim();
+    }
+
+    if (!commitHash || typeof commitHash !== 'string') {
+        logger.logo(`${chalk.yellow('Not Found commit Hash!')}`);
+        return;
+    }
 
     const gitRoot = path.resolve(microAppConfig.root, '.git');
     if (fs.statSync(gitRoot).isDirectory()) {
@@ -41,6 +59,8 @@ module.exports = args => {
             logger.logo(`Deploy: ${chalk.blueBright(gitPath)}`);
             logger.logo(`Branch: ${chalk.blueBright(gitBranch)}`);
             logger.logo(`Hash: ${chalk.blueBright(commitHash)}`);
+            logger.logo(`Name: ${chalk.blueBright(gitUser.name)}`);
+            logger.logo(`Email: ${chalk.blueBright(gitUser.email)}`);
             const result = shelljs.exec(execStr, { silent: true });
             if (result.code) {
                 logger.logo(`${result.code}: ${chalk.yellow(result.stderr.trim().split('\n').reverse()[0])}`);
@@ -70,8 +90,15 @@ module.exports = args => {
                         }
                         fs.writeFileSync(path.resolve(deployDir, 'package.json'), JSON.stringify(pkg, null, 4), 'utf8');
 
+                        // git config
+                        if (gitUser.name && typeof gitUser.name === 'string') {
+                            shelljs.exec(`git config user.name ${gitUser.name}`, { silent: true, cwd: deployDir });
+                        }
+                        if (gitUser.email && typeof gitUser.email === 'string') {
+                            shelljs.exec(`git config user.email ${gitUser.email}`, { silent: true, cwd: deployDir });
+                        }
                         // commit + push
-                        const { code } = shelljs.exec(`git commit -a -m "auto deploy ${MICRO_APP_CONFIG_NAME}"`, { cwd: deployDir });
+                        const { code } = shelljs.exec(`git commit -a -m ":package: auto deploy ${MICRO_APP_CONFIG_NAME} - ${commitHash.substr(0, 8)}${gitMessage}"`, { cwd: deployDir });
                         if (code === 0) {
                             const { code } = shelljs.exec('git push', { cwd: deployDir });
                             if (code === 0) {
