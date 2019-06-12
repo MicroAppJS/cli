@@ -34,7 +34,7 @@ module.exports = name => {
         }
     } else if (name === 'all' || name === '*') {
         shelljs.rm('-rf', path.join(microAppConfig.root, 'package-lock.json'));
-        const _gitPaths = micros.map(key => {
+        micros.map(key => {
             const microConfig = microApp(key);
             if (microConfig) {
                 const root = microConfig.root;
@@ -59,7 +59,7 @@ module.exports = name => {
         });
 
         logger.logo('waiting...');
-        shelljs.exec(`npm install -D "${_gitPaths.join('" ')}"`);
+        shelljs.exec('npm install');
 
         logger.logo(`${chalk.green('Finish!')}`);
         return;

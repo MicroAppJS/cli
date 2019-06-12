@@ -22,12 +22,12 @@ let promise = Promise.resolve();
 if (program.build) {
     const type = program.type;
     if (type === 'vusion') {
-        promise = microApp.vusion.build().then(() => {
+        promise = microApp.vusionAdapter.build().then(() => {
             return Promise.resolve(true);
         });
     } else {
         // webpack build ...
-        promise = microApp.webpack.build().then(() => {
+        promise = microApp.webpackAdapter.build().then(() => {
             return Promise.resolve(true);
         });
     }
@@ -37,7 +37,7 @@ promise.then(flag => {
     if (flag) {
         logger.success('Build finish');
     }
-    microApp.koa.runServer(program, url => {
+    microApp.koaAdapter.runServer(program, url => {
         // success
         logger.info(`Open Browser, URL: ${chalk.yellow(url)}`);
     });

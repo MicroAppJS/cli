@@ -14,14 +14,14 @@ global.extraArgs = program.args;
 
 const type = program.type;
 if (type === 'vusion') {
-    microApp.vusion.build().then(() => {
+    microApp.vusionAdapter.build().then(() => {
         console.info('>>> Build Success >>>');
     }).catch(e => {
         console.error('>>> Build Error >>>', e);
     });
 } else if (!type || type === 'webpack') {
     // webpack build ...
-    microApp.webpack.build().then(() => {
+    microApp.webpackAdapter.build().then(() => {
         console.info('>>> Build Success >>>');
     }).catch(e => {
         console.error('>>> Build Error >>>', e);
