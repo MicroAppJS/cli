@@ -10,6 +10,8 @@ program
     .option('-t, --type <type>', 'Choose a build type')
     .parse(process.argv);
 
+process.env.NODE_ENV = 'production';
+
 global.extraArgs = program.args;
 
 const type = program.type;
