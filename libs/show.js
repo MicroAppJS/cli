@@ -20,7 +20,13 @@ module.exports = name => {
                             const aliasKey = aliasName[0] !== '@' ? `@${aliasName}` : aliasName;
                             Object.keys(microConfig.alias).forEach(key => {
                                 if (microConfig.alias[key]) {
-                                    logger.logo(`   * ${chalk.yellow(`${aliasKey}/${key}`)}`);
+                                    const currAlias = microConfig.config.alias || {};
+                                    const desc = currAlias[key] && currAlias[key].description || false;
+                                    const textStrs = [ `   * ${chalk.yellow(`${aliasKey}/${key}`)}` ];
+                                    if (desc && typeof desc === 'string') {
+                                        textStrs.push(`(${chalk.gray()})`);
+                                    }
+                                    logger.logo(textStrs.join(' '));
                                 }
                             });
                         }
@@ -32,7 +38,13 @@ module.exports = name => {
                     const aliasKey = aliasName[0] !== '@' ? `@${aliasName}` : aliasName;
                     Object.keys(microAppConfig.alias).forEach(key => {
                         if (microAppConfig.alias[key]) {
-                            logger.logo(`   * ${chalk.yellow(`${aliasKey}/${key}`)}`);
+                            const currAlias = microAppConfig.config.alias || {};
+                            const desc = currAlias[key] && currAlias[key].description || false;
+                            const textStrs = [ `   * ${chalk.yellow(`${aliasKey}/${key}`)}` ];
+                            if (desc && typeof desc === 'string') {
+                                textStrs.push(`(${chalk.gray()})`);
+                            }
+                            logger.logo(textStrs.join(' '));
                         }
                     });
                 }
@@ -50,7 +62,13 @@ module.exports = name => {
                             const aliasKey = aliasName[0] !== '@' ? `@${aliasName}` : aliasName;
                             Object.keys(microConfig.shared).forEach(key => {
                                 if (microConfig.shared[key]) {
-                                    logger.logo(`   * ${chalk.yellow(`${aliasKey}/${key}`)}`);
+                                    const currAlias = microConfig.config.alias || {};
+                                    const desc = currAlias[key] && currAlias[key].description || false;
+                                    const textStrs = [ `   * ${chalk.yellow(`${aliasKey}/${key}`)}` ];
+                                    if (desc && typeof desc === 'string') {
+                                        textStrs.push(`(${chalk.gray()})`);
+                                    }
+                                    logger.logo(textStrs.join(' '));
                                 }
                             });
                         }
@@ -62,7 +80,13 @@ module.exports = name => {
                     const aliasKey = aliasName[0] !== '@' ? `@${aliasName}` : aliasName;
                     Object.keys(microAppConfig.shared).forEach(key => {
                         if (microAppConfig.shared[key]) {
-                            logger.logo(`   * ${chalk.yellow(`${aliasKey}/${key}`)}`);
+                            const currAlias = microAppConfig.config.alias || {};
+                            const desc = currAlias[key] && currAlias[key].description || false;
+                            const textStrs = [ `   * ${chalk.yellow(`${aliasKey}/${key}`)}` ];
+                            if (desc && typeof desc === 'string') {
+                                textStrs.push(`(${chalk.gray()})`);
+                            }
+                            logger.logo(textStrs.join(' '));
                         }
                     });
                 }

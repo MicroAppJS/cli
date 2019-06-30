@@ -21,7 +21,7 @@ process.env.NODE_ENV = 'development';
 
 global.extraArgs = program.args;
 
-microApp.koaAdapter.devServer(program, url => {
+microApp.koaAdapter.devHot(program, url => {
     // success
     if (program.openBrowser) {
         opn(url);

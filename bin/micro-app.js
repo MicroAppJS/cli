@@ -15,7 +15,7 @@ program
     .version(require('../package').version, '-v, --version')
     .option('init', 'Init a config file')
     .option('-l, --list', 'Show micros list')
-    .option('-s, --show <name>', 'Show alias & shared list')
+    .option('-s, --show', 'Show alias & shared list')
     .option('-u, --update', 'Update moicros')
     .option('-d, --deploy', 'Deploy current commit to container')
     .parse(process.argv);
@@ -47,7 +47,7 @@ if (program.list) {
 }
 
 if (program.show) {
-    const name = program.show;
+    const name = program.args[0] || '*';
     require('../libs/show')(name);
 }
 
