@@ -16,14 +16,16 @@ global.extraArgs = program.args;
 
 const type = program.type;
 if (type === 'vusion') {
-    microApp.vusionAdapter.build().then(() => {
+    const vusionAdapter = new microApp.VusionAdapter();
+    vusionAdapter.build().then(() => {
         console.info('>>> Build Success >>>');
     }).catch(e => {
         console.error('>>> Build Error >>>', e);
     });
 } else if (!type || type === 'webpack') {
     // webpack build ...
-    microApp.webpackAdapter.build().then(() => {
+    const webpackAdapter = new microApp.WebpackAdapter();
+    webpackAdapter.build().then(() => {
         console.info('>>> Build Success >>>');
     }).catch(e => {
         console.error('>>> Build Error >>>', e);

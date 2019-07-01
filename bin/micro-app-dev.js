@@ -21,7 +21,9 @@ process.env.NODE_ENV = 'development';
 
 global.extraArgs = program.args;
 
-microApp.koaAdapter.devHot(program, url => {
+const wbpackAdapter = program.type === 'vusion' ? new microApp.VusionAdapter() : new microApp.WebpackAdapter();
+const koaAdapter = new microApp.KoaAdapter(wbpackAdapter, program);
+koaAdapter.devHot(url => {
     // success
     if (program.openBrowser) {
         opn(url);
