@@ -23,7 +23,7 @@ global.extraArgs = program.args;
 
 const wbpackAdapter = program.type === 'vusion' ? new microApp.VusionAdapter() : new microApp.WebpackAdapter();
 const koaAdapter = new microApp.KoaAdapter(wbpackAdapter, program);
-koaAdapter.devHot(url => {
+koaAdapter.serve(url => {
     // success
     if (program.openBrowser) {
         opn(url);

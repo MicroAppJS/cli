@@ -41,7 +41,7 @@ promise.then(flag => {
     }
     const wbpackAdapter = program.type === 'vusion' ? new microApp.VusionAdapter() : new microApp.WebpackAdapter();
     const koaAdapter = new microApp.KoaAdapter(wbpackAdapter, program);
-    koaAdapter.runServer(url => {
+    koaAdapter.start(url => {
         // success
         logger.info(`Open Browser, URL: ${chalk.yellow(url)}`);
     });
