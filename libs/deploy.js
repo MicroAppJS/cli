@@ -23,7 +23,18 @@ module.exports = isHook => {
         return;
     }
     const gitPath = gitURL.replace(/^git\+/ig, '').split('#')[0];
-    const gitBranch = deployCfg.branch || gitURL.split('#')[1] || 'master';
+    let gitBranch = deployCfg.branch || gitURL.split('#')[1] || 'master';
+    const currBranch = ((shelljs.exec('git rev-parse --abbrev-ref HEAD', { silent: true }) || {}).stdout || '').trim();
+    if (typeof gitBranch === 'object') {
+        // 继承当前分支
+        if (currBranch && gitBranch.extends === true) {
+            gitBranch = currBranch;
+        } else if (gitBranch.name) {
+            gitBranch = gitBranch.name;
+        } else {
+            gitBranch = 'master';
+        }
+    }
     const gitMessage = deployCfg.message && ` | ${deployCfg.message}` || '';
 
     const gitUser = deployCfg.user || {};
@@ -38,7 +49,6 @@ module.exports = isHook => {
     if (isHook) {
         commitHash = ((shelljs.exec('git rev-parse --verify HEAD', { silent: true }) || {}).stdout || '').trim();
     } else {
-        const currBranch = ((shelljs.exec('git rev-parse --abbrev-ref HEAD', { silent: true }) || {}).stdout || '').trim();
         commitHash = ((shelljs.exec(`git rev-parse origin/${currBranch}`, { silent: true }) || {}).stdout || '').trim();
     }
 
