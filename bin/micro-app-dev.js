@@ -21,7 +21,22 @@ process.env.NODE_ENV = 'development';
 
 global.extraArgs = program.args;
 
-const wbpackAdapter = program.type === 'vusion' ? new microApp.VusionAdapter() : new microApp.WebpackAdapter();
+const type = program.type;
+// const wbpackAdapter = program.type === 'vusion' ? new microApp.VusionAdapter() : new microApp.WebpackAdapter();
+let wbpackAdapter = null;
+switch (type) {
+    case 'vusion':
+        wbpackAdapter = new microApp.VusionAdapter();
+        break;
+    case 'vusioncore':
+        wbpackAdapter = new microApp.VusionCoreAdapter();
+        break;
+    case 'webpack':
+    default:
+        wbpackAdapter = new microApp.WebpackAdapter();
+        break;
+}
+
 const koaAdapter = new microApp.KoaAdapter(wbpackAdapter, program);
 koaAdapter.serve(url => {
     // success
