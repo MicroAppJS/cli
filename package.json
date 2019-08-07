@@ -1,6 +1,6 @@
 {
   "name": "@micro-app/cli",
-  "version": "0.0.56-beta.1",
+  "version": "0.0.57",
   "description": "micro app cli",
   "bin": {
     "micro-app": "./bin/micro-app.js",
@@ -32,7 +32,7 @@
     "eslint-config-2o3t": "^1.1.17"
   },
   "dependencies": {
-    "@micro-app/core": "^0.0.56-beta.1",
+    "@micro-app/core": "^0.0.57",
     "chalk": "^2.4.2",
     "commander": "^2.19.0",
     "opn": "^5.5.0",

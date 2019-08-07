@@ -35,7 +35,7 @@ module.exports = isHook => {
             gitBranch = 'master';
         }
     }
-    const gitMessage = deployCfg.message && ` | ${deployCfg.message}` || '';
+    let gitMessage = deployCfg.message && ` | ${deployCfg.message}` || '';
 
     const gitUser = deployCfg.user || {};
     if (!gitUser.name || typeof gitUser.name !== 'string') {
@@ -55,6 +55,13 @@ module.exports = isHook => {
     if (!commitHash || typeof commitHash !== 'string') {
         logger.logo(`${chalk.yellow('Not Found commit Hash!')}`);
         return;
+    }
+
+    if (!gitMessage) {
+        const msg = ((shelljs.exec(`git log --pretty=format:“%s” ${commitHash} -1`, { silent: true }) || {}).stdout || '').trim();
+        if (msg) {
+            gitMessage = ` | ${msg}`;
+        }
     }
 
     const gitRoot = path.resolve(microAppConfig.root, '.git');
@@ -108,7 +115,7 @@ module.exports = isHook => {
                             shelljs.exec(`git config user.email ${gitUser.email}`, { silent: true, cwd: deployDir });
                         }
                         // commit + push
-                        const { code } = shelljs.exec(`git commit -a -m ":package: auto deploy ${MICRO_APP_CONFIG_NAME} - ${commitHash.substr(0, 8)}${gitMessage}"`, { cwd: deployDir });
+                        const { code } = shelljs.exec(`git commit -a -m ":package: auto deploy ${MICRO_APP_CONFIG_NAME} - ${currBranch} - ${commitHash.substr(0, 8)}${gitMessage}"`, { cwd: deployDir });
                         if (code === 0) {
                             const { code } = shelljs.exec('git push', { cwd: deployDir });
                             if (code === 0) {
