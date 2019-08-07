@@ -3,7 +3,6 @@
 
 const program = require('commander');
 const microApp = require('@micro-app/core');
-const chalk = require('chalk').default;
 
 program
     .version(require('../package').version, '-v, --version')
@@ -15,21 +14,22 @@ process.env.NODE_ENV = 'production';
 global.extraArgs = program.args;
 
 const type = program.type;
-if (type === 'vusion') {
-    const vusionAdapter = new microApp.VusionAdapter();
-    vusionAdapter.build().then(() => {
-        console.info('>>> Build Success >>>');
-    }).catch(e => {
-        console.error('>>> Build Error >>>', e);
-    });
-} else if (!type || type === 'webpack') {
-    // webpack build ...
-    const webpackAdapter = new microApp.WebpackAdapter();
-    webpackAdapter.build().then(() => {
-        console.info('>>> Build Success >>>');
-    }).catch(e => {
-        console.error('>>> Build Error >>>', e);
-    });
-} else {
-    console.warn(chalk.red(`Not Support < ${type} >`));
+let wbpackAdapter = null;
+switch (type) {
+    case 'vusion':
+        wbpackAdapter = new microApp.VusionAdapter();
+        break;
+    case 'vusioncore':
+        wbpackAdapter = new microApp.VusionCoreAdapter();
+        break;
+    case 'webpack':
+    default:
+        wbpackAdapter = new microApp.WebpackAdapter();
+        break;
 }
+
+wbpackAdapter.build().then(() => {
+    console.info('>>> Build Success >>>');
+}).catch(e => {
+    console.error('>>> Build Error >>>', e);
+});

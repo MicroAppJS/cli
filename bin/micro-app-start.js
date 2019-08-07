@@ -18,28 +18,33 @@ process.env.NODE_ENV = 'production';
 
 global.extraArgs = program.args;
 
+
+// const wbpackAdapter = program.type === 'vusion' ? new microApp.VusionAdapter() : new microApp.WebpackAdapter();
+let wbpackAdapter = null;
+switch (program.type) {
+    case 'vusion':
+        wbpackAdapter = new microApp.VusionAdapter();
+        break;
+    case 'vusioncore':
+        wbpackAdapter = new microApp.VusionCoreAdapter();
+        break;
+    case 'webpack':
+    default:
+        wbpackAdapter = new microApp.WebpackAdapter();
+        break;
+}
+
 let promise = Promise.resolve();
 if (program.build) {
-    const type = program.type;
-    if (type === 'vusion') {
-        const vusionAdapter = new microApp.VusionAdapter();
-        promise = vusionAdapter.build().then(() => {
-            return Promise.resolve(true);
-        });
-    } else {
-        // webpack build ...
-        const webpackAdapter = new microApp.WebpackAdapter();
-        promise = webpackAdapter.build().then(() => {
-            return Promise.resolve(true);
-        });
-    }
+    promise = wbpackAdapter.build().then(() => {
+        return Promise.resolve(true);
+    });
 }
 
 promise.then(flag => {
     if (flag) {
         logger.success('Build finish');
     }
-    const wbpackAdapter = program.type === 'vusion' ? new microApp.VusionAdapter() : new microApp.WebpackAdapter();
     const koaAdapter = new microApp.KoaAdapter(wbpackAdapter, program);
     koaAdapter.start(url => {
         // success
