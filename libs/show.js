@@ -4,93 +4,51 @@ const chalk = require('chalk').default;
 const microApp = require('@micro-app/core');
 const logger = microApp.logger;
 
+function showLoggerList(microConfig, type) {
+    const aliasName = microConfig.name;
+    if (aliasName) {
+        const aliasKey = aliasName[0] !== '@' ? `@${aliasName}` : aliasName;
+        Object.keys(microConfig[type]).forEach(key => {
+            if (microConfig[type][key]) {
+                const currAlias = microConfig.config.alias || {};
+                const desc = currAlias[key] && currAlias[key].description || false;
+                const textStrs = [ `   * ${chalk.yellow(`${aliasKey}/${key}`)}` ];
+                if (desc && typeof desc === 'string') {
+                    textStrs.push(`(${chalk.gray(desc)})`);
+                }
+                logger.logo(textStrs.join(' '));
+            }
+        });
+    }
+}
+
 module.exports = name => {
     const microAppConfig = microApp.self();
     if (!microAppConfig) return;
     const micros = microAppConfig.micros;
     switch (name) {
         case 'alias':
-            {
-                logger.logo(`${chalk.green('Alias List')}:`);
-                micros.forEach(item => {
-                    const microConfig = microApp(item);
-                    if (microConfig) {
-                        const aliasName = microConfig.name;
-                        if (aliasName) {
-                            const aliasKey = aliasName[0] !== '@' ? `@${aliasName}` : aliasName;
-                            Object.keys(microConfig.alias).forEach(key => {
-                                if (microConfig.alias[key]) {
-                                    const currAlias = microConfig.config.alias || {};
-                                    const desc = currAlias[key] && currAlias[key].description || false;
-                                    const textStrs = [ `   * ${chalk.yellow(`${aliasKey}/${key}`)}` ];
-                                    if (desc && typeof desc === 'string') {
-                                        textStrs.push(`(${chalk.gray()})`);
-                                    }
-                                    logger.logo(textStrs.join(' '));
-                                }
-                            });
-                        }
-                    }
-                });
-                // self
-                const aliasName = microAppConfig.name;
-                if (aliasName) {
-                    const aliasKey = aliasName[0] !== '@' ? `@${aliasName}` : aliasName;
-                    Object.keys(microAppConfig.alias).forEach(key => {
-                        if (microAppConfig.alias[key]) {
-                            const currAlias = microAppConfig.config.alias || {};
-                            const desc = currAlias[key] && currAlias[key].description || false;
-                            const textStrs = [ `   * ${chalk.yellow(`${aliasKey}/${key}`)}` ];
-                            if (desc && typeof desc === 'string') {
-                                textStrs.push(`(${chalk.gray()})`);
-                            }
-                            logger.logo(textStrs.join(' '));
-                        }
-                    });
+            logger.logo(`${chalk.green('Alias List')}:`);
+            micros.forEach(item => {
+                const microConfig = microApp(item);
+                if (microConfig) {
+                    showLoggerList(microConfig, 'alias');
                 }
-            }
+            });
+            // self
+            showLoggerList(microAppConfig, 'alias');
             break;
         case 'share':
         case 'shared':
-            {
-                logger.logo(`${chalk.green('Shared List')}:`);
-                micros.forEach(item => {
-                    const microConfig = microApp(item);
-                    if (microConfig) {
-                        const aliasName = microConfig.name;
-                        if (aliasName) {
-                            const aliasKey = aliasName[0] !== '@' ? `@${aliasName}` : aliasName;
-                            Object.keys(microConfig.shared).forEach(key => {
-                                if (microConfig.shared[key]) {
-                                    const currAlias = microConfig.config.alias || {};
-                                    const desc = currAlias[key] && currAlias[key].description || false;
-                                    const textStrs = [ `   * ${chalk.yellow(`${aliasKey}/${key}`)}` ];
-                                    if (desc && typeof desc === 'string') {
-                                        textStrs.push(`(${chalk.gray()})`);
-                                    }
-                                    logger.logo(textStrs.join(' '));
-                                }
-                            });
-                        }
-                    }
-                });
-                // self
-                const aliasName = microAppConfig.name;
-                if (aliasName) {
-                    const aliasKey = aliasName[0] !== '@' ? `@${aliasName}` : aliasName;
-                    Object.keys(microAppConfig.shared).forEach(key => {
-                        if (microAppConfig.shared[key]) {
-                            const currAlias = microAppConfig.config.alias || {};
-                            const desc = currAlias[key] && currAlias[key].description || false;
-                            const textStrs = [ `   * ${chalk.yellow(`${aliasKey}/${key}`)}` ];
-                            if (desc && typeof desc === 'string') {
-                                textStrs.push(`(${chalk.gray()})`);
-                            }
-                            logger.logo(textStrs.join(' '));
-                        }
-                    });
+            logger.logo(`${chalk.green('Shared List')}:`);
+            micros.forEach(item => {
+                const microConfig = microApp(item);
+                if (microConfig) {
+                    showLoggerList(microConfig, 'shared');
                 }
-            }
+            });
+            // self
+            showLoggerList(microAppConfig, 'shared');
             break;
         default:
             logger.logo(`${chalk.green('Show Details')}:`);
