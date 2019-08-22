@@ -3,6 +3,8 @@
 
 const program = require('commander');
 const microApp = require('@micro-app/core');
+const logger = microApp.logger;
+const microAppAdapter = require('@micro-app/plugin-adapter');
 
 program
     .version(require('../package').version, '-v, --version')
@@ -13,23 +15,11 @@ process.env.NODE_ENV = 'production';
 
 global.extraArgs = program.args;
 
-const type = program.type;
-let wbpackAdapter = null;
-switch (type) {
-    case 'vusion':
-        wbpackAdapter = new microApp.VusionAdapter();
-        break;
-    case 'vusioncore':
-        wbpackAdapter = new microApp.VusionCoreAdapter();
-        break;
-    case 'webpack':
-    default:
-        wbpackAdapter = new microApp.WebpackAdapter();
-        break;
-}
+const type = program.type || 'webpack';
+const wbpackAdapter = microAppAdapter(type);
 
 wbpackAdapter.build().then(() => {
-    console.info('>>> Build Success >>>');
+    logger.success('>>> Build Success >>>');
 }).catch(e => {
-    console.error('>>> Build Error >>>', e);
+    logger.error('>>> Build Error >>>', e);
 });

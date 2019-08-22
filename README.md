@@ -60,7 +60,8 @@ module.exports = {
     server: {
         entry: '', // 服务端入口
         port: 8088, // 服务端口号
-        staticBase: 'public', // 静态文件地址
+        // staticBase: 'public', // 静态文件地址
+        contentBase: 'public', // 静态文件地址
         options: {
             // 服务端回调参数
         },
