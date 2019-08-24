@@ -48,8 +48,9 @@ module.exports = function resolveVusionConfig(defaultVusionConfig) {
             let filename = 'vusion.config.js';
             if (!needLoadFile) {
                 filename = path.resolve(__dirname, 'vusion.config.js');
+                return vusionConfigModule(filename, ...externalConfigs);
             }
-            return vusionConfigModule(filename, ...externalConfigs);
+            return Object.assign(vusionConfigModule(filename, ...externalConfigs), defaultVusionConfig);
         }
         return vusionConfigModule();
     }

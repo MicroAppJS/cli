@@ -6,7 +6,7 @@ const resolveConfig = require('./resolve');
 module.exports = function(webpackConfig, isDev, { modifyDefaultVusionConfig, resolveVusionConfig, resolveVusionWebpackConfig }) {
 
     let defaultVusionConfig = {
-        type: 'app',
+        // type: 'app',
         isDev,
         webpack: webpackConfig,
         needLoadFile: true,
@@ -20,10 +20,6 @@ module.exports = function(webpackConfig, isDev, { modifyDefaultVusionConfig, res
     if (typeof resolveVusionConfig === 'function') {
         vusionConfig = resolveVusionConfig(vusionConfig);
     }
-
-    vusionConfig.webpack = merge.smartStrategy({
-        entry: 'replace',
-    })(vusionConfig.webpack, webpackConfig);
 
     global.vusionConfig = vusionConfig; // fixed vusion
 
