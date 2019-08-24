@@ -1,25 +1,10 @@
 #!/usr/bin/env node
 'use strict';
 
-const program = require('commander');
-const microApp = require('@micro-app/core');
-const logger = microApp.logger;
-const microAppAdapter = require('@micro-app/plugin-adapter');
+process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
-program
-    .version(require('../package').version, '-v, --version')
-    .option('-t, --type <type>', 'Choose a build type')
-    .parse(process.argv);
+const yParser = require('yargs-parser');
+const argv = yParser(process.argv.slice(2));
+const { service } = require('./base');
 
-process.env.NODE_ENV = 'production';
-
-global.extraArgs = program.args;
-
-const type = program.type || 'webpack';
-const wbpackAdapter = microAppAdapter(type);
-
-wbpackAdapter.build().then(() => {
-    logger.success('>>> Build Success >>>');
-}).catch(e => {
-    logger.error('>>> Build Error >>>', e);
-});
+service.run('build', argv);

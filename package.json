@@ -1,6 +1,6 @@
 {
   "name": "@micro-app/cli",
-  "version": "0.0.57",
+  "version": "0.1.0-beta.16",
   "description": "micro app cli",
   "bin": {
     "micro-app": "./bin/micro-app.js",
@@ -13,7 +13,8 @@
   },
   "files": [
     "bin",
-    "libs"
+    "plugins",
+    "src"
   ],
   "keywords": [
     "micro",
@@ -29,13 +30,19 @@
   "devDependencies": {
     "babel-eslint": "^10.0.2",
     "eslint": "^5.16.0",
-    "eslint-config-2o3t": "^1.1.17"
+    "eslint-config-2o3t": "^1.1.17",
+    "webpack": "^4.39.2"
   },
   "dependencies": {
-    "@micro-app/core": "^0.0.57",
+    "@micro-app/core": "^0.1.0-beta.23",
     "chalk": "^2.4.2",
-    "commander": "^2.19.0",
+    "koa": "^2.8.1",
+    "koa-static": "^5.0.0",
     "opn": "^5.5.0",
-    "shelljs": "^0.8.3"
+    "ora": "^3.4.0",
+    "shelljs": "^0.8.3",
+    "webpack-dev-middleware": "^2.0.6",
+    "webpack-hot-middleware": "^2.25.0",
+    "yargs-parser": "^13.1.1"
   }
 }

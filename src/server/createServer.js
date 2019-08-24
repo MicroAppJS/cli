@@ -3,8 +3,9 @@
 const Koa = require('koa');
 const koaCompose = require('koa-compose');
 const koaConvert = require('koa-convert');
+const _ = require('lodash');
+const tryRequire = require('try-require');
 
-const injectAliasModule = require('./injectAliasModule');
 const HookEvent = require('./HookEvent');
 const staticServer = require('./staticServer');
 
@@ -12,19 +13,23 @@ module.exports = function(options = {}, api) {
     const logger = api.logger;
     const isDev = options.isDev || false;
     const onlyNode = options.onlyNode || false;
-    const webpackAdapter = options.webpackAdapter || false;
+    const compiler = options.compiler || false;
+    const devOptions = options.devOptions || {};
     if (isDev) {
-        logger.info('DevServer Start...');
+        logger.info('Dev Server Start...');
     }
 
-    const config = options.config;
-    injectAliasModule(config.resolveShared);
     const serverConfig = options.serverConfig;
 
     const app = new Koa();
     // 兼容koa1的中间件
     const _use = app.use;
     app.use = x => _use.call(app, koaConvert(x));
+    app.logger = logger;
+    app.use((ctx, next) => {
+        ctx.logger = logger;
+        return next();
+    });
 
     // init hook
     const _HookEvent = new HookEvent(app); // 兼容
@@ -34,62 +39,94 @@ module.exports = function(options = {}, api) {
         logger.error('koa server error: ', error);
     });
 
-    hooks(_HookEvent, 'init');
-    api.applyPluginHooks('onServerInit', { app });
+    api.applyPluginHooks('onServerInit', { app, config: serverConfig });
+    applyHooks(_HookEvent, 'init');
 
-    hooks(_HookEvent, 'before');
-    api.applyPluginHooks('beforeServerEntry', { app });
+    api.applyPluginHooks('beforeServerEntry', { app, config: serverConfig });
+    applyHooks(_HookEvent, 'before');
 
     initEntrys(app, serverConfig, logger);
 
-    hooks(_HookEvent, 'after');
-    api.applyPluginHooks('afterServerEntry', { app });
+    api.applyPluginHooks('afterServerEntry', { app, config: serverConfig });
+    applyHooks(_HookEvent, 'after');
 
     if (isDev) {
-        if (!onlyNode && !!webpackAdapter) {
-            (async () => {
-                const middleware = await webpackAdapter.serve();
-                app.use(middleware);
-            })();
+        if (!onlyNode && !!compiler) {
+            const koaWebpackMiddleware = require('./koa-webpack-middleware');
+            app.use(koaWebpackMiddleware.devMiddleware(compiler, devOptions));
+            app.use(koaWebpackMiddleware.hotMiddleware(compiler, devOptions));
         }
     } else {
         // static file
-        const { contentBase } = serverConfig;
-        const koaStatic = staticServer(contentBase);
+        const { contentBase, options = {} } = serverConfig;
+        const koaStatic = staticServer(contentBase, options);
         if (koaStatic) {
             app.use(koaStatic);
         }
     }
 
-    api.applyPluginHooks('onServerInitDone', { app });
+    api.applyPluginHooks('onServerInitDone', { app, config: serverConfig });
+
+    const port = options.port || serverConfig.port || 8888;
+    const host = options.host || serverConfig.host || 'localhost';
+    return new Promise((resolve, reject) => {
+        app.listen(port, host === 'localhost' ? '0.0.0.0' : host, err => {
+            if (err) {
+                logger.error(err);
+                api.applyPluginHooks('onServerRunFail', { host, port, config: serverConfig, err });
+                reject(err);
+                return;
+            }
+
+            logger.success(`Server running... listen on ${port}, host: ${host}`);
+
+            api.applyPluginHooks('onServerRunSuccess', { host, port, config: serverConfig });
+
+            const url = `http://${host}:${port}`;
+            resolve({ host, port, url });
+        });
+    });
 };
 
 function initEntrys(app, serverConfig, logger) {
     const { entrys = [] } = serverConfig;
-    entrys.forEach(({ entry, info, options }) => {
+    entrys.map(item => {
+        const entry = tryRequire(item.link);
+        return entry && { ...item, entry };
+    }).filter(item => !!item).forEach(({ entry, info, options, link }) => {
         entry(app, options, info);
         logger.info(`【 ${info.name} 】Inserted`);
+        logger.debug(`【 ${info.name} 】Inserted Link: ${link}`);
     });
 }
 
 function initHooks(iHook, serverConfig, logger) {
-    const { hooks = [] } = serverConfig;
+    const allHooks = serverConfig.hooks || [];
 
-    hooks.forEach(({ hook, info, options }) => {
-        if (typeof hook === 'function') {
-            hook(iHook, options, info);
-        } else if (typeof hooks === 'object') {
-            Object.keys(hooks).forEach(key => {
-                const func = hooks[key];
-                iHook.hooks(key, func.bind({ info, options }));
-                logger.info(`【 ${info.name} 】Hook inject "${key}"`);
+    allHooks.forEach(({ link, info, options }) => {
+        if (typeof link === 'string') {
+            const hook = tryRequire(link);
+            if (_.isFunction(hook)) {
+                hook(iHook, options, info);
+                logger.info(`【 ${info.name} 】Hook inject`);
+                logger.debug(`【 ${info.name} 】Hook Link: ${link}`);
+            }
+        } else if (typeof link === 'object') {
+            Object.keys(link).forEach(key => {
+                const _link = link[key];
+                const hook = tryRequire(_link);
+                if (_.isFunction(hook)) {
+                    iHook.hooks(key, hook.bind({ info, options }));
+                    logger.info(`【 ${info.name} 】Hook inject "${key}"`);
+                    logger.debug(`【 ${info.name} 】Hook inject "${key}" Link: ${link}`);
+                }
             });
         }
         logger.info(`【 ${info.name} 】Hook loaded`);
     });
 }
 
-function hooks(iHook, name) {
+function applyHooks(iHook, name) {
     if (iHook && name) {
         const args = Array.prototype.splice.call(arguments, 0, 1);
         iHook.send(name, ...args);

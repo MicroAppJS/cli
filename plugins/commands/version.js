@@ -2,12 +2,10 @@
 
 const chalk = require('chalk');
 
-module.exports = function(api) {
+module.exports = function versionCommand(api) {
     api.registerCommand('version', {
         description: 'show version',
-        usage: '',
-        options: '',
-        details: '',
+        usage: 'micro-app version',
     }, () => {
         const pkg = require('../../package.json');
         const version = pkg.version;
