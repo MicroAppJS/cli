@@ -43,6 +43,7 @@ Examples:
 };
 
 function runServe(api, type) {
+    const logger = api.logger;
     const webpackConfig = api.getState('webpackConfig');
 
     let webpackCompiler;
@@ -87,7 +88,7 @@ function runServe(api, type) {
     };
 
     return new Promise((resolve, reject) => {
-        const spinner = ora('Building for production...');
+        const spinner = logger.spinner('Building for production...');
         spinner.start();
         api.applyPluginHooks('beforeBuild', info);
         compiler.run((err, stats) => {

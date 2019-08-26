@@ -162,15 +162,18 @@ function deployCommit(api, isHooks) {
                             commitHash,
                             name: MICRO_APP_CONFIG_NAME,
                         });
+                        const spinner = logger.spinner('Auto Deploy...');
+                        spinner.start();
                         const { code } = shelljs.exec(`git commit -a -m "${message}"`, { cwd: deployDir });
                         if (code === 0) {
                             const { code } = shelljs.exec('git push', { cwd: deployDir });
                             if (code === 0) {
                                 shelljs.rm('-rf', deployDir);
-                                logger.logo(chalk.green('success'));
+                                spinner.succeed(chalk.green('Success !'));
                                 return;
                             }
                         }
+                        spinner.fail(chalk.red('Fail !'));
                     }
                 }
             }

@@ -49,9 +49,9 @@ function updateMicro(api, name) {
     if (micros.includes(name)) {
         const microConfig = microsConfig[name];
         if (microConfig) {
-            const root = microConfig.root;
+            const root = microConfig.originalRoot || microConfig.root;
             if (!root.startsWith(currentNodeModules)) {
-                // 丢弃软链接
+                // 丢弃非 node_modules 中的地址
                 return;
             }
 
@@ -60,9 +60,10 @@ function updateMicro(api, name) {
                 logger.logo(`${chalk.yellow('Delete')}: ${root}`);
                 shelljs.rm('-rf', root);
                 shelljs.rm('-rf', path.join(microAppConfig.root, 'package-lock.json'));
-                logger.logo('waiting...');
+                const spinner = logger.spinner(`Updating ${name} ...`);
+                spinner.start();
                 shelljs.exec(`npm install -D "${gitPath}"`);
-                logger.logo(`${chalk.green('Finish!')}`);
+                spinner.succeed(`${chalk.green('Update Finish!')}`);
                 return;
             }
         }
@@ -92,8 +93,10 @@ function updateMicro(api, name) {
 
         if (gitPaths.length) {
             shelljs.rm('-rf', path.join(microAppConfig.root, 'package-lock.json'));
-            logger.logo('waiting...');
+            const spinner = logger.spinner('Updating all ...');
+            spinner.start();
             shelljs.exec('npm install');
+            spinner.succeed(`${chalk.green('Update Finish!')}`);
         }
 
         logger.logo(`${chalk.green('Finish!')}`);

@@ -13,8 +13,6 @@ module.exports = function(options = {}, api) {
     const logger = api.logger;
     const isDev = options.isDev || false;
     const onlyNode = options.onlyNode || false;
-    const compiler = options.compiler || false;
-    const devOptions = options.devOptions || {};
     if (isDev) {
         logger.info('Dev Server Start...');
     }
@@ -51,6 +49,8 @@ module.exports = function(options = {}, api) {
     applyHooks(_HookEvent, 'after');
 
     if (isDev) {
+        const compiler = options.compiler || false;
+        const devOptions = options.devOptions || {};
         if (!onlyNode && !!compiler) {
             const koaWebpackMiddleware = require('./koa-webpack-middleware');
             app.use(koaWebpackMiddleware.devMiddleware(compiler, devOptions));
@@ -77,7 +77,7 @@ module.exports = function(options = {}, api) {
                 reject(err);
                 return;
             }
-
+            console.log('\n');
             logger.success(`Server running... listen on ${port}, host: ${host}`);
 
             api.applyPluginHooks('onServerRunSuccess', { host, port, config: serverConfig });
