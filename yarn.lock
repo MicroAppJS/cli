@@ -182,10 +182,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@micro-app/core@^0.1.0-RC":
-  version "0.1.0-RC"
-  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.1.0-RC.tgz#9479c5e0e72648b17335c26d243648f9a9408994"
-  integrity sha512-p8/bklly6y5ajOrB3Cjp/M16gbD8xiS3Dc7VkBVTOWp2nOMZzu2m6+Ms6a5V1e75mQGPGXk+15zQXg2YD4f/hA==
+"@micro-app/core@^0.1.0-RC4":
+  version "0.1.0-RC4"
+  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.1.0-RC4.tgz#d391e0172ac597b2e07788e46e7a22c2374eed1b"
+  integrity sha512-XGeWdS+fnypBpQODHO8Aj0cZoZkirYg1I+K1IXZWvNf3ClXZzQKupTITjLBqhL35vkVKEJJJIlooEvTF47r6hQ==
   dependencies:
     ajv "^6.10.2"
     ajv-keywords "^3.4.1"

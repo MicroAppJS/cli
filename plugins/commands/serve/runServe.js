@@ -27,8 +27,10 @@ module.exports = function runServe(api, isDev, { type, onlyNode, progress, port,
             webpackDevOptions = vusionAdapter.devOptions || {};
         } else {
             const webpackAdapter = require('../../../src/adapter/webpack')(webpackConfig, isDev);
-            webpackCompiler = webpackAdapter.compiler;
-            webpackDevOptions = webpackAdapter.devOptions || {};
+            if (webpackAdapter) {
+                webpackCompiler = webpackAdapter.compiler;
+                webpackDevOptions = webpackAdapter.devOptions || {};
+            }
         }
     }
 

@@ -65,8 +65,10 @@ function runServe(api, type) {
         webpackDevOptions = vusionAdapter.devOptions || {};
     } else {
         const webpackAdapter = require('../../src/adapter/webpack')(webpackConfig, false);
-        webpackCompiler = webpackAdapter.compiler;
-        webpackDevOptions = webpackAdapter.devOptions || {};
+        if (webpackAdapter) {
+            webpackCompiler = webpackAdapter.compiler;
+            webpackDevOptions = webpackAdapter.devOptions || {};
+        }
     }
 
     // [ 'post', 'host', 'contentBase', 'entrys', 'hooks' ]; // serverConfig
