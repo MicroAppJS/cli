@@ -9,15 +9,15 @@ const tryRequire = require('try-require');
 const HookEvent = require('./HookEvent');
 const staticServer = require('./staticServer');
 
-module.exports = function(options = {}, api) {
+module.exports = function(opts = {}, api) {
     const logger = api.logger;
-    const isDev = options.isDev || false;
-    const onlyNode = options.onlyNode || false;
+    const isDev = opts.isDev || false;
+    const onlyNode = opts.onlyNode || false;
     if (isDev) {
         logger.info('Dev Server Start...');
     }
 
-    const serverConfig = options.serverConfig;
+    const serverConfig = opts.serverConfig;
 
     const app = new Koa();
     // 兼容koa1的中间件
@@ -49,8 +49,8 @@ module.exports = function(options = {}, api) {
     applyHooks(_HookEvent, 'after');
 
     if (isDev) {
-        const compiler = options.compiler || false;
-        const devOptions = options.devOptions || {};
+        const compiler = opts.compiler || false;
+        const devOptions = opts.devOptions || {};
         if (!onlyNode && !!compiler) {
             const koaWebpackMiddleware = require('./koa-webpack-middleware');
             app.use(koaWebpackMiddleware.devMiddleware(compiler, devOptions));
@@ -61,14 +61,24 @@ module.exports = function(options = {}, api) {
         const { contentBase, options = {} } = serverConfig;
         const koaStatic = staticServer(contentBase, options);
         if (koaStatic) {
+            if (opts.type === 'vusion') {
+                const config = opts.config;
+                const prePath = contentBase.replace(config.root, '');
+                app.use((ctx, next) => {
+                    if (ctx.url) {
+                        ctx.url = ctx.url.replace(prePath, '');
+                    }
+                    return next();
+                });
+            }
             app.use(koaStatic);
         }
     }
 
     api.applyPluginHooks('onServerInitDone', { app, config: serverConfig });
 
-    const port = options.port || serverConfig.port || 8888;
-    const host = options.host || serverConfig.host || 'localhost';
+    const port = opts.port || serverConfig.port || 8888;
+    const host = opts.host || serverConfig.host || 'localhost';
     return new Promise((resolve, reject) => {
         app.listen(port, host === 'localhost' ? '0.0.0.0' : host, err => {
             if (err) {

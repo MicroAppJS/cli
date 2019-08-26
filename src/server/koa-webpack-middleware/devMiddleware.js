@@ -7,7 +7,7 @@ module.exports = function(compiler, opts) {
     const expressMiddleware = devMiddleware(compiler, opts);
 
     async function middleware(ctx, next) {
-        await expressMiddleware(ctx.req, {
+        return await expressMiddleware(ctx.req, {
             end: content => {
                 ctx.body = content;
             },

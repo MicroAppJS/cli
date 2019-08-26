@@ -10,10 +10,10 @@ module.exports = function(compiler, opts) {
     const expressMiddleware = hotMiddleware(compiler, opts);
     return async (ctx, next) => {
         const stream = new PassThrough();
-        ctx.body = stream;
-        await expressMiddleware(ctx.req, {
+        return await expressMiddleware(ctx.req, {
             write: stream.write.bind(stream),
             writeHead: (status, headers) => {
+                ctx.body = stream; // ok 才赋值
                 ctx.status = status;
                 ctx.set(headers);
             },

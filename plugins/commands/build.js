@@ -51,6 +51,9 @@ function runServe(api, type) {
 
     if (type === 'vusion') {
         const vusionAdapter = require('../../src/adapter/vusion')(webpackConfig, false, {
+            modifyDefaultVusionConfig(vusionConfig) {
+                return api.applyPluginHooks('modifyDefaultVusionConfig', vusionConfig);
+            },
             resolveVusionConfig(vusionConfig) {
                 return api.applyPluginHooks('modifyVusionConfig', vusionConfig);
             },
@@ -66,6 +69,15 @@ function runServe(api, type) {
         webpackDevOptions = webpackAdapter.devOptions || {};
     }
 
+    // [ 'post', 'host', 'contentBase', 'entrys', 'hooks' ]; // serverConfig
+    const info = {
+        type,
+        config: api.config,
+        serverConfig: api.serverConfig,
+        onlyNode: false,
+        webpackConfig,
+    };
+
     // 更新一次
     api.setState('webpackConfig', webpackConfig);
 
@@ -76,16 +88,8 @@ function runServe(api, type) {
         devOptions: webpackDevOptions,
     });
 
-    // [ 'post', 'host', 'contentBase', 'entrys', 'hooks' ]; // serverConfig
-    const info = {
-        type,
-        config: api.config,
-        serverConfig: api.serverConfig,
-        onlyNode: false,
-        webpackConfig,
-        compiler,
-        devOptions,
-    };
+    info.compiler = compiler;
+    info.devOptions = devOptions;
 
     return new Promise((resolve, reject) => {
         const spinner = logger.spinner('Building for production...');
