@@ -1,29 +1,69 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
 const shelljs = require('shelljs');
-const microApp = require('@micro-app/core');
-const chalk = require('chalk').default;
-const logger = microApp.logger;
+const path = require('path');
+const chalk = require('chalk');
+const fs = require('fs');
 
-module.exports = isHook => {
-    const microAppConfig = microApp.self();
-    if (!microAppConfig) return;
+module.exports = function deployCommand(api, opts) {
 
-    const deployCfg = microAppConfig.config.deploy;
-    if (!deployCfg || typeof deployCfg !== 'object') {
+    api.registerMethod('beforeCommandDeploy', {
+        type: api.API_TYPE.EVENT,
+        description: '发布前事件',
+    });
+    api.registerMethod('afterCommandDeploy', {
+        type: api.API_TYPE.EVENT,
+        description: '发布后事件',
+    });
+    api.registerMethod('modifyCommandDeployMessage', {
+        type: api.API_TYPE.MODIFY,
+        description: '发布消息二次编辑事件',
+    });
+
+    // start
+    api.registerCommand('deploy', {
+        description: 'sync commit status.',
+        usage: 'micro-app deploy [options]',
+        options: {
+            '-': 'deploy last commit',
+            '--hooks': 'git commit hooks.',
+        },
+        details: `
+Examples:
+    ${chalk.gray('# deploy')}
+    micro-app deploy
+    ${chalk.gray('# git hooks')}
+    micro-app deploy --hooks
+          `.trim(),
+    }, args => {
+        const isHooks = args.hooks;
+        return deployCommit(api, isHooks);
+    });
+};
+
+function deployCommit(api, isHooks) {
+    const logger = api.logger;
+    const microAppConfig = api.self;
+    const micros = api.micros;
+    const microsConfig = api.microsConfig;
+    const currentNodeModules = microAppConfig.nodeModules;
+    const currentPkgInfo = microAppConfig.package;
+
+    const deployConfig = microAppConfig.deploy;
+    if (!deployConfig || typeof deployConfig !== 'object') {
         logger.logo(`${chalk.yellow('need "deploy: \{\}" in "micro-app.config.js"')}`);
         return;
     }
 
-    const gitURL = deployCfg.git || '';
+    api.applyPluginHooks('beforeCommandDeploy', { isHooks, logger, deployConfig, microsConfig });
+
+    const gitURL = deployConfig.git || '';
     if (!gitURL || typeof gitURL !== 'string') {
         logger.logo(`${chalk.yellow('need "deploy.git: \'ssh://...\'" in "micro-app.config.js"')}`);
         return;
     }
     const gitPath = gitURL.replace(/^git\+/ig, '').split('#')[0];
-    let gitBranch = deployCfg.branch || gitURL.split('#')[1] || 'master';
+    let gitBranch = deployConfig.branch || gitURL.split('#')[1] || 'master';
     const currBranch = ((shelljs.exec('git rev-parse --abbrev-ref HEAD', { silent: true }) || {}).stdout || '').trim();
     if (typeof gitBranch === 'object') {
         // 继承当前分支
@@ -35,9 +75,9 @@ module.exports = isHook => {
             gitBranch = 'master';
         }
     }
-    let gitMessage = deployCfg.message && ` | ${deployCfg.message}` || '';
+    let gitMessage = deployConfig.message && ` | ${deployConfig.message}` || '';
 
-    const gitUser = deployCfg.user || {};
+    const gitUser = deployConfig.user || {};
     if (!gitUser.name || typeof gitUser.name !== 'string') {
         gitUser.name = ((shelljs.exec('git config user.name', { silent: true }) || {}).stdout || '').trim();
     }
@@ -46,7 +86,7 @@ module.exports = isHook => {
     }
 
     let commitHash = '';
-    if (isHook) {
+    if (isHooks) {
         commitHash = ((shelljs.exec('git rev-parse --verify HEAD', { silent: true }) || {}).stdout || '').trim();
     } else {
         commitHash = ((shelljs.exec(`git rev-parse origin/${currBranch}`, { silent: true }) || {}).stdout || '').trim();
@@ -115,15 +155,25 @@ module.exports = isHook => {
                             shelljs.exec(`git config user.email ${gitUser.email}`, { silent: true, cwd: deployDir });
                         }
                         // commit + push
-                        const { code } = shelljs.exec(`git commit -a -m ":package: auto deploy ${MICRO_APP_CONFIG_NAME} - ${currBranch} - ${commitHash.substr(0, 8)}${gitMessage}"`, { cwd: deployDir });
+                        const { message } = api.applyPluginHooks('modifyCommandDeployMessage', {
+                            message: `:package: auto deploy ${MICRO_APP_CONFIG_NAME} - ${currBranch} - ${commitHash.substr(0, 8)}${gitMessage}`,
+                            branch: currBranch,
+                            gitMessage,
+                            commitHash,
+                            name: MICRO_APP_CONFIG_NAME,
+                        });
+                        const spinner = logger.spinner('Auto Deploy...');
+                        spinner.start();
+                        const { code } = shelljs.exec(`git commit -a -m "${message}"`, { cwd: deployDir });
                         if (code === 0) {
                             const { code } = shelljs.exec('git push', { cwd: deployDir });
                             if (code === 0) {
                                 shelljs.rm('-rf', deployDir);
-                                logger.logo(chalk.green('success'));
+                                spinner.succeed(chalk.green('Success !'));
                                 return;
                             }
                         }
+                        spinner.fail(chalk.red('Fail !'));
                     }
                 }
             }
@@ -136,4 +186,6 @@ module.exports = isHook => {
     } else {
         logger.logo(`${chalk.yellow('not found git')}`);
     }
-};
+
+    api.applyPluginHooks('afterCommandUpdate', { isHooks, logger, deployConfig, microsConfig });
+}

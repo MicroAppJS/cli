@@ -1,33 +1,10 @@
 #!/usr/bin/env node
 'use strict';
 
-const program = require('commander');
-const microApp = require('@micro-app/core');
-const chalk = require('chalk').default;
-
-program
-    .version(require('../package').version, '-v, --version')
-    .option('-t, --type <type>', 'Choose a build type')
-    .parse(process.argv);
-
 process.env.NODE_ENV = 'production';
 
-global.extraArgs = program.args;
+const yParser = require('yargs-parser');
+const argv = yParser(process.argv.slice(2));
+const { service } = require('./base');
 
-const type = program.type;
-if (type === 'vusion') {
-    microApp.vusionAdapter.build().then(() => {
-        console.info('>>> Build Success >>>');
-    }).catch(e => {
-        console.error('>>> Build Error >>>', e);
-    });
-} else if (!type || type === 'webpack') {
-    // webpack build ...
-    microApp.webpackAdapter.build().then(() => {
-        console.info('>>> Build Success >>>');
-    }).catch(e => {
-        console.error('>>> Build Error >>>', e);
-    });
-} else {
-    console.warn(chalk.red(`Not Support < ${type} >`));
-}
+service.run('build', argv);
