@@ -10,6 +10,13 @@ const yParser = require('yargs-parser');
 const cmd = process.argv[2];
 const argv = yParser(process.argv.slice(3));
 
+// 全局环境
+if ([ 'start', 'build' ].includes(cmd)) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'production';
+} else if ([ 'serve' ].includes(cmd)) {
+    process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+}
+
 // 全局指令
 if (!global.MicroAppConfig) {
     global.MicroAppConfig = {};
