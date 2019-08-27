@@ -19,9 +19,11 @@ exports.checkUpgrade = function() {
 
 exports.checkNode = function() {
     // Ensure minimum supported node version is used
-    const result = semver.satisfies(process.version, pkg.engines.node);
-
-    !result && logger.error(`  You must upgrade node to ${pkg.engines.node} to use ${pkg.name}`);
-
-    return result;
+    try {
+        const result = semver.satisfies(process.version, pkg.engines.node);
+        !result && logger.error(`  You must upgrade node to ${pkg.engines.node} to use ${pkg.name}`);
+        return result;
+    } catch (error) {
+        return true;
+    }
 };
