@@ -5,7 +5,7 @@ const logger = microApp.logger;
 const tryRequire = require('try-require');
 const path = require('path');
 
-module.exports = function(webpackConfig) {
+module.exports = function(wConfig) {
     let devCompiler = tryRequire('vusion-cli/lib/dev');
     if (!devCompiler) {
         devCompiler = tryRequire(path.join(process.cwd(), 'node_modules', 'vusion-cli/lib/dev'));
@@ -15,6 +15,6 @@ module.exports = function(webpackConfig) {
         }
     }
 
-    const { compiler, devOptions } = devCompiler.prepare(webpackConfig);
+    const { compiler, devOptions, webpackConfig = wConfig } = devCompiler.prepare(wConfig);
     return { webpackConfig, compiler, devOptions };
 };

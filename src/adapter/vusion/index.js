@@ -1,14 +1,13 @@
 'use strict';
 
-const merge = require('webpack-merge');
 const resolveConfig = require('./resolve');
 
-module.exports = function(webpackConfig, isDev, { modifyDefaultVusionConfig, resolveVusionConfig, resolveVusionWebpackConfig }) {
+module.exports = function(webpack, isDev, { modifyDefaultVusionConfig, resolveVusionConfig, resolveVusionWebpackConfig }) {
 
     let defaultVusionConfig = {
         // type: 'app',
         isDev,
-        webpack: webpackConfig,
+        webpack,
         needLoadFile: true,
     };
     if (typeof modifyDefaultVusionConfig === 'function') {
@@ -25,9 +24,7 @@ module.exports = function(webpackConfig, isDev, { modifyDefaultVusionConfig, res
 
     const config = require('./config')(vusionConfig);
 
-    webpackConfig = vusionConfig.webpack = merge.smartStrategy({
-        entry: 'replace',
-    })(config, vusionConfig.webpack);
+    let { devOptions, webpackConfig } = isDev ? require('./devHot')(config) : require('./build')(config);
 
     // 简单优化
     webpackConfig.resolve.modules = [ ...new Set(webpackConfig.resolve.modules) ];
@@ -36,10 +33,5 @@ module.exports = function(webpackConfig, isDev, { modifyDefaultVusionConfig, res
         webpackConfig = resolveVusionWebpackConfig(webpackConfig);
     }
 
-    global.vusionConfig.webpack = webpackConfig;
-
-    if (isDev) {
-        return require('./devHot')({});
-    }
-    return require('./build')({});
+    return { webpackConfig, devOptions };
 };
