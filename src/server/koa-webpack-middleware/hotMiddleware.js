@@ -18,7 +18,7 @@ module.exports = function(compiler, opts) {
                 ctx.set(headers);
             },
             end: () => {
-                logger.warn('hotMiddleware end!');
+                logger.debug('hot middleware end!');
             },
         }, next);
     };

@@ -2,6 +2,7 @@
 
 const microApp = require('@micro-app/core');
 const logger = microApp.logger;
+const CONSTANTS = microApp.CONSTANTS;
 const tryRequire = require('try-require');
 const path = require('path');
 
@@ -9,7 +10,7 @@ function resolveDefaultConfig(defaultVusionConfig = {}) {
     const modulePath = 'vusion-cli/config/defaults';
     let defaultConfigModule = tryRequire(modulePath);
     if (!defaultConfigModule) {
-        defaultConfigModule = tryRequire(path.join(process.cwd(), 'node_modules', modulePath));
+        defaultConfigModule = tryRequire(path.join(CONSTANTS.ROOT, 'node_modules', modulePath));
         if (!defaultConfigModule) {
             logger.error('load vusion-cli error!');
             return null;
@@ -25,7 +26,7 @@ module.exports = function resolveVusionConfig(defaultVusionConfig) {
     const modulePath = 'vusion-cli/config/resolve';
     let vusionConfigModule = tryRequire(modulePath);
     if (!vusionConfigModule) {
-        vusionConfigModule = tryRequire(path.join(process.cwd(), 'node_modules', modulePath));
+        vusionConfigModule = tryRequire(path.join(CONSTANTS.ROOT, 'node_modules', modulePath));
         if (!vusionConfigModule) {
             logger.error('load vusion-cli error!');
             return null;

@@ -126,7 +126,7 @@ function deployCommit(api, isHooks) {
                 const { dependencies = {}, devDependencies = {} } = pkg;
                 const deps = Object.assign({}, dependencies, devDependencies);
 
-                const MICRO_APP_CONFIG_NAME = microAppConfig.name;
+                const MICRO_APP_CONFIG_NAME = microAppConfig.packageName;
                 if (deps[MICRO_APP_CONFIG_NAME]) {
                     const gitp = deps[MICRO_APP_CONFIG_NAME];
                     // update

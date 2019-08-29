@@ -36,7 +36,7 @@ module.exports = function adapter(api, { type, isDev, progress }) {
     });
 
     if (
-        !_.isPlainObject(compiler) || !compiler
+        !_.isObject(compiler) || !compiler
         ||
         !_.isPlainObject(devOptions) || !devOptions
         ||

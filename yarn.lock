@@ -182,10 +182,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@micro-app/core@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.1.0.tgz#6f59e395817c7aca666b128e764d82de83b6baaf"
-  integrity sha512-spS0B1ok6LuL4d6Lb+MGOc9X4XMsqPFK7P+ZHv/iRc0XNXEDck8nNcEy/1Cwf/MUbjKofDKRMM41KXctpipnCQ==
+"@micro-app/core@^0.1.1-rc.1":
+  version "0.1.1-rc.1"
+  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.1.1-rc.1.tgz#8c7d991d9853d92ba7882f8546afb7e60670d0a4"
+  integrity sha512-xsJuQeTH/EJ591dclegMuYLov5NEG40yMhBVyjAUHxWB1VDAc0b0Yse5RMxS8z2CJ44CcIv6a6Oir0UlupQ/GQ==
   dependencies:
     ajv "^6.10.2"
     ajv-keywords "^3.4.1"
@@ -200,7 +200,7 @@
     stream-to-string "^1.2.0"
     try-require "^1.2.1"
     webpack-chain "^6.0.0"
-    webpack-merge "^4.2.1"
+    webpack-merge "^4.2.2"
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
@@ -2948,7 +2948,7 @@ lodash.unescape@4.0.1:
   resolved "https://registry.yarnpkg.com/lodash.unescape/-/lodash.unescape-4.0.1.tgz#bf2249886ce514cda112fae9218cdc065211fc9c"
   integrity sha1-vyJJiGzlFM2hEvrpIYzcBlIR/Jw=
 
-lodash@^4.15.0, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.5, lodash@^4.2.0:
+lodash@^4.15.0, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.2.0:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -4935,12 +4935,12 @@ webpack-log@^1.0.1:
     loglevelnext "^1.0.1"
     uuid "^3.1.0"
 
-webpack-merge@^4.2.1:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/webpack-merge/-/webpack-merge-4.2.1.tgz#5e923cf802ea2ace4fd5af1d3247368a633489b4"
-  integrity sha512-4p8WQyS98bUJcCvFMbdGZyZmsKuWjWVnVHnAS3FFg0HDaRVrPbkivx2RYCre8UiemD67RsiFFLfn4JhLAin8Vw==
+webpack-merge@^4.2.2:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/webpack-merge/-/webpack-merge-4.2.2.tgz#a27c52ea783d1398afd2087f547d7b9d2f43634d"
+  integrity sha512-TUE1UGoTX2Cd42j3krGYqObZbOD+xF7u28WB7tfUordytSjbWTIjK/8V0amkBfTYN4/pB/GIDlJZZ657BGG19g==
   dependencies:
-    lodash "^4.17.5"
+    lodash "^4.17.15"
 
 webpack-sources@^1.4.0, webpack-sources@^1.4.1:
   version "1.4.3"
