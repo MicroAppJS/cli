@@ -2,36 +2,43 @@
 
 const path = require('path');
 
+const commands = [
+    {
+        name: 'version',
+        description: '显示当前版本号',
+    },
+    {
+        name: 'serve',
+        description: '服务启动命令行',
+    },
+    {
+        name: 'build',
+        description: '构建命令行',
+    },
+    {
+        name: 'update',
+        description: '强制更新 micros 依赖服务命令行',
+    },
+    {
+        name: 'deploy',
+        description: '强制发布更新当前提交信息到指定 git 中命令行',
+    },
+    {
+        name: 'init',
+        description: '初始化命令行',
+    },
+];
+
 module.exports = function(service) {
 
-    service.registerPlugin({
-        id: 'cli:plugins-commands-version',
-        link: path.resolve(__dirname, './commands/version'),
-        description: '显示当前版本号',
-    });
-
-    service.registerPlugin({
-        id: 'cli:plugins-commands-serve',
-        link: path.resolve(__dirname, './commands/serve'),
-        description: '服务启动命令行',
-    });
-
-    service.registerPlugin({
-        id: 'cli:plugins-commands-build',
-        link: path.resolve(__dirname, './commands/build'),
-        description: '构建命令行',
-    });
-
-    service.registerPlugin({
-        id: 'cli:plugins-commands-update',
-        link: path.resolve(__dirname, './commands/update'),
-        description: '强制更新 micros 依赖服务命令行',
-    });
-
-    service.registerPlugin({
-        id: 'cli:plugins-commands-deploy',
-        link: path.resolve(__dirname, './commands/deploy'),
-        description: '强制发布更新当前提交信息到指定 git 中命令行',
+    commands.forEach(item => {
+        const name = item.name;
+        const description = item.description;
+        service.registerPlugin({
+            id: `cli:plugins-commands-${name}`,
+            link: path.resolve(__dirname, './commands', name),
+            description,
+        });
     });
 
 };

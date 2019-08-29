@@ -55,7 +55,7 @@ function updateMicro(api, name) {
                 return;
             }
 
-            const gitPath = (currentPkgInfo.devDependencies && currentPkgInfo.devDependencies[microConfig.name]) || (currentPkgInfo.dependencies && currentPkgInfo.dependencies[microConfig.name]) || false;
+            const gitPath = (currentPkgInfo.devDependencies && currentPkgInfo.devDependencies[microConfig.packageName]) || (currentPkgInfo.dependencies && currentPkgInfo.dependencies[microConfig.packageName]) || false;
             if (gitPath) {
                 logger.logo(`${chalk.yellow('Delete')}: ${root}`);
                 shelljs.rm('-rf', root);
@@ -77,7 +77,7 @@ function updateMicro(api, name) {
                     return false;
                 }
 
-                const gitPath = (currentPkgInfo.devDependencies && currentPkgInfo.devDependencies[microConfig.name]) || (currentPkgInfo.dependencies && currentPkgInfo.dependencies[microConfig.name]) || false;
+                const gitPath = (currentPkgInfo.devDependencies && currentPkgInfo.devDependencies[microConfig.packageName]) || (currentPkgInfo.dependencies && currentPkgInfo.dependencies[microConfig.packageName]) || false;
                 if (gitPath) {
                     return {
                         root, gitPath,

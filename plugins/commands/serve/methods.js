@@ -38,5 +38,9 @@ module.exports = api => {
         type: api.API_TYPE.EVENT,
         description: '开发服务创建后事件',
     });
+    api.registerMethod('modifyStaticServerOptions', {
+        type: api.API_TYPE.MODIFY,
+        description: '对静态服务配置进行修改, 需要返回所有参数',
+    });
 
 };

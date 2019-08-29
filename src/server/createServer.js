@@ -59,7 +59,8 @@ module.exports = function(opts = {}, api) {
     } else {
         // static file
         const { contentBase, options = {} } = serverConfig;
-        const koaStatic = staticServer(contentBase, options);
+        const staticOptions = api.applyPluginHooks('modifyStaticServerOptions', { options });
+        const koaStatic = staticServer(contentBase, staticOptions);
         if (koaStatic) {
             if (opts.type === 'vusion') {
                 const config = opts.config;

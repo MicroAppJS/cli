@@ -21,7 +21,7 @@ module.exports = name => {
             }
 
             const pkgInfo = microAppConfig.package;
-            const gitPath = (pkgInfo.devDependencies && pkgInfo.devDependencies[microConfig.name]) || (pkgInfo.dependencies && pkgInfo.dependencies[microConfig.name]) || false;
+            const gitPath = (pkgInfo.devDependencies && pkgInfo.devDependencies[microConfig.packageName]) || (pkgInfo.dependencies && pkgInfo.dependencies[microConfig.packageName]) || false;
             if (gitPath) {
                 logger.logo(`${chalk.yellow('Delete')}: ${root}`);
                 shelljs.rm('-rf', root);
@@ -44,7 +44,7 @@ module.exports = name => {
                 }
 
                 const pkgInfo = microAppConfig.package;
-                const gitPath = (pkgInfo.devDependencies && pkgInfo.devDependencies[microConfig.name]) || (pkgInfo.dependencies && pkgInfo.dependencies[microConfig.name]) || false;
+                const gitPath = (pkgInfo.devDependencies && pkgInfo.devDependencies[microConfig.packageName]) || (pkgInfo.dependencies && pkgInfo.dependencies[microConfig.packageName]) || false;
                 if (gitPath) {
                     return {
                         root, gitPath,

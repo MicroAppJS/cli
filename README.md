@@ -2,9 +2,14 @@
 
 Pluggable application framework.
 
+基于webpack多入口的多仓库业务模块开发的插件应用框架脚手架.
+
+[![CircleCI][CircleCI-img]][CircleCI-url]
 [![NPM Version][npm-img]][npm-url]
 [![NPM Download][download-img]][download-url]
 
+[CircleCI-img]: https://circleci.com/gh/zyao89/MicroApp-CLI/tree/master.svg?style=svg
+[CircleCI-url]: https://circleci.com/gh/zyao89/MicroApp-CLI/tree/master
 [npm-img]: https://img.shields.io/npm/v/@micro-app/cli.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/@micro-app/cli
 [download-img]: https://img.shields.io/npm/dm/@micro-app/cli.svg?style=flat-square
@@ -295,7 +300,7 @@ Examples:
         return updateMicro(api, name);
     });
 
-    // 对外抛出已注册的方法.
+    // 对外触发已注册的方法.
     api.applyPluginHooks('beforeCommandUpdate', { name, logger, microsConfig });
 
 ```

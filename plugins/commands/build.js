@@ -1,7 +1,7 @@
 'use strict';
 
-const ora = require('ora');
 const chalk = require('chalk');
+const webpackAdapter = require('../../src/adapter');
 
 module.exports = function buildCommand(api, opts) {
 
@@ -29,6 +29,7 @@ module.exports = function buildCommand(api, opts) {
         options: {
             '-': 'default webpack.',
             '-t <type>': 'adapter type, eg. [ webpack, vusion ].',
+            '--progress': 'show how progress is reported during a compilation.',
         },
         details: `
 Examples:
@@ -38,60 +39,26 @@ Examples:
     }, args => {
         process.env.NODE_ENV = process.env.NODE_ENV || 'production';
         const type = args.t || 'webpack';
-        return runServe(api, type);
+        const progress = args.progress;
+        return runBuild(api, { type, progress });
     });
 };
 
-function runServe(api, type) {
+function runBuild(api, { type, progress }) {
     const logger = api.logger;
-    const webpackConfig = api.getState('webpackConfig');
-
-    let webpackCompiler;
-    let webpackDevOptions;
-
-    if (type === 'vusion') {
-        const vusionAdapter = require('../../src/adapter/vusion')(webpackConfig, false, {
-            modifyDefaultVusionConfig(vusionConfig) {
-                return api.applyPluginHooks('modifyDefaultVusionConfig', vusionConfig);
-            },
-            resolveVusionConfig(vusionConfig) {
-                return api.applyPluginHooks('modifyVusionConfig', vusionConfig);
-            },
-            resolveVusionWebpackConfig(vusionWebpackConfig) {
-                return api.applyPluginHooks('modifyVusionWebpackConfig', vusionWebpackConfig);
-            },
-        });
-        webpackCompiler = vusionAdapter.compiler;
-        webpackDevOptions = vusionAdapter.devOptions || {};
-    } else {
-        const webpackAdapter = require('../../src/adapter/webpack')(webpackConfig, false);
-        if (webpackAdapter) {
-            webpackCompiler = webpackAdapter.compiler;
-            webpackDevOptions = webpackAdapter.devOptions || {};
-        }
-    }
 
     // [ 'post', 'host', 'contentBase', 'entrys', 'hooks' ]; // serverConfig
     const info = {
         type,
         config: api.config,
         serverConfig: api.serverConfig,
-        onlyNode: false,
-        webpackConfig,
     };
 
-    // 更新一次
-    api.setState('webpackConfig', webpackConfig);
-
-    const { compiler, devOptions = {} } = api.applyPluginHooks('modifyWebpackCompiler', {
-        type,
-        webpackConfig,
-        compiler: webpackCompiler,
-        devOptions: webpackDevOptions,
-    });
+    const { compiler, devOptions, webpackConfig } = webpackAdapter(api, { type, isDev: false, progress });
 
     info.compiler = compiler;
     info.devOptions = devOptions;
+    info.webpackConfig = webpackConfig;
 
     return new Promise((resolve, reject) => {
         const spinner = logger.spinner('Building for production...');
@@ -106,13 +73,13 @@ function runServe(api, type) {
                 return reject(err);
             }
 
-            process.stdout.write(stats.toString({
+            process.stdout.write(stats.toString(Object.assign({
                 colors: true,
                 modules: false,
                 children: false,
                 chunks: false,
                 chunkModules: false,
-            }) + '\n');
+            }, webpackConfig.stats || {})) + '\n');
 
             api.applyPluginHooks('onBuildSuccess', stats);
             // 处理完成
