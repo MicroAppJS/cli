@@ -2,6 +2,8 @@
 
 Pluggable application framework.
 
+基于webpack多入口的多仓库业务模块开发的插件应用框架脚手架.
+
 [![CircleCI][CircleCI-img]][CircleCI-url]
 [![NPM Version][npm-img]][npm-url]
 [![NPM Download][download-img]][download-url]
