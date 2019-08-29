@@ -1,7 +1,7 @@
 {
     "name": "@micro-app/cli",
     "version": "0.1.1-rc.1",
-    "description": "micro app cli",
+    "description": "[CLI] Pluggable micro application framework.",
     "bin": {
         "micro-app": "./bin/micro-app.js",
         "micro-app-dev": "./bin/micro-app-dev.js",
@@ -11,13 +11,13 @@
     "scripts": {
         "test": "jest"
     },
-    "homepage": "https://github.com/zyao89/MicroApp-CLI",
+    "homepage": "https://github.com/MicrosApp/MicroApp-CLI",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/zyao89/MicroApp-CLI.git"
+        "url": "git+https://github.com/MicrosApp/MicroApp-CLI.git"
     },
     "bugs": {
-        "url": "https://github.com/zyao89/MicroApp-CLI/issues"
+        "url": "https://github.com/MicrosApp/MicroApp-CLI/issues"
     },
     "files": [
         "bin",
