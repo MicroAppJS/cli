@@ -87,5 +87,3 @@ dist
 *.sln
 *.sw*
 
-
-/micro-app.config.js
