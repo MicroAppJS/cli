@@ -2,9 +2,12 @@
 
 Pluggable application framework.
 
+[![CircleCI][CircleCI-img]][CircleCI-url]
 [![NPM Version][npm-img]][npm-url]
 [![NPM Download][download-img]][download-url]
 
+[CircleCI-img]: https://circleci.com/gh/zyao89/MicroApp-CLI/tree/master.svg?style=svg
+[CircleCI-url]: https://circleci.com/gh/zyao89/MicroApp-CLI/tree/master
 [npm-img]: https://img.shields.io/npm/v/@micro-app/cli.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/@micro-app/cli
 [download-img]: https://img.shields.io/npm/dm/@micro-app/cli.svg?style=flat-square
