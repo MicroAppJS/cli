@@ -1,6 +1,6 @@
 # Micro APP CLI
 
-Pluggable application framework.
+Pluggable micro application framework.
 
 基于webpack多入口的多仓库业务模块开发的插件应用框架脚手架.
 
