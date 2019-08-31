@@ -56,10 +56,11 @@ module.exports = function(opts = {}, api) {
             app.use(koaWebpackMiddleware.devMiddleware(compiler, devOptions));
             app.use(koaWebpackMiddleware.hotMiddleware(compiler, devOptions));
         }
-    } else {
-        // static file
-        const { contentBase, options = {} } = serverConfig;
-        const staticOptions = api.applyPluginHooks('modifyStaticServerOptions', { options });
+    }
+    // static file
+    const { contentBase, options = {} } = serverConfig;
+    const staticOptions = api.applyPluginHooks('modifyStaticServerOptions', options) || {};
+    if (staticOptions.disabled !== true) {
         const koaStatic = staticServer(contentBase, staticOptions);
         if (koaStatic) {
             if (opts.type === 'vusion') {

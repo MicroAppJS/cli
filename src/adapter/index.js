@@ -7,7 +7,7 @@ const _ = require('lodash');
 module.exports = function adapter(api, { type, isDev, progress }) {
     const logger = api.logger;
     let _webpackConfig = api.getState('webpackConfig');
-    let _webpackDevOptions = {};
+    let _webpackDevOptions = _webpackConfig.devServer || {};
 
     if (type === 'vusion') {
         const vusionAdapter = require('./vusion')(_webpackConfig, isDev, {
