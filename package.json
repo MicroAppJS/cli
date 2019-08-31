@@ -1,6 +1,6 @@
 {
     "name": "@micro-app/cli",
-    "version": "0.1.1-rc.1",
+    "version": "0.1.1-rc.3",
     "description": "[CLI] Pluggable micro application framework.",
     "bin": {
         "micro-app": "./bin/micro-app.js",
@@ -45,7 +45,7 @@
         "webpack": "^4.39.2"
     },
     "dependencies": {
-        "@micro-app/core": "^0.1.1-rc.4",
+        "@micro-app/core": "^0.1.1-rc.5",
         "koa": "^2.8.1",
         "koa-static": "^5.0.0",
         "opn": "^5.5.0",
