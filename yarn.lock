@@ -419,10 +419,10 @@
   resolved "https://registry.yarnpkg.com/@micro-app/plugin-vue-cli/-/plugin-vue-cli-0.0.2.tgz#76b9f52cb054e6a7b1c98ff6ac10bddf2682ad92"
   integrity sha512-9blABeA/g2M/nUVLd+MwulRD+JrPntPuoR22eO4ZsSjz2HtQVU7fwTToX76ItSL1iRIUkgNSKjbGOEbBMc8eog==
 
-"@micro-app/plugin-vusion-cli@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@micro-app/plugin-vusion-cli/-/plugin-vusion-cli-0.0.2.tgz#fb7bc2af39ad03628c3ea4ae089e15ad587015b6"
-  integrity sha512-vVlBGuckRuWrb9RclShA+vfKAW63/kVAufRE2M8FxC2tZgxTRHMa3NLNkd6K8nh6FwNN8kWLZ84kSE3enQxWIg==
+"@micro-app/plugin-vusion-cli@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@micro-app/plugin-vusion-cli/-/plugin-vusion-cli-0.0.3.tgz#a1bb1def4e002fea923814620046b5b73d782add"
+  integrity sha512-M0isjhXSz8N+xOu4/fQl7JUKV0K6Y14xfXQqQW2WhzKzUogEXyarbrQ/qoexKqL1R17p/WMD4JSnUfd50y64bg==
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
