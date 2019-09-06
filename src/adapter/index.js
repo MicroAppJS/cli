@@ -4,52 +4,34 @@ const chalk = require('chalk');
 const tryRequire = require('try-require');
 const _ = require('lodash');
 
-module.exports = function adapter(api, { type, isDev, progress }) {
+module.exports = function adapter(api, info) {
     const logger = api.logger;
-    let _webpackConfig = api.getState('webpackConfig');
-    let _webpackDevOptions = _webpackConfig.devServer || {};
-
-    if (type === 'vusion') {
-        const vusionAdapter = require('./vusion')(_webpackConfig, isDev, {
-            modifyDefaultVusionConfig(vusionConfig) {
-                return api.applyPluginHooks('modifyDefaultVusionConfig', vusionConfig);
-            },
-            resolveVusionConfig(vusionConfig) {
-                return api.applyPluginHooks('modifyVusionConfig', vusionConfig);
-            },
-            resolveVusionWebpackConfig(vusionWebpackConfig) {
-                return api.applyPluginHooks('modifyVusionWebpackConfig', vusionWebpackConfig);
-            },
-        });
-        _webpackConfig = vusionAdapter.webpackConfig;
-        _webpackDevOptions = vusionAdapter.devOptions || {};
-    }
+    const _webpackConfig = api.getState('webpackConfig');
+    const _webpackDevOptions = _webpackConfig.devServer || {};
 
     const webpack = tryRequire('webpack');
 
-    const { compiler, devOptions = {}, webpackConfig } = api.applyPluginHooks('modifyWebpackCompiler', {
-        type,
-        isDev,
-        compiler: webpack && _.isFunction(webpack) ? webpack(_webpackConfig) : null,
-        webpackConfig: _webpackConfig,
+    const { devOptions = {}, webpackConfig } = api.applyPluginHooks('modifyWebpackConfig', {
+        ...info,
+        webpackConfig: _.cloneDeep(_webpackConfig),
         devOptions: _webpackDevOptions || {},
     });
 
     if (
-        !_.isObject(compiler) || !compiler
-        ||
         !_.isPlainObject(devOptions) || !devOptions
         ||
         !_.isPlainObject(webpackConfig) || !webpackConfig
     ) {
-        logger.error('[Plugin] modifyWebpackCompiler must return { compiler, devOptions, webpackConfig }');
-        return progress.exit(1);
+        logger.error('[Plugin] modifyWebpackConfig must return { devOptions, webpackConfig }');
+        return process.exit(1);
     }
 
     // 更新一次
     api.setState('webpackConfig', webpackConfig);
 
-    if (progress && webpack && webpack.ProgressPlugin) {
+    const compiler = webpack(webpackConfig);
+
+    if (info.progress && webpack && webpack.ProgressPlugin) {
         try {
             let spinner;
             compiler.apply(new webpack.ProgressPlugin({

@@ -379,10 +379,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@micro-app/core@^0.1.1-rc.5":
-  version "0.1.1-rc.5"
-  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.1.1-rc.5.tgz#0a9167aca0b6583e62c7837950c228b6af2c82f7"
-  integrity sha512-p7cxoWpq/ji8qW3TFPiwJm1U8NHQ37fcChHLv0aQCVuQLYBvlSvhCSTY8wQPJRxr1J1vlopat+0h52I8w4HRZg==
+"@micro-app/core@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.1.1.tgz#49334e96e880b72f2ae97d733dae1d2da73f9d15"
+  integrity sha512-QCb421N4fAYWd1VAMVxy4qnEjdsuFys2UqbUukqcvVcCD80/5hd5GlmX/N23HfbcraZCRj4DjNDoVEqJc2acrA==
   dependencies:
     ajv "^6.10.2"
     ajv-keywords "^3.4.1"
@@ -398,6 +398,31 @@
     try-require "^1.2.1"
     webpack-chain "^6.0.0"
     webpack-merge "^4.2.2"
+
+"@micro-app/plugin-koa-static-server@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@micro-app/plugin-koa-static-server/-/plugin-koa-static-server-0.0.1.tgz#09a32cacb2c44635528b5642c4c145e33ab9db72"
+  integrity sha512-66eOwX8/zbYyXjhEpuTj3cRhU9fkmtvDc1b86I6tjOQNSrs0WjFifb231M67aFpeglIsbdAtjge6h8/nUmd5Uw==
+  dependencies:
+    koa-static "^5.0.0"
+
+"@micro-app/plugin-koa-webpack-middleware@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@micro-app/plugin-koa-webpack-middleware/-/plugin-koa-webpack-middleware-0.0.1.tgz#87148bea0f90694b65cf321f1216a8fc6dc64396"
+  integrity sha512-E5nMtkJmA8+XbPC9Bdh9vI1vjyvLMVeooHAnKhGkMucOtQz6D/EKeKFP9IMUVk6gHO00iQEAW33CqN41wNvATg==
+  dependencies:
+    webpack-dev-middleware "^2.0.6"
+    webpack-hot-middleware "^2.25.0"
+
+"@micro-app/plugin-vue-cli@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@micro-app/plugin-vue-cli/-/plugin-vue-cli-0.0.2.tgz#76b9f52cb054e6a7b1c98ff6ac10bddf2682ad92"
+  integrity sha512-9blABeA/g2M/nUVLd+MwulRD+JrPntPuoR22eO4ZsSjz2HtQVU7fwTToX76ItSL1iRIUkgNSKjbGOEbBMc8eog==
+
+"@micro-app/plugin-vusion-cli@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@micro-app/plugin-vusion-cli/-/plugin-vusion-cli-0.0.3.tgz#a1bb1def4e002fea923814620046b5b73d782add"
+  integrity sha512-M0isjhXSz8N+xOu4/fQl7JUKV0K6Y14xfXQqQW2WhzKzUogEXyarbrQ/qoexKqL1R17p/WMD4JSnUfd50y64bg==
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"

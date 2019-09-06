@@ -7,12 +7,10 @@ const _ = require('lodash');
 const tryRequire = require('try-require');
 
 const HookEvent = require('./HookEvent');
-const staticServer = require('./staticServer');
 
 module.exports = function(opts = {}, api) {
     const logger = api.logger;
     const isDev = opts.isDev || false;
-    const onlyNode = opts.onlyNode || false;
     if (isDev) {
         logger.info('Dev Server Start...');
     }
@@ -37,47 +35,23 @@ module.exports = function(opts = {}, api) {
         logger.error('koa server error: ', error);
     });
 
-    api.applyPluginHooks('onServerInit', { app, config: serverConfig });
+    api.applyPluginHooks('onServerInit', { app, config: serverConfig, options: opts });
     applyHooks(_HookEvent, 'init');
 
-    api.applyPluginHooks('beforeServerEntry', { app, config: serverConfig });
+    api.applyPluginHooks('beforeServerEntry', { app, config: serverConfig, options: opts });
     applyHooks(_HookEvent, 'before');
 
     initEntrys(app, serverConfig, logger);
 
-    api.applyPluginHooks('afterServerEntry', { app, config: serverConfig });
+    api.applyPluginHooks('afterServerEntry', { app, config: serverConfig, options: opts });
     applyHooks(_HookEvent, 'after');
 
     if (isDev) {
-        const compiler = opts.compiler || false;
-        const devOptions = opts.devOptions || {};
-        if (!onlyNode && !!compiler) {
-            const koaWebpackMiddleware = require('./koa-webpack-middleware');
-            app.use(koaWebpackMiddleware.devMiddleware(compiler, devOptions));
-            app.use(koaWebpackMiddleware.hotMiddleware(compiler, devOptions));
-        }
-    }
-    // static file
-    const { contentBase, options = {} } = serverConfig;
-    const staticOptions = api.applyPluginHooks('modifyStaticServerOptions', options) || {};
-    if (staticOptions.disabled !== true) {
-        const koaStatic = staticServer(contentBase, staticOptions);
-        if (koaStatic) {
-            if (opts.type === 'vusion') {
-                const config = opts.config;
-                const prePath = contentBase.replace(config.root, '');
-                app.use((ctx, next) => {
-                    if (ctx.url) {
-                        ctx.url = ctx.url.replace(prePath, '');
-                    }
-                    return next();
-                });
-            }
-            app.use(koaStatic);
-        }
+        api.applyPluginHooks('onDevServerMiddleware', { app, config: serverConfig, options: opts });
     }
 
-    api.applyPluginHooks('onServerInitDone', { app, config: serverConfig });
+    api.applyPluginHooks('onServerInitDone', { app, config: serverConfig, options: opts });
+    applyHooks(_HookEvent, 'done');
 
     const port = opts.port || serverConfig.port || 8888;
     const host = opts.host || serverConfig.host || 'localhost';

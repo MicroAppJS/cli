@@ -16,7 +16,7 @@ module.exports = function runServe(api, isDev, { type, onlyNode, progress, port,
     };
 
     if (isDev && !onlyNode) {
-        const { compiler, devOptions, webpackConfig } = webpackAdapter(api, { type, isDev, progress });
+        const { compiler, devOptions, webpackConfig } = webpackAdapter(api, Object.assign({}, startInfo, { progress }));
 
         startInfo.compiler = compiler;
         startInfo.devOptions = devOptions;
