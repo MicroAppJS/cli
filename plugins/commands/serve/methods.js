@@ -26,9 +26,9 @@ module.exports = api => {
         type: api.API_TYPE.EVENT,
         description: '服务从业务逻辑出来后事件',
     });
-    api.registerMethod('modifyWebpackCompiler', {
+    api.registerMethod('modifyWebpackConfig', {
         type: api.API_TYPE.MODIFY,
-        description: '对服务启动前对 webpack compiler 进行修改, 需要返回所有参数',
+        description: '对服务启动前对 webpack config 进行修改, 需要返回所有参数',
     });
     api.registerMethod('beforeDevServer', {
         type: api.API_TYPE.EVENT,
@@ -38,9 +38,9 @@ module.exports = api => {
         type: api.API_TYPE.EVENT,
         description: '开发服务创建后事件',
     });
-    api.registerMethod('modifyStaticServerOptions', {
-        type: api.API_TYPE.MODIFY,
-        description: '对静态服务配置进行修改, 需要返回所有参数',
-    });
 
+    api.registerMethod('onDevServerMiddleware', {
+        type: api.API_TYPE.EVENT,
+        description: '开发服务中间件事件, 适用于 webpackMiddleware)',
+    });
 };

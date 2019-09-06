@@ -52,9 +52,10 @@ function runBuild(api, { type, progress }) {
         type,
         config: api.config,
         serverConfig: api.serverConfig,
+        isDev: false,
     };
 
-    const { compiler, devOptions, webpackConfig } = webpackAdapter(api, { type, isDev: false, progress });
+    const { compiler, devOptions, webpackConfig } = webpackAdapter(api, Object.assign({}, info, { progress }));
 
     info.compiler = compiler;
     info.devOptions = devOptions;
