@@ -6,7 +6,7 @@ const _ = require('lodash');
 
 module.exports = function adapter(api, info) {
     const logger = api.logger;
-    const _webpackConfig = api.getState('webpackConfig');
+    const _webpackConfig = api.resolveWebpackConfig();
     const _webpackDevOptions = _webpackConfig.devServer || {};
 
     const webpack = tryRequire('webpack');

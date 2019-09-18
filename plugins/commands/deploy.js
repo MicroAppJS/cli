@@ -5,6 +5,7 @@ const path = require('path');
 const chalk = require('chalk');
 const fs = require('fs');
 
+// TODO 抽离
 module.exports = function deployCommand(api, opts) {
 
     api.registerMethod('beforeCommandDeploy', {
