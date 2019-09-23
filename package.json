@@ -1,6 +1,6 @@
 {
     "name": "@micro-app/cli",
-    "version": "0.1.3",
+    "version": "0.1.4-beta.1",
     "description": "[CLI] Pluggable micro application framework.",
     "bin": {
         "micro-app": "./bin/micro-app.js",
@@ -36,7 +36,7 @@
     },
     "license": "MIT",
     "devDependencies": {
-        "@micro-app/core": "^0.1.3",
+        "@micro-app/core": "^0.1.4-beta.1",
         "@micro-app/plugin-webpack-adapter": "^0.0.3",
         "@micro-app/plugin-koa-static-server": "^0.0.1",
         "@micro-app/plugin-koa-webpack-middleware": "^0.0.1",
@@ -51,7 +51,7 @@
         "webpack": "^4.39.2"
     },
     "peerDependencies": {
-        "@micro-app/core": "^0.1.3",
+        "@micro-app/core": ">=0.1.5",
         "@micro-app/plugin-webpack-adapter": "^0.0.3"
     },
     "dependencies": {

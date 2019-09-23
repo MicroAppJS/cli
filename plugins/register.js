@@ -20,10 +20,6 @@ const commands = [
         description: '强制更新 micros 依赖服务命令行',
     },
     {
-        name: 'deploy',
-        description: '强制发布更新当前提交信息到指定 git 中命令行',
-    },
-    {
         name: 'init',
         description: '初始化命令行',
     },

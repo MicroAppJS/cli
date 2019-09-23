@@ -18,12 +18,8 @@ if ([ 'start', 'build' ].includes(cmd)) {
 }
 
 // 全局指令
-if (!global.MicroAppConfig) {
-    global.MicroAppConfig = {};
-}
-const MicroAppConfig = global.MicroAppConfig;
-MicroAppConfig.OPEN_SOFT_LINK = argv.openSoftLink || false; // 开启软链接
-MicroAppConfig.OPEN_DISABLED_ENTRY = argv.openDisabledEntry || false; // 开启禁用指定模块入口, 优化开发速度
+process.env.MICRO_APP_OPEN_SOFT_LINK = argv.openSoftLink || false; // 开启软链接
+process.env.MICRO_APP_OPEN_DISABLED_ENTRY = argv.openDisabledEntry || false; // 开启禁用指定模块入口, 优化开发速度
 
 const microApp = require('@micro-app/core');
 const Service = microApp.Service;
