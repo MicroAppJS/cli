@@ -17,12 +17,21 @@ if ([ 'start', 'build' ].includes(cmd)) {
     process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 }
 
-// 全局指令
-process.env.MICRO_APP_OPEN_SOFT_LINK = argv.openSoftLink || false; // 开启软链接
-process.env.MICRO_APP_OPEN_DISABLED_ENTRY = argv.openDisabledEntry || false; // 开启禁用指定模块入口, 优化开发速度
+const { Service, logger } = require('@micro-app/core');
 
-const microApp = require('@micro-app/core');
-const Service = microApp.Service;
+// 全局指令
+if (argv.openSoftLink) {
+    process.env.MICRO_APP_OPEN_SOFT_LINK = argv.openSoftLink || false; // 开启软链接
+    if (process.env.MICRO_APP_OPEN_SOFT_LINK === 'true') {
+        logger.info(`开启软链接; --open-soft-link = ${process.env.MICRO_APP_OPEN_SOFT_LINK}`);
+    }
+}
+if (argv.openDisabledEntry) {
+    process.env.MICRO_APP_OPEN_DISABLED_ENTRY = argv.openDisabledEntry || false; // 开启禁用指定模块入口, 优化开发速度
+    if (process.env.MICRO_APP_OPEN_DISABLED_ENTRY === 'true') {
+        logger.info(`开启禁用指定模块入口; --open-disabled-entry = ${process.env.MICRO_APP_OPEN_DISABLED_ENTRY}`);
+    }
+}
 
 const service = new Service();
 

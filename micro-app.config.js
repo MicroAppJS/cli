@@ -55,7 +55,6 @@ module.exports = {
     server: {
         entry: '', // 服务端入口
         port: 8088, // 服务端口号
-        contentBase: 'public', // 静态文件地址
         options: {
             // 服务端回调参数
         },
@@ -71,13 +70,4 @@ module.exports = {
         }],
     ],
 
-    // deploy: {
-    //     git: 'git+ssh://git@xxxxx.git',
-    //     branch: 'test',
-    //     // branch: {
-    //     //     name: 'develop',
-    //     //     extends: true,
-    //     // },
-    //     message: '', // 提交 message 中增加内容
-    // },
 };

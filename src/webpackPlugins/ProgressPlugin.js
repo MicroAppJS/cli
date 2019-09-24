@@ -1,8 +1,9 @@
 'use strict';
 
 const tryRequire = require('try-require');
+const chalk = require('chalk');
 
-module.exports = function ProgressPlugin(compiler) {
+module.exports = function ProgressPlugin(api, compiler) {
     const webpack = tryRequire('webpack');
 
     if (webpack && webpack.ProgressPlugin) {

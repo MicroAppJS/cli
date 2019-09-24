@@ -9,11 +9,15 @@ const commands = [
     },
     {
         name: 'serve',
-        description: '服务启动命令行',
+        description: '服务开发命令行',
     },
     {
         name: 'build',
         description: '构建命令行',
+    },
+    {
+        name: 'start',
+        description: '服务启动命令行',
     },
     {
         name: 'update',

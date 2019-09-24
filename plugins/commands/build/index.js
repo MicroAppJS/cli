@@ -64,7 +64,7 @@ Examples:
 
         if (progress && webpack && webpack.ProgressPlugin) {
             try {
-                require('../../../src/webpackPlugins/ProgressPlugin')(compiler);
+                require('../../../src/webpackPlugins/ProgressPlugin')(api, compiler);
             } catch (error) {
                 logger.warn(error);
             }
