@@ -9,7 +9,7 @@ module.exports = function startCommand(api, opts) {
         description: 'runs server for production',
         usage: 'micro-app start [options]',
         options: {
-            '-': 'default.',
+            '--mode': 'specify env mode (default: development)',
             '--type <type>': 'adapter type, eg. [ webpack, vusion, etc. ].',
             '--host <host>': 'node server host.',
             '--port <port>': 'node server port.',

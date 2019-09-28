@@ -18,6 +18,8 @@ module.exports = function(api, args = {}, devCb = false) {
     const serverConfig = api.serverConfig;
 
     const app = new Koa();
+    app._name = 'KOA2'; // 设置名称, 给后面插件判断使用
+
     // 兼容koa1的中间件
     const _use = app.use;
     app.use = x => _use.call(app, koaConvert(x));
@@ -35,22 +37,22 @@ module.exports = function(api, args = {}, devCb = false) {
         logger.error('koa server error: ', error);
     });
 
-    api.applyPluginHooks('onServerInit', { app, config: serverConfig, args });
+    api.applyPluginHooks('onServerInit', { app, args });
     applyHooks(_HookEvent, 'init');
 
-    api.applyPluginHooks('beforeServerEntry', { app, config: serverConfig, args });
+    api.applyPluginHooks('beforeServerEntry', { app, args });
     applyHooks(_HookEvent, 'before');
 
     initEntrys(app, serverConfig, logger);
 
-    api.applyPluginHooks('afterServerEntry', { app, config: serverConfig, args });
+    api.applyPluginHooks('afterServerEntry', { app, args });
     applyHooks(_HookEvent, 'after');
 
     if (isDev && devCb && _.isFunction(devCb)) {
         devCb(app, serverConfig, args);
     }
 
-    api.applyPluginHooks('onServerInitDone', { app, config: serverConfig, args });
+    api.applyPluginHooks('onServerInitDone', { app, args });
     applyHooks(_HookEvent, 'done');
 
     const port = args.port || serverConfig.port || 8888;
@@ -59,14 +61,14 @@ module.exports = function(api, args = {}, devCb = false) {
         app.listen(port, host === 'localhost' ? '0.0.0.0' : host, err => {
             if (err) {
                 logger.error(err);
-                api.applyPluginHooks('onServerRunFail', { host, port, config: serverConfig, err, args });
+                api.applyPluginHooks('onServerRunFail', { host, port, err, args });
                 reject(err);
                 return;
             }
             console.log('\n');
             logger.success(`Server running... listen on ${port}, host: ${host}`);
 
-            api.applyPluginHooks('onServerRunSuccess', { host, port, config: serverConfig, args });
+            api.applyPluginHooks('onServerRunSuccess', { host, port, args });
 
             const url = `http://${host}:${port}`;
             resolve({ host, port, url });

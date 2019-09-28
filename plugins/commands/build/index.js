@@ -14,14 +14,14 @@ module.exports = function buildCommand(api, opts) {
         description: 'build for production',
         usage: 'micro-app build [options]',
         options: {
-            '-': 'default webpack.',
-            '-t <type>': 'adapter type, eg. [ webpack, vusion ].',
+            '--mode': 'specify env mode (default: development)',
+            '--type <type>': 'adapter type, eg. [ webpack, vusion ].',
             '--progress': 'show how progress is reported during a compilation.',
         },
         details: `
 Examples:
     ${chalk.gray('# vusion')}
-    micro-app build -t vusion
+    micro-app build --type vusion
           `.trim(),
     }, args => {
         process.env.NODE_ENV = process.env.NODE_ENV || 'production';
