@@ -10,10 +10,8 @@ const yParser = require('yargs-parser');
 const cmd = process.argv[2];
 const argv = yParser(process.argv.slice(3));
 
-// 全局环境模式
-if (argv.mode) { // production, development
-    process.env.NODE_ENV = argv.mode || process.env.NODE_ENV || 'development';
-}
+// 全局环境模式 production, development
+process.env.NODE_ENV = argv.mode || process.env.NODE_ENV || 'development';
 
 const { Service, logger } = require('@micro-app/core');
 

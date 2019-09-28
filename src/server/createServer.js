@@ -10,10 +10,8 @@ const HookEvent = require('./HookEvent');
 
 module.exports = function(api, args = {}, devCb = false) {
     const logger = api.logger;
-    const isDev = process.env.NODE_ENV !== 'production';
-    if (isDev) {
-        logger.info('Starting development server...');
-    }
+    const isDev = api.mode === 'development';
+    logger.info(`Starting ${api.mode} server...`);
 
     const serverConfig = api.serverConfig;
 
