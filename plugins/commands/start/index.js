@@ -3,10 +3,10 @@
 module.exports = function serveCommand(api, opts) {
 
     const registerMethods = require('./methods');
-    const devCommand = require('./dev');
+    const startCommand = require('./start');
 
     registerMethods(api);
 
-    // serve
-    devCommand(api, opts);
+    // start
+    startCommand(api, opts);
 };

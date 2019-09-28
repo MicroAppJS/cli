@@ -1,23 +1,23 @@
 'use strict';
 
 const Koa = require('koa');
-const koaCompose = require('koa-compose');
+// const koaCompose = require('koa-compose');
 const koaConvert = require('koa-convert');
 const _ = require('lodash');
 const tryRequire = require('try-require');
 
 const HookEvent = require('./HookEvent');
 
-module.exports = function(opts = {}, api) {
+module.exports = function(api, args = {}, devCb = false) {
     const logger = api.logger;
-    const isDev = opts.isDev || false;
-    if (isDev) {
-        logger.info('Dev Server Start...');
-    }
+    const isDev = api.mode === 'development';
+    logger.info(`Starting ${api.mode} server...`);
 
-    const serverConfig = opts.serverConfig;
+    const serverConfig = api.serverConfig;
 
     const app = new Koa();
+    app._name = 'KOA2'; // 设置名称, 给后面插件判断使用
+
     // 兼容koa1的中间件
     const _use = app.use;
     app.use = x => _use.call(app, koaConvert(x));
@@ -35,38 +35,38 @@ module.exports = function(opts = {}, api) {
         logger.error('koa server error: ', error);
     });
 
-    api.applyPluginHooks('onServerInit', { app, config: serverConfig, options: opts });
+    api.applyPluginHooks('onServerInit', { app, args });
     applyHooks(_HookEvent, 'init');
 
-    api.applyPluginHooks('beforeServerEntry', { app, config: serverConfig, options: opts });
+    api.applyPluginHooks('beforeServerEntry', { app, args });
     applyHooks(_HookEvent, 'before');
 
     initEntrys(app, serverConfig, logger);
 
-    api.applyPluginHooks('afterServerEntry', { app, config: serverConfig, options: opts });
+    api.applyPluginHooks('afterServerEntry', { app, args });
     applyHooks(_HookEvent, 'after');
 
-    if (isDev) {
-        api.applyPluginHooks('onDevServerMiddleware', { app, config: serverConfig, options: opts });
+    if (isDev && devCb && _.isFunction(devCb)) {
+        devCb(app, serverConfig, args);
     }
 
-    api.applyPluginHooks('onServerInitDone', { app, config: serverConfig, options: opts });
+    api.applyPluginHooks('onServerInitDone', { app, args });
     applyHooks(_HookEvent, 'done');
 
-    const port = opts.port || serverConfig.port || 8888;
-    const host = opts.host || serverConfig.host || 'localhost';
+    const port = args.port || serverConfig.port || 8888;
+    const host = args.host || serverConfig.host || 'localhost';
     return new Promise((resolve, reject) => {
         app.listen(port, host === 'localhost' ? '0.0.0.0' : host, err => {
             if (err) {
                 logger.error(err);
-                api.applyPluginHooks('onServerRunFail', { host, port, config: serverConfig, err });
+                api.applyPluginHooks('onServerRunFail', { host, port, err, args });
                 reject(err);
                 return;
             }
             console.log('\n');
             logger.success(`Server running... listen on ${port}, host: ${host}`);
 
-            api.applyPluginHooks('onServerRunSuccess', { host, port, config: serverConfig });
+            api.applyPluginHooks('onServerRunSuccess', { host, port, args });
 
             const url = `http://${host}:${port}`;
             resolve({ host, port, url });

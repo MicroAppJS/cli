@@ -9,19 +9,19 @@ const commands = [
     },
     {
         name: 'serve',
-        description: '服务启动命令行',
+        description: '服务开发命令行',
     },
     {
         name: 'build',
         description: '构建命令行',
     },
     {
-        name: 'update',
-        description: '强制更新 micros 依赖服务命令行',
+        name: 'start',
+        description: '服务启动命令行',
     },
     {
-        name: 'deploy',
-        description: '强制发布更新当前提交信息到指定 git 中命令行',
+        name: 'update',
+        description: '强制更新 micros 依赖服务命令行',
     },
     {
         name: 'init',
