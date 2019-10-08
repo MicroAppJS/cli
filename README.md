@@ -123,18 +123,6 @@ or
 npx micro-app-dev
 ```
 
-### Build
-
-```sh
-npx micro-app build
-```
-
-or
-
-```sh
-npx micro-app-build
-```
-
 ### 运行
 
 ```sh
