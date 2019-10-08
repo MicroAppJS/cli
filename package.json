@@ -1,11 +1,10 @@
 {
     "name": "@micro-app/cli",
-    "version": "0.1.6",
+    "version": "0.2.0-beta.1",
     "description": "[CLI] Pluggable micro application framework.",
     "bin": {
         "micro-app": "./bin/micro-app.js",
         "micro-app-dev": "./bin/micro-app-dev.js",
-        "micro-app-build": "./bin/micro-app-build.js",
         "micro-app-start": "./bin/micro-app-start.js"
     },
     "scripts": {
@@ -53,7 +52,6 @@
         "@micro-app/plugin-webpack-adapter": "^0.0.5"
     },
     "dependencies": {
-        "cli-highlight": "^2.1.1",
         "koa": "^2.8.1",
         "shelljs": "^0.8.3",
         "update-notifier": "^3.0.1",
