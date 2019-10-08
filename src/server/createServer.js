@@ -8,9 +8,9 @@ const tryRequire = require('try-require');
 
 const HookEvent = require('./HookEvent');
 
-module.exports = function(api, args = {}, devCb = false) {
+module.exports = function(api, args = {}) {
     const logger = api.logger;
-    const isDev = api.mode === 'development';
+    // const isDev = api.mode === 'development';
     logger.info(`Starting ${api.mode} server...`);
 
     const serverConfig = api.serverConfig;
@@ -45,10 +45,6 @@ module.exports = function(api, args = {}, devCb = false) {
 
     api.applyPluginHooks('afterServerEntry', { app, args });
     applyHooks(_HookEvent, 'after');
-
-    if (isDev && devCb && _.isFunction(devCb)) {
-        devCb(app, serverConfig, args);
-    }
 
     api.applyPluginHooks('onServerInitDone', { app, args });
     applyHooks(_HookEvent, 'done');
