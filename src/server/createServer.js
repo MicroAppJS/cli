@@ -46,6 +46,8 @@ module.exports = function(api, args = {}) {
     api.applyPluginHooks('afterServerEntry', { app, args });
     applyHooks(_HookEvent, 'after');
 
+    api.applyPluginHooks('onServerInitWillDone', { app, args });
+
     api.applyPluginHooks('onServerInitDone', { app, args });
     applyHooks(_HookEvent, 'done');
 
@@ -59,7 +61,7 @@ module.exports = function(api, args = {}) {
                 reject(err);
                 return;
             }
-            console.log('\n');
+            console.log('\r\n');
             logger.success(`Server running... listen on ${port}, host: ${host}`);
 
             api.applyPluginHooks('onServerRunSuccess', { host, port, args });

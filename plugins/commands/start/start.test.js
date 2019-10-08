@@ -62,6 +62,13 @@ describe('Command start', () => {
             expect(app).not.toBeUndefined();
             expect(app).not.toBeNull();
         });
+        plugin._api.onServerInitWillDone(({ args, app }) => {
+            expect(args).not.toBeUndefined();
+            expect(args).not.toBeNull();
+            expect(app).not.toBeUndefined();
+            expect(app).not.toBeNull();
+        });
+
         plugin._api.onServerRunSuccess(({ args, host, port }) => {
             expect(args).not.toBeUndefined();
             expect(args).not.toBeNull();

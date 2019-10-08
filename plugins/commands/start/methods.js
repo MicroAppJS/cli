@@ -11,6 +11,10 @@ module.exports = api => {
         type: api.API_TYPE.EVENT,
         description: '服务初始化时事件',
     });
+    api.registerMethod('onServerInitWillDone', {
+        type: api.API_TYPE.EVENT,
+        description: '服务初始化即将完成事件',
+    });
     api.registerMethod('onServerInitDone', {
         type: api.API_TYPE.EVENT,
         description: '服务初始化完成事件',
