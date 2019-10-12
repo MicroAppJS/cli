@@ -4,7 +4,7 @@
 
 describe('Command start', () => {
 
-    let PORTS = 10000;
+    let PORTS = 22000;
     function getArgvs() {
         const port = PORTS++;
         return { _: [], port };
