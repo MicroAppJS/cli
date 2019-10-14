@@ -28,6 +28,7 @@
     "keywords": [
         "micro",
         "micro-app",
+        "micro-application",
         "core",
         "cli"
     ],
@@ -37,7 +38,7 @@
     },
     "license": "MIT",
     "devDependencies": {
-        "@micro-app/core": "^0.2.0-beta.4",
+        "@micro-app/core": "^0.2.0-beta.5",
         "@micro-app/plugin-koa-static-server": "^0.0.1",
         "@micro-app/plugin-koa-webpack-middleware": "^0.0.3",
         "@types/jest": "^24.0.18",

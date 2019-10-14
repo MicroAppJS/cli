@@ -7,7 +7,6 @@ module.exports = function extendServer(api, opts) {
     const registerMethods = require('./methods');
     registerMethods(api);
 
-    const requireMicro = require('@micro-app/core');
     const _ = require('lodash');
 
     const logger = api.logger;
@@ -16,26 +15,57 @@ module.exports = function extendServer(api, opts) {
         cache: true,
         description: '当前工程下的服务配置',
     }, function() {
-        return api.self.toServerConfig(true);
+        const microConfig = this.selfConfig;
+        const _originalConfig = microConfig.originalConfig || {};
+        const _serverConfig = _originalConfig.server || {};
+        const { entry, options = {}, hooks } = _serverConfig;
+        return {
+            // ...microConfig,
+            entry,
+            hooks,
+            options,
+            info: _.cloneDeep(microConfig),
+            shared: microConfig.shared,
+            sharedObj: microConfig.sharedObj,
+            resolveShared: microConfig.resolveShared,
+            port: _serverConfig.port,
+            host: _serverConfig.host,
+            proxy: _serverConfig.proxy,
+        };
     });
 
     api.extendConfig('microsServerConfig', {
         cache: true,
         description: '当前工程下所有依赖的服务配置合集',
     }, function() {
-        const _self = this.self;
+        const selfConfig = this.selfConfig;
+        const micros = api.micros;
+        const microsConfig = api.microsConfig;
         const config = {};
-        const micros = _.cloneDeep([ ...this.micros ]);
         micros.forEach(key => {
-            const microConfig = requireMicro(key);
+            const microConfig = microsConfig[key];
             if (microConfig) {
-                config[key] = microConfig.toServerConfig(true);
+                const _originalConfig = microConfig.originalConfig || {};
+                const _serverConfig = _originalConfig.server || {};
+                const { entry, options = {}, hooks } = _serverConfig;
+                config[key] = {
+                    // ...microConfig,
+                    entry,
+                    hooks,
+                    options,
+                    info: _.cloneDeep(microConfig),
+                    shared: microConfig.shared,
+                    sharedObj: microConfig.sharedObj,
+                    resolveShared: microConfig.resolveShared,
+                    port: _serverConfig.port,
+                    host: _serverConfig.host,
+                    proxy: _serverConfig.proxy,
+                };
             } else {
-                this.micros.delete(key);
                 logger.error(`Not Found micros: "${key}"`);
             }
         });
-        config[_self.key] = api.selfServerConfig || _self.toServerConfig(true);
+        config[selfConfig.key] = api.selfServerConfig;
         return config;
     });
 

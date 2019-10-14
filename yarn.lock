@@ -379,10 +379,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@micro-app/core@^0.2.0-beta.4":
-  version "0.2.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.2.0-beta.4.tgz#db7a7342ceae012a3e40957737962e125dfe9680"
-  integrity sha512-/gJ6fvydEXxhHohDZVxsF71Kla7vf7WJ8xIGsIT6qcXTiweQiAWQdJfdWn97rLPUR6Kxw9BqSZp4szuklbvrmA==
+"@micro-app/core@^0.2.0-beta.5":
+  version "0.2.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.2.0-beta.5.tgz#6763b09b4403bb9db6ae8f4c63a2b32d23ae3536"
+  integrity sha512-p7c0C4BOHD6askAlqOdyPiNNzmIWW0A8a2zsV5aXlz89QuFZTL433/B5LLSndHiAvCC1ryMi25caJA7OSbPq5g==
   dependencies:
     ajv "^6.10.2"
     ajv-keywords "^3.4.1"

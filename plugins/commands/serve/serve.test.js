@@ -136,4 +136,15 @@ describe('Command serve', () => {
 
     });
 
+    it('global cmd config', async () => {
+
+        const { service } = require('../../../bin/base');
+
+        await service.run('serve', Object.assign({
+            openSoftLink: true,
+            openDisabledEntry: true,
+        }, getArgvs()));
+
+    });
+
 });
