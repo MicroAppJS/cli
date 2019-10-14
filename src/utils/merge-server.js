@@ -5,9 +5,9 @@ const path = require('path');
 
 function adapter(microConfig) {
     const microServers = [];
-    const root = microConfig.root;
     const { entry, options = {}, info } = microConfig;
     if (entry) {
+        const root = info.root;
         const entryFile = path.resolve(root, entry);
         const entryCallback = tryRequire.resolve(entryFile);
         if (entryCallback && typeof entryCallback === 'string') {

@@ -1,6 +1,6 @@
 {
     "name": "@micro-app/cli",
-    "version": "0.2.0-beta.3",
+    "version": "0.2.0-beta.4",
     "description": "[CLI] Pluggable micro application framework.",
     "bin": {
         "micro-app": "./bin/micro-app.js",
@@ -46,7 +46,7 @@
         "coveralls": "^3.0.7",
         "eslint": "^5.16.0",
         "eslint-config-2o3t": "^1.1.17",
-        "husky": "^3.0.8",
+        "husky": "^3.0.9",
         "jest": "^24.9.0",
         "lint-staged": "^9.4.2",
         "webpack": "^4.39.2"

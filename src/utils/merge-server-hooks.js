@@ -6,9 +6,9 @@ const fs = require('fs-extra');
 
 function adapter(microConfig) {
     const microServers = [];
-    const root = microConfig.root;
     const { hooks, options = {}, info } = microConfig;
     if (hooks) {
+        const root = info.root;
         const hooksFile = path.resolve(root, hooks);
         if (fs.statSync(hooksFile).isDirectory()) {
             const hookFuncs = [];
