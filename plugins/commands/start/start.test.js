@@ -108,4 +108,42 @@ describe('Command start', () => {
 
     });
 
+    it('modifyCreateServer', async () => {
+
+        const { service } = require('../../../bin/base');
+
+        const plugin = service.plugins.find(item => item.id === 'cli:plugins-commands-start');
+        expect(typeof plugin).toEqual('object');
+
+        service.init();
+
+        expect(plugin._api).not.toBeUndefined();
+
+        const argv = plugin._api.parseArgv();
+        expect(argv).not.toBeNull();
+        expect(argv).not.toBeUndefined();
+
+        plugin._api.modifyCreateServer(() => {
+
+            return function(api, args) {
+
+                expect(args).not.toBeNull();
+                expect(args).not.toBeUndefined();
+
+                return Promise.resolve({
+                    host: 'a',
+                    port: 22,
+                    url: 'abc',
+                });
+            };
+        });
+
+        await service.runCommand('start', getArgvs());
+
+        expect(service.commands.start).not.toBeNull();
+        expect(service.commands.start).not.toBeUndefined();
+        expect(typeof service.commands.start).toEqual('object');
+
+    });
+
 });

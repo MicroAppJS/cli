@@ -11,6 +11,14 @@ module.exports = function extendServer(api, opts) {
 
     const logger = api.logger;
 
+    api.extendMethod('parseArgv', {
+        description: 'resolve parse command argv.',
+    }, function() {
+        const yParser = require('yargs-parser');
+        const argv = yParser(process.argv.slice(2));
+        return argv;
+    });
+
     api.extendConfig('selfServerConfig', {
         cache: true,
         description: '当前工程下的服务配置',
