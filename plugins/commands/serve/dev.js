@@ -16,6 +16,7 @@ module.exports = function devCommand(api, opts) {
             '--host <host>': 'node server host.',
             '--port <port>': 'node server port.',
             '--only-node': 'only run node server.',
+            '--only-dev-server': 'only run webpack dev server.',
             '--open-soft-link': '启用开发软链接',
             '--open-disabled-entry': '支持可配置禁用部分模块入口.',
         },
@@ -37,6 +38,7 @@ Examples:
         api.applyPluginHooks('beforeDevServer', { args });
 
         const onlyNode = args.onlyNode || false;
+        const onlyDevServer = args.onlyDevServer || false;
 
         if (args.t && !args.type) { // TODO 兼容, 下个版本删除
             args.type = args.t;
@@ -45,6 +47,7 @@ Examples:
 
         let compiler = null;
         let devCb = false;
+        let webpackConfigInner;
         if (!onlyNode) {
 
             let _webpackConfig = api.resolveWebpackConfig();
@@ -87,10 +90,39 @@ Examples:
                 // 开发模式
                 api.applyPluginHooks('onDevServerMiddleware', { app, config, args, compiler, devOptions: _webpackConfig.devServer });
             };
+
+            webpackConfigInner = _webpackConfig;
+        }
+
+        if (!onlyNode && onlyDevServer && webpackConfigInner) {
+            return new Promise((resolve, reject) => {
+                const WebpackDevServer = require('webpack-dev-server');
+                const webpackHotMiddleware = require('webpack-hot-middleware');
+
+                const devServerOptions = Object.assign({}, webpackConfigInner.devServer, {
+                    open: true,
+                    stats: {
+                        colors: true,
+                    },
+                });
+                const server = new WebpackDevServer(compiler, devServerOptions);
+                server.use(webpackHotMiddleware(compiler));
+
+                const port = args.port || devServerOptions.port || 8888;
+                const host = args.host || devServerOptions.host || 'localhost';
+                server.listen(port, host === 'localhost' ? '0.0.0.0' : host, err => {
+                    if (err) {
+                        logger.error(err);
+                        reject(err);
+                        return;
+                    }
+                    logger.success(`Starting server on http://${host}:${port}`);
+                    resolve();
+                });
+            });
         }
 
         const createServer = require('../../../src/server/createServer');
-
         return createServer(api, args, devCb)
             .then(({ host, port, url }) => {
                 api.logger.info(`Open Browser, URL: ${chalk.yellow(url)}`);
@@ -98,5 +130,6 @@ Examples:
             }).catch(err => {
                 api.applyPluginHooks('afterDevServer', { args, err });
             });
+
     }
 };

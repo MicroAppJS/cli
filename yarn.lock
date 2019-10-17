@@ -379,10 +379,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@micro-app/core@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.1.7.tgz#8081614e9c8f32f1db611d3040e670126469529c"
-  integrity sha512-YLEwXFXh+xbbc74nm//jTdOtkZunHnPT058sJEphujAlrW6+4KhtgCgFOg1G7ivWAhJw8hv+IzDKGlkOQRlX3Q==
+"@micro-app/core@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.1.8.tgz#204c9b2c59ab05b31fb517a0d54774ed579c5846"
+  integrity sha512-V309e/wj60+g+XqmpyeSn6/HYYjEfWBnIAKBPIrBReC5V390/FKgRkSY5H17muq7cOuF4ocUob+Jyuxl5QGlLA==
   dependencies:
     ajv "^6.10.2"
     ajv-keywords "^3.4.1"
@@ -391,7 +391,6 @@
     cheerio "^1.0.0-rc.3"
     dotenv "^8.1.0"
     lodash "^4.17.15"
-    module-alias "^2.2.1"
     ora "^3.4.0"
     semver "^6.3.0"
     semver-regex "^3.1.0"
@@ -4427,11 +4426,6 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
   integrity sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
   dependencies:
     minimist "0.0.8"
-
-module-alias@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/module-alias/-/module-alias-2.2.1.tgz#553aea9dc7f99cd45fd75e34a574960dc46550da"
-  integrity sha512-LTez0Eo+YtfUhgzhu/LqxkUzOpD+k5C0wXBLun0L1qE2BhHf6l09dqam8e7BnoMYA6mAlP0vSsGFQ8QHhGN/aQ==
 
 move-concurrently@^1.0.1:
   version "1.0.1"
