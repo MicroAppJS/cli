@@ -1,6 +1,6 @@
 {
     "name": "@micro-app/cli",
-    "version": "0.2.0-beta.5",
+    "version": "0.2.0",
     "description": "[CLI] Pluggable micro application framework.",
     "main": "bin/base.js",
     "bin": {
@@ -39,10 +39,10 @@
     },
     "license": "MIT",
     "devDependencies": {
-        "@micro-app/core": "^0.2.0-beta.5",
+        "@micro-app/core": "^0.2.0",
         "@micro-app/plugin-koa-static-server": "^0.0.1",
         "@micro-app/plugin-koa-webpack-middleware": "^0.0.3",
-        "@types/jest": "^24.0.18",
+        "@types/jest": "^24.0.19",
         "babel-eslint": "^10.0.3",
         "coveralls": "^3.0.7",
         "eslint": "^5.16.0",

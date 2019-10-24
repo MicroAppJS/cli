@@ -8,15 +8,21 @@ module.exports = function extendServer(api, opts) {
     registerMethods(api);
 
     const _ = require('lodash');
+    const { smartMerge } = require('@micro-app/shared-utils');
 
     const logger = api.logger;
+
+    let tempArgvs = {};
+    api.onRunCommand(({ args = {} }) => {
+        tempArgvs = args;
+    });
 
     api.extendMethod('parseArgv', {
         description: 'resolve parse command argv.',
     }, function() {
         const yParser = require('yargs-parser');
-        const argv = yParser(process.argv.slice(2));
-        return argv;
+        const argv = yParser(process.argv.slice(2)) || {};
+        return smartMerge({}, argv, tempArgvs);
     });
 
     api.extendConfig('selfServerConfig', {
