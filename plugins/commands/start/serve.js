@@ -11,13 +11,13 @@ module.exports = function runServe(api, args, opts) {
         logger.warn('you should be use "--type <type>"!!!');
     }
 
-    api.applyPluginHooks('beforeServer', { args });
-
     // custom server
     const createServer = api.applyPluginHooks('modifyCreateServer', require('../../../src/server/createServer'));
     if (!createServer || !_.isFunction(createServer)) {
         logger.throw('[Plugin] api.modifyCreateServer() must be return function !');
     }
+
+    api.applyPluginHooks('beforeServer', { args });
 
     return createServer(api, args)
         .then(({ host, port, url }) => {
