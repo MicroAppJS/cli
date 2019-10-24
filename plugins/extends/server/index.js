@@ -23,12 +23,11 @@ module.exports = function extendServer(api, opts) {
         cache: true,
         description: '当前工程下的服务配置',
     }, function() {
-        const microConfig = this.selfConfig;
+        const microConfig = api.selfConfig;
         const _originalConfig = microConfig.originalConfig || {};
         const _serverConfig = _originalConfig.server || {};
         const { entry, options = {}, hooks } = _serverConfig;
         return {
-            // ...microConfig,
             entry,
             hooks,
             options,
@@ -46,7 +45,7 @@ module.exports = function extendServer(api, opts) {
         cache: true,
         description: '当前工程下所有依赖的服务配置合集',
     }, function() {
-        const selfConfig = this.selfConfig;
+        const selfConfig = api.selfConfig;
         const micros = api.micros;
         const microsConfig = api.microsConfig;
         const config = {};
@@ -57,7 +56,6 @@ module.exports = function extendServer(api, opts) {
                 const _serverConfig = _originalConfig.server || {};
                 const { entry, options = {}, hooks } = _serverConfig;
                 config[key] = {
-                    // ...microConfig,
                     entry,
                     hooks,
                     options,
