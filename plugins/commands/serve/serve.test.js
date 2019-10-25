@@ -56,6 +56,12 @@ describe('Command serve', () => {
             expect(app).not.toBeUndefined();
             expect(app).not.toBeNull();
         });
+        plugin._api.onServerInitWillDone(({ args, app }) => {
+            expect(args).not.toBeUndefined();
+            expect(args).not.toBeNull();
+            expect(app).not.toBeUndefined();
+            expect(app).not.toBeNull();
+        });
         plugin._api.onServerInitDone(({ args, app }) => {
             expect(args).not.toBeUndefined();
             expect(args).not.toBeNull();
@@ -127,6 +133,17 @@ describe('Command serve', () => {
         expect(service.commands.serve).not.toBeNull();
         expect(service.commands.serve).not.toBeUndefined();
         expect(typeof service.commands.serve).toEqual('object');
+
+    });
+
+    it('global cmd config', async () => {
+
+        const { service } = require('../../../bin/base');
+
+        await service.run('serve', Object.assign({
+            openSoftLink: true,
+            openDisabledEntry: true,
+        }, getArgvs()));
 
     });
 

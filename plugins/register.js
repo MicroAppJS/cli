@@ -2,6 +2,13 @@
 
 const path = require('path');
 
+const extendConfigs = [
+    {
+        name: 'server',
+        description: '针对服务信息进行配置扩展.',
+    },
+];
+
 const commands = [
     {
         name: 'version',
@@ -26,6 +33,16 @@ const commands = [
 ];
 
 module.exports = function(service) {
+
+    extendConfigs.forEach(item => {
+        const name = item.name;
+        const description = item.description;
+        service.registerPlugin({
+            id: `cli:plugins-extends-${name}`,
+            link: path.resolve(__dirname, './extends', name),
+            description,
+        });
+    });
 
     commands.forEach(item => {
         const name = item.name;

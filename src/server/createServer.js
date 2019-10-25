@@ -6,8 +6,6 @@ const koaConvert = require('koa-convert');
 const _ = require('lodash');
 const tryRequire = require('try-require');
 
-const HookEvent = require('./HookEvent');
-
 module.exports = function(api, args = {}) {
     const logger = api.logger;
     // const isDev = api.mode === 'development';
@@ -28,6 +26,7 @@ module.exports = function(api, args = {}) {
     });
 
     // init hook
+    const HookEvent = require('./HookEvent');
     const _HookEvent = new HookEvent(app); // 兼容
     initHooks(_HookEvent, serverConfig, logger);
 
@@ -46,6 +45,8 @@ module.exports = function(api, args = {}) {
     api.applyPluginHooks('afterServerEntry', { app, args });
     applyHooks(_HookEvent, 'after');
 
+    api.applyPluginHooks('onServerInitWillDone', { app, args });
+
     api.applyPluginHooks('onServerInitDone', { app, args });
     applyHooks(_HookEvent, 'done');
 
@@ -59,7 +60,6 @@ module.exports = function(api, args = {}) {
                 reject(err);
                 return;
             }
-            console.log('\n');
             logger.success(`Server running... listen on ${port}, host: ${host}`);
 
             api.applyPluginHooks('onServerRunSuccess', { host, port, args });

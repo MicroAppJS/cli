@@ -9,11 +9,11 @@ module.exports = function serveCommand(api, opts) {
     const chalk = require('chalk');
 
     api.beforeServer(params => {
-        api.applyPluginHooks('beforeDevServer', params);
+        return api.applyPluginHooks('beforeDevServer', params);
     });
 
     api.afterServer(params => {
-        api.applyPluginHooks('afterDevServer', params);
+        return api.applyPluginHooks('afterDevServer', params);
     });
 
     // serve
@@ -37,7 +37,7 @@ Examples:
     micro-app serve --type vusion --open-soft-link
           `.trim(),
     }, args => {
-        process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+        process.env.NODE_ENV = args.mode || process.env.NODE_ENV || 'development';
 
         const runServe = require('../start/serve');
         return runServe(api, args, opts);

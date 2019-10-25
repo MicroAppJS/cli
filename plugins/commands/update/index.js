@@ -38,7 +38,7 @@ Examples:
 
 function updateMicro(api, name) {
     const logger = api.logger;
-    const microAppConfig = api.self;
+    const microAppConfig = api.selfConfig;
     const micros = api.micros;
     const microsConfig = api.microsConfig;
     const currentNodeModules = microAppConfig.nodeModules;
@@ -102,7 +102,7 @@ function updateMicro(api, name) {
         logger.logo(`${chalk.green('Finish!')}`);
         return;
     } else {
-        logger.error(`not found micros: "${name}"`);
+        logger.error(`Not Found micros: "${name}"`);
     }
 
     api.applyPluginHooks('afterCommandUpdate', { name, logger, microsConfig });

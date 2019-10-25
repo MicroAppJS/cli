@@ -24,7 +24,7 @@ Examples:
     micro-app start --type vusion
           `.trim(),
     }, args => {
-        process.env.NODE_ENV = process.env.NODE_ENV || 'production';
+        process.env.NODE_ENV = args.mode || process.env.NODE_ENV || 'production';
 
         const runServe = require('./serve');
         return runServe(api, args, opts);

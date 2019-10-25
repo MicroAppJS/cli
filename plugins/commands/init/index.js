@@ -35,7 +35,7 @@ Examples:
 
 function initMicro(api, args) {
     const logger = api.logger;
-    const config = api.self;
+    const config = api.selfConfig;
     const micros = api.micros;
     const microsConfig = api.microsConfig;
 

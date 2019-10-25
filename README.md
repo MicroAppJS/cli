@@ -123,18 +123,6 @@ or
 npx micro-app-dev
 ```
 
-### Build
-
-```sh
-npx micro-app build
-```
-
-or
-
-```sh
-npx micro-app-build
-```
-
 ### 运行
 
 ```sh
@@ -215,8 +203,7 @@ npx micro-app show methods
      * onPluginInitDone            ( System Build-in )
      * beforeMergeConfig           ( System Build-in )
      * afterMergeConfig            ( System Build-in )
-     * beforeMergeServerConfig     ( System Build-in )
-     * afterMergeServerConfig      ( System Build-in )
+     * modifyDefaultServerConfig   ( System Build-in )
      * onInitWillDone              ( System Build-in )
      * onInitDone                  ( System Build-in )
      * modifyCommand               ( System Build-in )
@@ -226,13 +213,14 @@ npx micro-app show methods
      * afterMergeWebpackConfig     ( 合并 webpack 配置之后事件 )
      * modifyChainWebpcakConfig    ( 合并之后提供 webpack-chain 进行再次修改事件 )
      * onChainWebpcakConfig        ( 修改之后提供 webpack-chain 进行查看事件 )
+     * modifyWebpackConfig         ( 合并之后提供 webpack config 进行再次修改事件 )
      * onServerInit                ( 服务初始化时事件 )
+     * onServerInitWillDone        ( 服务初始化即将完成事件 )
      * onServerInitDone            ( 服务初始化完成事件 )
      * onServerRunSuccess          ( 服务运行启动成功时事件 )
      * onServerRunFail             ( 服务运行启动失败时事件 )
      * beforeServerEntry           ( 服务进入业务逻辑前事件 )
      * afterServerEntry            ( 服务从业务逻辑出来后事件 )
-     * modifyWebpackConfig         ( 对服务启动前对 webpack config 进行修改, 需要返回所有参数 )
      * beforeDevServer             ( 开发服务创建前事件 )
      * afterDevServer              ( 开发服务创建后事件 )
      * onBuildSuccess              ( 构建成功时事件 )

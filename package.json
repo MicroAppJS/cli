@@ -1,13 +1,16 @@
 {
     "name": "@micro-app/cli",
-    "version": "0.2.0-beta.1",
+    "version": "0.2.0",
     "description": "[CLI] Pluggable micro application framework.",
+    "main": "bin/base.js",
     "bin": {
-        "micro-app": "./bin/micro-app.js",
-        "micro-app-dev": "./bin/micro-app-dev.js",
-        "micro-app-start": "./bin/micro-app-start.js"
+        "micro-app": "bin/micro-app",
+        "micro-app-dev": "bin/micro-app-dev",
+        "micro-app-start": "bin/micro-app-start"
     },
     "scripts": {
+        "lint": "eslint .",
+        "lint:fix": "npm run lint -- --fix",
         "test": "jest"
     },
     "homepage": "https://github.com/MicrosApp/MicroApp-CLI",
@@ -26,6 +29,7 @@
     "keywords": [
         "micro",
         "micro-app",
+        "micro-application",
         "core",
         "cli"
     ],
@@ -35,24 +39,24 @@
     },
     "license": "MIT",
     "devDependencies": {
-        "@micro-app/core": "^0.1.7",
+        "@micro-app/core": "^0.2.0",
         "@micro-app/plugin-koa-static-server": "^0.0.1",
-        "@micro-app/plugin-koa-webpack-middleware": "^0.0.2",
-        "@micro-app/plugin-webpack-adapter": "^0.0.5",
-        "@types/jest": "^24.0.18",
+        "@micro-app/plugin-koa-webpack-middleware": "^0.0.3",
+        "@types/jest": "^24.0.19",
         "babel-eslint": "^10.0.3",
-        "coveralls": "^3.0.6",
+        "coveralls": "^3.0.7",
         "eslint": "^5.16.0",
         "eslint-config-2o3t": "^1.1.17",
+        "husky": "^3.0.9",
         "jest": "^24.9.0",
+        "lint-staged": "^9.4.2",
         "webpack": "^4.39.2"
     },
     "peerDependencies": {
-        "@micro-app/core": ">=0.1.7",
-        "@micro-app/plugin-webpack-adapter": "^0.0.5"
+        "@micro-app/core": ">=0.2.0"
     },
     "dependencies": {
-        "koa": "^2.8.1",
+        "koa": "^2.10.0",
         "shelljs": "^0.8.3",
         "update-notifier": "^3.0.1",
         "yargs-parser": "^13.1.1"
