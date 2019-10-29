@@ -34,4 +34,4 @@ const service = new Service();
 // 注册插件
 require('../plugins/register')(service);
 
-module.exports = { cmd, argv, service };
+module.exports = { cmd, argv, service, logger };
