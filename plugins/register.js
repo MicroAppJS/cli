@@ -38,7 +38,7 @@ module.exports = function(service) {
         const name = item.name;
         const description = item.description;
         service.registerPlugin({
-            id: `cli:plugins-extends-${name}`,
+            id: `cli:plugin-extend-${name}`,
             link: path.resolve(__dirname, './extends', name),
             description,
         });
@@ -48,7 +48,7 @@ module.exports = function(service) {
         const name = item.name;
         const description = item.description;
         service.registerPlugin({
-            id: `cli:plugins-commands-${name}`,
+            id: `cli:plugin-command-${name}`,
             link: path.resolve(__dirname, './commands', name),
             description,
         });

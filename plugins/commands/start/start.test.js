@@ -14,7 +14,7 @@ describe('Command start', () => {
 
         const { service } = require('../../../bin/base');
 
-        const plugin = service.plugins.find(item => item.id === 'cli:plugins-commands-start');
+        const plugin = service.plugins.find(item => item.id === 'cli:plugin-command-start');
         expect(typeof plugin).toEqual('object');
 
         service.init();
@@ -33,7 +33,7 @@ describe('Command start', () => {
 
         const { service } = require('../../../bin/base');
 
-        const plugin = service.plugins.find(item => item.id === 'cli:plugins-commands-start');
+        const plugin = service.plugins.find(item => item.id === 'cli:plugin-command-start');
         expect(typeof plugin).toEqual('object');
 
         service.init();
@@ -112,7 +112,7 @@ describe('Command start', () => {
 
         const { service } = require('../../../bin/base');
 
-        const plugin = service.plugins.find(item => item.id === 'cli:plugins-commands-start');
+        const plugin = service.plugins.find(item => item.id === 'cli:plugin-command-start');
         expect(typeof plugin).toEqual('object');
 
         service.init();

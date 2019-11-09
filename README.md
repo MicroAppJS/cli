@@ -9,10 +9,10 @@ Pluggable micro application framework.
 [![NPM Version][npm-img]][npm-url]
 [![NPM Download][download-img]][download-url]
 
-[Coverage-img]: https://coveralls.io/repos/github/MicrosApp/MicroApp-CLI/badge.svg?branch=master
-[Coverage-url]: https://coveralls.io/github/MicrosApp/MicroApp-CLI?branch=master
-[CircleCI-img]: https://circleci.com/gh/MicrosApp/MicroApp-CLI/tree/master.svg?style=svg
-[CircleCI-url]: https://circleci.com/gh/MicrosApp/MicroApp-CLI/tree/master
+[Coverage-img]: https://coveralls.io/repos/github/MicroAppJS/MicroApp-CLI/badge.svg?branch=master
+[Coverage-url]: https://coveralls.io/github/MicroAppJS/MicroApp-CLI?branch=master
+[CircleCI-img]: https://circleci.com/gh/MicroAppJS/MicroApp-CLI/tree/master.svg?style=svg
+[CircleCI-url]: https://circleci.com/gh/MicroAppJS/MicroApp-CLI/tree/master
 [npm-img]: https://img.shields.io/npm/v/@micro-app/cli.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/@micro-app/cli
 [download-img]: https://img.shields.io/npm/dm/@micro-app/cli.svg?style=flat-square

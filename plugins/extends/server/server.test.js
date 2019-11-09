@@ -7,7 +7,7 @@ describe('server', () => {
     it('server adapter', () => {
         const { service } = require('../../../bin/base');
 
-        const plugin = service.plugins.find(item => item.id === 'cli:plugins-extends-server');
+        const plugin = service.plugins.find(item => item.id === 'cli:plugin-extend-server');
         expect(typeof plugin).toEqual('object');
 
         service.init();

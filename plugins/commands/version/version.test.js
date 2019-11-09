@@ -8,7 +8,7 @@ describe('Command version', () => {
 
         const { service } = require('../../../bin/base');
 
-        const plugin = service.plugins.find(item => item.id === 'cli:plugins-commands-version');
+        const plugin = service.plugins.find(item => item.id === 'cli:plugin-command-version');
         expect(typeof plugin).toEqual('object');
 
         service.init();
