@@ -4,13 +4,13 @@
 
 describe('server', () => {
 
-    it('server adapter', () => {
-        const { service } = require('../../../bin/base');
+    it('server adapter', async () => {
+        const { service } = require('../../../../');
 
         const plugin = service.plugins.find(item => item.id === 'cli:plugin-extend-server');
         expect(typeof plugin).toEqual('object');
 
-        service.init();
+        await service.init();
 
         expect(plugin._api).not.toBeUndefined();
 

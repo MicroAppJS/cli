@@ -2,9 +2,9 @@
 
 /* global expect */
 
-describe('Command serve', () => {
+describe('Command start', () => {
 
-    let PORTS = 10000;
+    let PORTS = 22000;
     function getArgvs() {
         const port = PORTS++;
         return { _: [], port };
@@ -12,31 +12,31 @@ describe('Command serve', () => {
 
     it('init run', async () => {
 
-        const { service } = require('../../../bin/base');
+        const { service } = require('../../../../');
 
-        const plugin = service.plugins.find(item => item.id === 'cli:plugin-command-serve');
+        const plugin = service.plugins.find(item => item.id === 'cli:plugin-command-start');
         expect(typeof plugin).toEqual('object');
 
-        service.init();
+        await service.init();
 
         expect(plugin._api).not.toBeUndefined();
 
-        await service.runCommand('serve', getArgvs());
+        await service.runCommand('start', getArgvs());
 
-        expect(service.commands.serve).not.toBeNull();
-        expect(service.commands.serve).not.toBeUndefined();
-        expect(typeof service.commands.serve).toEqual('object');
+        expect(service.commands.start).not.toBeNull();
+        expect(service.commands.start).not.toBeUndefined();
+        expect(typeof service.commands.start).toEqual('object');
 
     });
 
     it('register methods', async () => {
 
-        const { service } = require('../../../bin/base');
+        const { service } = require('../../../../');
 
-        const plugin = service.plugins.find(item => item.id === 'cli:plugin-command-serve');
+        const plugin = service.plugins.find(item => item.id === 'cli:plugin-command-start');
         expect(typeof plugin).toEqual('object');
 
-        service.init();
+        await service.init();
 
         expect(plugin._api).not.toBeUndefined();
         expect(plugin._api).not.toBeNull();
@@ -56,18 +56,19 @@ describe('Command serve', () => {
             expect(app).not.toBeUndefined();
             expect(app).not.toBeNull();
         });
-        plugin._api.onServerInitWillDone(({ args, app }) => {
-            expect(args).not.toBeUndefined();
-            expect(args).not.toBeNull();
-            expect(app).not.toBeUndefined();
-            expect(app).not.toBeNull();
-        });
         plugin._api.onServerInitDone(({ args, app }) => {
             expect(args).not.toBeUndefined();
             expect(args).not.toBeNull();
             expect(app).not.toBeUndefined();
             expect(app).not.toBeNull();
         });
+        plugin._api.onServerInitWillDone(({ args, app }) => {
+            expect(args).not.toBeUndefined();
+            expect(args).not.toBeNull();
+            expect(app).not.toBeUndefined();
+            expect(app).not.toBeNull();
+        });
+
         plugin._api.onServerRunSuccess(({ args, host, port }) => {
             expect(args).not.toBeUndefined();
             expect(args).not.toBeNull();
@@ -99,51 +100,49 @@ describe('Command serve', () => {
             expect(app).not.toBeNull();
         });
 
-        await service.runCommand('serve', getArgvs());
+        await service.runCommand('start', getArgvs());
 
-        expect(service.commands.serve).not.toBeNull();
-        expect(service.commands.serve).not.toBeUndefined();
-        expect(typeof service.commands.serve).toEqual('object');
+        expect(service.commands.start).not.toBeNull();
+        expect(service.commands.start).not.toBeUndefined();
+        expect(typeof service.commands.start).toEqual('object');
 
     });
 
-    it('register dev methods', async () => {
+    it('modifyCreateServer', async () => {
 
-        const { service } = require('../../../bin/base');
+        const { service } = require('../../../../');
 
-        const plugin = service.plugins.find(item => item.id === 'cli:plugin-command-serve');
+        const plugin = service.plugins.find(item => item.id === 'cli:plugin-command-start');
         expect(typeof plugin).toEqual('object');
 
-        service.init();
+        await service.init();
 
         expect(plugin._api).not.toBeUndefined();
-        expect(plugin._api).not.toBeNull();
 
-        plugin._api.beforeDevServer(({ args }) => {
-            expect(args).not.toBeUndefined();
-            expect(args).not.toBeNull();
+        const argv = plugin._api.parseArgv();
+        expect(argv).not.toBeNull();
+        expect(argv).not.toBeUndefined();
+
+        plugin._api.modifyCreateServer(() => {
+
+            return function(api, args) {
+
+                expect(args).not.toBeNull();
+                expect(args).not.toBeUndefined();
+
+                return Promise.resolve({
+                    host: 'a',
+                    port: 22,
+                    url: 'abc',
+                });
+            };
         });
-        plugin._api.afterDevServer(({ args }) => {
-            expect(args).not.toBeUndefined();
-            expect(args).not.toBeNull();
-        });
 
-        await service.runCommand('serve', getArgvs());
+        await service.runCommand('start', getArgvs());
 
-        expect(service.commands.serve).not.toBeNull();
-        expect(service.commands.serve).not.toBeUndefined();
-        expect(typeof service.commands.serve).toEqual('object');
-
-    });
-
-    it('global cmd config', async () => {
-
-        const { service } = require('../../../bin/base');
-
-        await service.run('serve', Object.assign({
-            openSoftLink: true,
-            openDisabledEntry: true,
-        }, getArgvs()));
+        expect(service.commands.start).not.toBeNull();
+        expect(service.commands.start).not.toBeUndefined();
+        expect(typeof service.commands.start).toEqual('object');
 
     });
 

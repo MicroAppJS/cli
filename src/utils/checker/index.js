@@ -4,7 +4,7 @@ const microApp = require('@micro-app/core');
 const logger = microApp.logger;
 const semver = require('semver');
 const updateNotifier = require('update-notifier');
-const pkg = require('../../package.json');
+const pkg = require('../../../package.json');
 
 exports.checkUpgrade = function() {
     // Notify package upgrade. Check version once a week

@@ -2,7 +2,7 @@
 
 /* global expect */
 
-const checker = require('./checker');
+const checker = require('.');
 
 describe('checker', () => {
 

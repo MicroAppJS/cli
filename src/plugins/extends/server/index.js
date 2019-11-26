@@ -74,7 +74,7 @@ module.exports = function extendServer(api, opts) {
                     proxy: _serverConfig.proxy,
                 };
             } else {
-                logger.error(`Not Found micros: "${key}"`);
+                logger.error('[microsServerConfig]', `Not Found micros: "${key}"`);
             }
         });
         config[selfConfig.key] = api.selfServerConfig;
@@ -89,8 +89,8 @@ module.exports = function extendServer(api, opts) {
 
     // merge server config
     api.onInitWillDone(() => {
-        const serverMerge = require('../../../src/utils/merge-server');
-        const serverHooksMerge = require('../../../src/utils/merge-server-hooks');
+        const serverMerge = require('../lib/merge-server');
+        const serverHooksMerge = require('../lib/merge-server-hooks');
         api.modifyDefaultServerConfig(_serverConfig => {
             const selfServerConfig = api.selfServerConfig;
             const microsServerConfig = api.microsServerConfig;

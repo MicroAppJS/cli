@@ -30,6 +30,10 @@ const commands = [
         name: 'init',
         description: '初始化命令行',
     },
+    {
+        name: 'bootstrap',
+        description: '初始化命令行',
+    },
 ];
 
 module.exports = function(service) {

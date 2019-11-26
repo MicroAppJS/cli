@@ -12,7 +12,7 @@ module.exports = function runServe(api, args, opts) {
     }
 
     // custom server
-    const createServer = api.applyPluginHooks('modifyCreateServer', require('../../../src/server/createServer'));
+    const createServer = api.applyPluginHooks('modifyCreateServer', require('../../../server/createServer'));
     if (!createServer || !_.isFunction(createServer)) {
         logger.throw('[Plugin] api.modifyCreateServer() must be return function !');
     }

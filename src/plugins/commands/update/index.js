@@ -102,7 +102,7 @@ function updateMicro(api, name) {
         logger.logo(`${chalk.green('Finish!')}`);
         return;
     } else {
-        logger.error(`Not Found micros: "${name}"`);
+        logger.error('[update]', `Not Found micros: "${name}"`);
     }
 
     api.applyPluginHooks('afterCommandUpdate', { name, logger, microsConfig });

@@ -1,8 +1,8 @@
 {
     "name": "@micro-app/cli",
-    "version": "0.2.0",
+    "version": "0.3.0-alpha.1",
     "description": "[CLI] Pluggable micro application framework.",
-    "main": "bin/base.js",
+    "main": "src/index.js",
     "bin": {
         "micro-app": "bin/micro-app",
         "micro-app-dev": "bin/micro-app-dev",
@@ -39,25 +39,28 @@
     },
     "license": "MIT",
     "devDependencies": {
-        "@micro-app/core": "^0.2.0",
+        "@micro-app/core": "file:../MicroApp-Core",
         "@micro-app/plugin-koa-static-server": "^0.0.1",
         "@micro-app/plugin-koa-webpack-middleware": "^0.0.3",
-        "@types/jest": "^24.0.19",
+        "@types/jest": "^24.0.23",
         "babel-eslint": "^10.0.3",
-        "coveralls": "^3.0.7",
+        "coveralls": "^3.0.8",
         "eslint": "^5.16.0",
         "eslint-config-2o3t": "^1.1.17",
-        "husky": "^3.0.9",
+        "husky": "^3.1.0",
         "jest": "^24.9.0",
-        "lint-staged": "^9.4.2",
+        "lint-staged": "^9.4.3",
         "webpack": "^4.39.2"
     },
     "peerDependencies": {
-        "@micro-app/core": ">=0.2.0"
+        "@micro-app/core": ">=0.3.0"
     },
     "dependencies": {
-        "koa": "^2.10.0",
+        "execa": "^3.3.0",
+        "koa": "^2.11.0",
+        "read-cmd-shim": "^1.0.5",
         "shelljs": "^0.8.3",
+        "signal-exit": "^3.0.2",
         "update-notifier": "^3.0.1",
         "yargs-parser": "^13.1.1"
     },
