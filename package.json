@@ -28,6 +28,7 @@
     ],
     "keywords": [
         "micro",
+        "microapp",
         "micro-app",
         "micro-application",
         "core",
@@ -39,9 +40,6 @@
     },
     "license": "MIT",
     "devDependencies": {
-        "@micro-app/core": "file:../MicroApp-Core",
-        "@micro-app/plugin-koa-static-server": "^0.0.1",
-        "@micro-app/plugin-koa-webpack-middleware": "^0.0.3",
         "@types/jest": "^24.0.23",
         "babel-eslint": "^10.0.3",
         "coveralls": "^3.0.8",
@@ -56,6 +54,7 @@
         "@micro-app/core": ">=0.3.0"
     },
     "dependencies": {
+        "@micro-app/core": "^0.3.0-alpha.2",
         "@zkochan/cmd-shim": "^3.1.0",
         "execa": "^3.3.0",
         "koa": "^2.11.0",

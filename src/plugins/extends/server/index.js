@@ -2,8 +2,6 @@
 
 module.exports = function extendServer(api, opts) {
 
-    api.assertVersion('>=0.2.0');
-
     const registerMethods = require('./methods');
     registerMethods(api);
 
