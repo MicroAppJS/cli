@@ -41,7 +41,7 @@ class BootstrapCommand extends Command {
 
         chain = chain.then(() => this.initTempFiles());
 
-        chain = chain.then(() => this.initGits({ scope }));
+        chain = chain.then(() => this.initNodeModules({ scope }));
 
         chain = chain.then(() => {
             this.npmConfig = {
@@ -80,33 +80,14 @@ class BootstrapCommand extends Command {
     }
 
     initTempFiles() {
-        const path = require('path');
-        const { fs, _ } = require('@micro-app/shared-utils');
+        const initTempDir = require('./initTempDir');
 
         const api = this.api;
-        const allPackages = api.packages;
 
-        if (_.isEmpty(allPackages)) {
-            return;
-        }
-
-        // TODO 初始化临时文件
-        const scope = api.tempDirName;
-        if (_.isString(scope)) {
-            const tempDir = path.resolve(api.root, scope);
-            if (!fs.existsSync(tempDir)) {
-                fs.mkdirpSync(tempDir);
-                api.logger.debug('create scope', tempDir);
-            }
-            if (!this.tempDir) {
-                this.tempDir = tempDir;
-            }
-        }
-
-        api.logger.debug('[bootstrap]', `tempDir: ${this.tempDir}`);
+        this.tempDir = initTempDir(api);
     }
 
-    initGits({ scope }) {
+    initNodeModules({ scope }) {
         const { _ } = require('@micro-app/shared-utils');
 
         const api = this.api;
@@ -118,24 +99,26 @@ class BootstrapCommand extends Command {
 
         // init git
         const pkgs = allPackages.filter(item => {
-            return item.type === 'git';
+            return item.pkgInfo;
         }).map(item => {
             return item.pkgInfo;
         });
+
+        api.logger.debug('pkgs', pkgs.length);
 
         // TODO 需要对外暴露筛选和修复名称, 或者使用其它安装 npm 方式。
         // 例如：
         const resultPkgs = [];
         pkgs.forEach(item => {
-            if (scope) {
+            if (scope) { // 是否指定 scope？
                 resultPkgs.push(_.merge({}, item, {
                     name: `${scope}/${item.name}`,
                 }));
             } else {
                 if (!item.name.startsWith('@micro-app/')) {
-                    resultPkgs.push(_.merge({}, item, {
-                        name: `@micro-app/${item.name}`,
-                    }));
+                    const clone = _.cloneDeep(item);
+                    clone.setName(`@micro-app/${item.name}`);
+                    resultPkgs.push(clone);
                 }
                 resultPkgs.push(item);
             }
@@ -158,38 +141,90 @@ class BootstrapCommand extends Command {
     }
 
     initSymlinks() {
-        const { _ } = require('@micro-app/shared-utils');
-        // TODO 初始化链接, 依赖 packages
-        const api = this.api;
-        const allPackages = api.packages;
+        const path = require('path');
+        const { _, fs } = require('@micro-app/shared-utils');
 
-        if (_.isEmpty(allPackages)) {
+        // TODO 初始化链接, 依赖 packages
+        const filteredPackages = this.filteredPackages;
+        if (_.isEmpty(filteredPackages)) {
             return;
         }
+
+        const api = this.api;
+
         const tempDirPackageGraph = api.tempDirPackageGraph;
 
-        api.logger.debug('ccc...');
-        const deps = api.micros.map(key => {
-            if (/^@micro-app/.test(key)) {
-                if (tempDirPackageGraph.has(key)) {
-                    return { name: key };
-                }
-                return null;
-            }
-            if (tempDirPackageGraph.has(key)) {
-                return { name: key };
-            }
-            if (tempDirPackageGraph.has(`@micro-app/${key}`)) {
-                return { name: `@micro-app/${key}` };
-            }
-            return null;
-        });
-        const dependencies = api.tempDirPackageGraph.addDependencies(deps);
-        console.warn(dependencies);
-        dependencies.reduce((arrs, item) => {
-            console.warn(item.localDependencies);
-            return arrs;
+        const pkgs = tempDirPackageGraph.addDependents(filteredPackages.map(item => ({ name: item.name })));
+        console.warn(pkgs);
+        const dependencies = pkgs.reduce((arrs, item) => {
+            const deps = item.dependencies || {};
+            return arrs.concat(Object.keys(deps).map(name => ({ name })));
         }, []);
+
+        const finallyDeps = tempDirPackageGraph.addDependencies(pkgs.concat(dependencies));
+
+        const symlink = require('../../../utils/symlink');
+        const currentNodeModules = api.nodeModulesPath;
+
+        return Promise.all(finallyDeps.map(item => {
+
+            const dependencyName = item.name;
+            const targetDirectory = path.join(currentNodeModules, dependencyName);
+
+            let chain = Promise.resolve();
+
+            // check if dependency is already installed
+            chain = chain.then(() => fs.pathExists(targetDirectory));
+
+            chain = chain.then(dirExists => {
+                if (dirExists) {
+
+                    const isDepSymlink = symlink.resolve(targetDirectory);
+                    if (isDepSymlink !== false && isDepSymlink !== item.location) {
+                        // installed dependency is a symlink pointing to a different location
+                        api.logger.warn(
+                            'EREPLACE_OTHER',
+                            `Symlink already exists for ${dependencyName}, ` +
+                    'but links to different location. Replacing with updated symlink...'
+                        );
+                    } else if (isDepSymlink === false) {
+                        // installed dependency is not a symlink
+                        api.logger.warn(
+                            'EREPLACE_EXIST',
+                            `${dependencyName} is already installed.`
+                        );
+
+                        // break;
+                        return true;
+                    }
+                } else {
+                // ensure destination directory exists (dealing with scoped subdirs)
+                    fs.ensureDir(path.dirname(targetDirectory));
+                    return false;
+                }
+            });
+
+            chain = chain.then(isBreak => {
+                if (!isBreak) {
+                    // create package symlink
+                    const dependencyLocation = item.contents
+                        ? path.resolve(currentNodeModules, item.contents)
+                        : currentNodeModules;
+
+                    api.logger.debug('junction', 'dependencyLocation: ', dependencyLocation);
+                    symlink.create(dependencyLocation, targetDirectory, 'junction');
+                } else {
+                    api.logger.debug('junction', 'break: ', dependencyName);
+                }
+            });
+
+            // TODO: pass PackageGraphNodes directly instead of Packages
+            // chain = chain.then(() => symlinkBinary(dependencyNode.pkg, currentNode.pkg));
+
+            return chain;
+        })).then(() => {
+            api.logger.info('initSymlinks', 'finished');
+        });
     }
 }
 

@@ -87,3 +87,6 @@ dist
 *.sln
 *.sw*
 
+
+# 特殊备注
+micros.json
