@@ -54,7 +54,7 @@
         "@micro-app/core": ">=0.3.0"
     },
     "dependencies": {
-        "@micro-app/core": "^0.3.0-alpha.2",
+        "@micro-app/core": "file:../MicroApp-Core",
         "@zkochan/cmd-shim": "^3.1.0",
         "execa": "^3.3.0",
         "koa": "^2.11.0",
