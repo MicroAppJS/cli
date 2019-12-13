@@ -10,7 +10,7 @@ module.exports = function extendServer(api, opts) {
 
     const logger = api.logger;
 
-    let tempArgvs = {};
+    let tempArgvs = {}; // TODO 引用，带优化
     api.onRunCommand(({ args = {} }) => {
         tempArgvs = args;
     });
@@ -105,4 +105,9 @@ module.exports = function extendServer(api, opts) {
             });
         });
     });
+};
+
+
+module.exports.configuration = {
+    description: '针对服务信息进行配置扩展.',
 };

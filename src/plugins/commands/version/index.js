@@ -7,3 +7,7 @@ module.exports = function versionCommand(api) {
     api.addCommandVersion(pkg);
 
 };
+
+module.exports.configuration = {
+    description: '显示当前版本号',
+};

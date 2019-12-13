@@ -13,8 +13,8 @@ describe('Command version', () => {
 
         await service.init();
 
-        expect(plugin._api).not.toBeUndefined();
-        plugin._api.addCommandVersion({
+        expect(plugin[Symbol.for('api')]).not.toBeUndefined();
+        plugin[Symbol.for('api')].addCommandVersion({
             name: 'a',
             version: 'b',
             description: 'c',

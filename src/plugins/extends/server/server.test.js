@@ -12,16 +12,16 @@ describe('server', () => {
 
         await service.init();
 
-        expect(plugin._api).not.toBeUndefined();
+        expect(plugin[Symbol.for('api')]).not.toBeUndefined();
 
-        expect(plugin._api.selfConfig).not.toBeNull();
-        expect(plugin._api.selfConfig).not.toBeUndefined();
+        expect(plugin[Symbol.for('api')].selfConfig).not.toBeNull();
+        expect(plugin[Symbol.for('api')].selfConfig).not.toBeUndefined();
 
-        expect(plugin._api.selfServerConfig).not.toBeNull();
-        expect(plugin._api.selfServerConfig).not.toBeUndefined();
+        expect(plugin[Symbol.for('api')].selfServerConfig).not.toBeNull();
+        expect(plugin[Symbol.for('api')].selfServerConfig).not.toBeUndefined();
 
-        expect(plugin._api.microsServerConfig).not.toBeNull();
-        expect(plugin._api.microsServerConfig).not.toBeUndefined();
+        expect(plugin[Symbol.for('api')].microsServerConfig).not.toBeNull();
+        expect(plugin[Symbol.for('api')].microsServerConfig).not.toBeUndefined();
     });
 
 });

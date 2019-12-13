@@ -6,7 +6,7 @@ module.exports = function startCommand(api, opts) {
 
     registerMethods(api);
 
-    const chalk = require('chalk');
+    const { _, chalk } = require('@micro-app/shared-utils');
 
     // start
     api.registerCommand('start', {
@@ -14,19 +14,58 @@ module.exports = function startCommand(api, opts) {
         usage: 'micro-app start [options]',
         options: {
             '--mode': 'specify env mode (default: development)',
-            '--type <type>': 'adapter type, eg. [ webpack, vusion, etc. ].',
+            '--type <type>': 'adapter type, eg. [ webpack, etc. ].',
             '--host <host>': 'node server host.',
             '--port <port>': 'node server port.',
         },
         details: `
 Examples:
-    ${chalk.gray('# vusion')}
-    micro-app start --type vusion
+    micro-app start
           `.trim(),
     }, args => {
-        process.env.NODE_ENV = args.mode || process.env.NODE_ENV || 'production';
+        const logger = api.logger;
 
-        const runServe = require('./serve');
-        return runServe(api, args, opts);
+        // TODO 兼容, 下个版本删除
+        if (args.t && !args.type) {
+            args.type = args.t;
+            logger.warn('you should be use "--type <type>"!!!');
+        }
+
+        for (const key of [ 'type', 'mode' ]) {
+            if (args[key] == null) {
+                args[key] = api[key];
+            }
+        }
+
+        logger.info('Starting server...');
+
+        // custom server
+        const createServer = api.applyPluginHooks('modifyCreateServer', () => {
+            logger.warn('[Plugin]', 'you should be use api.modifyCreateServer() !');
+            return Promise.resolve();
+        });
+        // const createServer = api.applyPluginHooks('modifyCreateServer', require('../../../server/createServer'));
+        if (!createServer || !_.isFunction(createServer)) {
+            logger.throw('[Plugin]', 'api.modifyCreateServer() must be return function !');
+        }
+
+        api.applyPluginHooks('beforeServer', { args });
+
+        return createServer(api, args)
+            .then(({ host, port, url } = {}) => {
+                logger.success('>>> Starting Success >>>');
+                if (url && _.isString(url)) {
+                    logger.info(`Open Browser, URL: ${chalk.yellow(url)}`);
+                }
+                api.applyPluginHooks('afterServer', { args, host, port, url });
+            }).catch(err => {
+                logger.error('>>> Starting Error >>>', err);
+                api.applyPluginHooks('afterServer', { args, err });
+            });
     });
+};
+
+
+module.exports.configuration = {
+    description: '服务启动命令行',
 };

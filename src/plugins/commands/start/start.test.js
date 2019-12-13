@@ -19,7 +19,7 @@ describe('Command start', () => {
 
         await service.init();
 
-        expect(plugin._api).not.toBeUndefined();
+        expect(plugin[Symbol.for('api')]).not.toBeUndefined();
 
         await service.runCommand('start', getArgvs());
 
@@ -38,38 +38,38 @@ describe('Command start', () => {
 
         await service.init();
 
-        expect(plugin._api).not.toBeUndefined();
-        expect(plugin._api).not.toBeNull();
+        expect(plugin[Symbol.for('api')]).not.toBeUndefined();
+        expect(plugin[Symbol.for('api')]).not.toBeNull();
 
-        plugin._api.beforeServer(({ args }) => {
+        plugin[Symbol.for('api')].beforeServer(({ args }) => {
             expect(args).not.toBeUndefined();
             expect(args).not.toBeNull();
         });
-        plugin._api.afterServer(({ args }) => {
+        plugin[Symbol.for('api')].afterServer(({ args }) => {
             expect(args).not.toBeUndefined();
             expect(args).not.toBeNull();
         });
 
-        plugin._api.onServerInit(({ args, app }) => {
+        plugin[Symbol.for('api')].onServerInit(({ args, app }) => {
             expect(args).not.toBeUndefined();
             expect(args).not.toBeNull();
             expect(app).not.toBeUndefined();
             expect(app).not.toBeNull();
         });
-        plugin._api.onServerInitDone(({ args, app }) => {
+        plugin[Symbol.for('api')].onServerInitDone(({ args, app }) => {
             expect(args).not.toBeUndefined();
             expect(args).not.toBeNull();
             expect(app).not.toBeUndefined();
             expect(app).not.toBeNull();
         });
-        plugin._api.onServerInitWillDone(({ args, app }) => {
+        plugin[Symbol.for('api')].onServerInitWillDone(({ args, app }) => {
             expect(args).not.toBeUndefined();
             expect(args).not.toBeNull();
             expect(app).not.toBeUndefined();
             expect(app).not.toBeNull();
         });
 
-        plugin._api.onServerRunSuccess(({ args, host, port }) => {
+        plugin[Symbol.for('api')].onServerRunSuccess(({ args, host, port }) => {
             expect(args).not.toBeUndefined();
             expect(args).not.toBeNull();
             expect(host).not.toBeUndefined();
@@ -77,7 +77,7 @@ describe('Command start', () => {
             expect(port).not.toBeUndefined();
             expect(port).not.toBeNull();
         });
-        plugin._api.onServerRunFail(({ args, host, port, err }) => {
+        plugin[Symbol.for('api')].onServerRunFail(({ args, host, port, err }) => {
             expect(args).not.toBeUndefined();
             expect(args).not.toBeNull();
             expect(host).not.toBeUndefined();
@@ -87,13 +87,13 @@ describe('Command start', () => {
             expect(err).not.toBeUndefined();
             expect(err).not.toBeNull();
         });
-        plugin._api.beforeServerEntry(({ args, app }) => {
+        plugin[Symbol.for('api')].beforeServerEntry(({ args, app }) => {
             expect(args).not.toBeUndefined();
             expect(args).not.toBeNull();
             expect(app).not.toBeUndefined();
             expect(app).not.toBeNull();
         });
-        plugin._api.afterServerEntry(({ args, app }) => {
+        plugin[Symbol.for('api')].afterServerEntry(({ args, app }) => {
             expect(args).not.toBeUndefined();
             expect(args).not.toBeNull();
             expect(app).not.toBeUndefined();
@@ -117,13 +117,13 @@ describe('Command start', () => {
 
         await service.init();
 
-        expect(plugin._api).not.toBeUndefined();
+        expect(plugin[Symbol.for('api')]).not.toBeUndefined();
 
-        const argv = plugin._api.parseArgv();
+        const argv = plugin[Symbol.for('api')].parseArgv();
         expect(argv).not.toBeNull();
         expect(argv).not.toBeUndefined();
 
-        plugin._api.modifyCreateServer(() => {
+        plugin[Symbol.for('api')].modifyCreateServer(() => {
 
             return function(api, args) {
 

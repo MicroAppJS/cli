@@ -107,3 +107,8 @@ function updateMicro(api, name) {
 
     api.applyPluginHooks('afterCommandUpdate', { name, logger, microsConfig });
 }
+
+
+module.exports.configuration = {
+    description: '强制更新 micros 依赖服务命令行',
+};

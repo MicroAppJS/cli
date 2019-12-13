@@ -6,15 +6,7 @@ module.exports = function serveCommand(api, opts) {
 
     registerMethods(api);
 
-    const chalk = require('chalk');
-
-    api.beforeServer(params => {
-        return api.applyPluginHooks('beforeDevServer', params);
-    });
-
-    api.afterServer(params => {
-        return api.applyPluginHooks('afterDevServer', params);
-    });
+    const { _, chalk } = require('@micro-app/shared-utils');
 
     // serve
     api.registerCommand('serve', {
@@ -22,7 +14,7 @@ module.exports = function serveCommand(api, opts) {
         usage: 'micro-app serve [options]',
         options: {
             '--mode': 'specify env mode (default: development)',
-            '--type <type>': 'adapter type, eg. [ webpack, vusion, etc. ].',
+            '--type <type>': 'adapter type, eg. [ webpack, etc. ].',
             '--host <host>': 'node server host.',
             '--port <port>': 'node server port.',
             '--only-node': 'only run node server.',
@@ -31,15 +23,54 @@ module.exports = function serveCommand(api, opts) {
         },
         details: `
 Examples:
-    ${chalk.gray('# vusion')}
-    micro-app serve --type vusion
-    ${chalk.gray('# open soft link')}
-    micro-app serve --type vusion --open-soft-link
+    micro-app serve
+    ${chalk.gray('# mode: development')}
+    micro-app serve --mode development
           `.trim(),
     }, args => {
-        process.env.NODE_ENV = args.mode || process.env.NODE_ENV || 'development';
+        const logger = api.logger;
 
-        const runServe = require('../start/serve');
-        return runServe(api, args, opts);
+        // TODO 兼容, 下个版本删除
+        if (args.t && !args.type) {
+            args.type = args.t;
+            logger.warn('you should be use "--type <type>"!!!');
+        }
+
+        for (const key of [ 'type', 'mode' ]) {
+            if (args[key] == null) {
+                args[key] = api[key];
+            }
+        }
+
+        logger.info('Starting development server...');
+
+        // custom server
+        const createServer = api.applyPluginHooks('modifyCreateDevServer', () => {
+            logger.warn('[Plugin]', 'you should be use api.modifyCreateDevServer() !');
+            return Promise.resolve();
+        });
+
+        if (!createServer || !_.isFunction(createServer)) {
+            logger.throw('[Plugin]', 'api.modifyCreateDevServer() must be return function !');
+        }
+
+        api.applyPluginHooks('beforeDevServer', { args });
+
+        return createServer({ args })
+            .then(({ host, port, url } = {}) => {
+                logger.success('>>> Starting Success >>>');
+                if (url && _.isString(url)) {
+                    logger.info(`Open Browser, URL: ${chalk.yellow(url)}`);
+                }
+                api.applyPluginHooks('afterDevServer', { args, host, port, url });
+            }).catch(err => {
+                logger.error('>>> Starting Error >>>', err);
+                api.applyPluginHooks('afterDevServer', { args, err });
+            });
     });
+};
+
+
+module.exports.configuration = {
+    description: '服务开发命令行',
 };

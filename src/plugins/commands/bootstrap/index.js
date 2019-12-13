@@ -1,5 +1,7 @@
 'use strict';
 
+// TODO 需要整理目录结构，需要保留 package.json, 但是要更改内容
+
 const { Command } = require('@micro-app/core');
 
 class BootstrapCommand extends Command {
@@ -241,3 +243,7 @@ class BootstrapCommand extends Command {
 
 
 module.exports = BootstrapCommand;
+
+module.exports.configuration = {
+    description: '初始化命令行',
+};

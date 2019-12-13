@@ -51,3 +51,8 @@ function initMicro(api, args) {
 
     logger.success(`Init Fnished, Create: ${chalk.yellow(microApp.CONSTANTS.CONFIG_NAME)}`);
 }
+
+
+module.exports.configuration = {
+    description: '初始化命令行',
+};

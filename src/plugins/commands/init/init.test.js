@@ -13,13 +13,13 @@ describe('Command init', () => {
 
         // await service.init();
 
-        // expect(plugin._api).not.toBeUndefined();
+        // expect(plugin[Symbol.for('api')]).not.toBeUndefined();
 
-        // plugin._api.beforeCommandInit(({ logger }) => {
-        //     expect(plugin._api.logger).toEqual(logger);
+        // plugin[Symbol.for('api')].beforeCommandInit(({ logger }) => {
+        //     expect(plugin[Symbol.for('api')].logger).toEqual(logger);
         // });
 
-        // plugin._api.afterCommandInit(({ from, to }) => {
+        // plugin[Symbol.for('api')].afterCommandInit(({ from, to }) => {
         //     expect(from).not.toEqual(to);
         //     expect(from).not.toBeUndefined();
         //     expect(to).not.toBeUndefined();
