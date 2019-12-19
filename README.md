@@ -9,10 +9,10 @@ Pluggable micro application framework.
 [![NPM Version][npm-img]][npm-url]
 [![NPM Download][download-img]][download-url]
 
-[Coverage-img]: https://coveralls.io/repos/github/MicroAppJS/MicroApp-CLI/badge.svg?branch=master
-[Coverage-url]: https://coveralls.io/github/MicroAppJS/MicroApp-CLI?branch=master
-[CircleCI-img]: https://circleci.com/gh/MicroAppJS/MicroApp-CLI/tree/master.svg?style=svg
-[CircleCI-url]: https://circleci.com/gh/MicroAppJS/MicroApp-CLI/tree/master
+[Coverage-img]: https://coveralls.io/repos/github/MicroAppJS/cli/badge.svg?branch=master
+[Coverage-url]: https://coveralls.io/github/MicroAppJS/cli?branch=master
+[CircleCI-img]: https://circleci.com/gh/MicroAppJS/cli/tree/master.svg?style=svg
+[CircleCI-url]: https://circleci.com/gh/MicroAppJS/cli/tree/master
 [npm-img]: https://img.shields.io/npm/v/@micro-app/cli.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/@micro-app/cli
 [download-img]: https://img.shields.io/npm/dm/@micro-app/cli.svg?style=flat-square
@@ -175,9 +175,6 @@ module.exports = function(api, opts) {
     api.onPluginInitDone(item => {
         console.log('onPluginInitDone', item);
     });
-    // api.onChainWebpcakConfig(webpackChainConfig => {
-    //     console.log('onChainWebpcakConfig', webpackChainConfig);
-    // });
 };
 ```
 
@@ -203,8 +200,6 @@ npx micro-app show methods
      * modifyCommand               ( System Build-in )
      * onRunCommand                ( System Build-in )
      * modifyCommandHelp           ( System Build-in )
-     * modifyChainWebpcakConfig    ( 合并之后提供 webpack-chain 进行再次修改事件 )
-     * onChainWebpcakConfig        ( 修改之后提供 webpack-chain 进行查看事件 )
      * modifyWebpackConfig         ( 合并之后提供 webpack config 进行再次修改事件 )
      * onServerInit                ( 服务初始化时事件 )
      * onServerInitWillDone        ( 服务初始化即将完成事件 )

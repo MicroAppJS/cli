@@ -13,6 +13,7 @@ const commands = [
     'update',
     'init',
     'bootstrap',
+    'check',
 ];
 
 module.exports = function(service) {

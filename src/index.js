@@ -18,4 +18,7 @@ const service = new Service(_.cloneDeep(argv));
 // 注册插件
 require('./plugins/register')(service);
 
+// 预加载插件
+// ZAP prePlugin
+
 module.exports = { cmd, argv, service, logger };

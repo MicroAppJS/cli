@@ -1,6 +1,6 @@
 {
     "name": "@micro-app/cli",
-    "version": "0.3.0-alpha.1",
+    "version": "0.3.0-alpha.2",
     "description": "[CLI] Pluggable micro application framework.",
     "main": "src/index.js",
     "bin": {
@@ -13,13 +13,13 @@
         "lint:fix": "npm run lint -- --fix",
         "test": "jest"
     },
-    "homepage": "https://github.com/MicroAppJS/MicroApp-CLI",
+    "homepage": "https://github.com/MicroAppJS/cli",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/MicroAppJS/MicroApp-CLI.git"
+        "url": "git+https://github.com/MicroAppJS/cli.git"
     },
     "bugs": {
-        "url": "https://github.com/MicroAppJS/MicroApp-CLI/issues"
+        "url": "https://github.com/MicroAppJS/cli/issues"
     },
     "files": [
         "bin",
@@ -54,7 +54,7 @@
         "@micro-app/core": ">=0.3.0"
     },
     "dependencies": {
-        "@micro-app/core": "file:../MicroApp-Core",
+        "@micro-app/core": "^0.3.0",
         "@zkochan/cmd-shim": "^3.1.0",
         "execa": "^3.3.0",
         "koa": "^2.11.0",
