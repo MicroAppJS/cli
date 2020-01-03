@@ -1,6 +1,6 @@
 {
     "name": "@micro-app/cli",
-    "version": "0.3.0-alpha.2",
+    "version": "0.3.0-alpha.3",
     "description": "[CLI] Pluggable micro application framework.",
     "main": "src/index.js",
     "bin": {
@@ -39,24 +39,34 @@
         "email": "zyao89@gmail.com"
     },
     "license": "MIT",
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.js": [
+            "npm run lint:fix",
+            "git add"
+        ]
+    },
     "devDependencies": {
-        "@types/jest": "^24.0.23",
+        "@types/jest": "^24.0.25",
         "babel-eslint": "^10.0.3",
-        "coveralls": "^3.0.8",
         "eslint": "^5.16.0",
         "eslint-config-2o3t": "^1.1.17",
         "husky": "^3.1.0",
         "jest": "^24.9.0",
-        "lint-staged": "^9.4.3",
-        "webpack": "^4.39.2"
+        "lint-staged": "^9.5.0",
+        "webpack": "^4.41.5"
     },
     "peerDependencies": {
-        "@micro-app/core": ">=0.3.0"
+        "@micro-app/core": ">=0.3.1"
     },
     "dependencies": {
-        "@micro-app/core": "^0.3.0",
+        "@micro-app/core": "^0.3.1",
         "@zkochan/cmd-shim": "^3.1.0",
-        "execa": "^3.3.0",
+        "execa": "^3.4.0",
         "koa": "^2.11.0",
         "read-cmd-shim": "^1.0.5",
         "shelljs": "^0.8.3",
