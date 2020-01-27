@@ -1,8 +1,7 @@
 'use strict';
 
 const cmdShim = require('@zkochan/cmd-shim');
-const { logger, fs } = require('@micro-app/shared-utils');
-const path = require('path');
+const { path, logger, fs } = require('@micro-app/shared-utils');
 
 module.exports = createSymlink;
 

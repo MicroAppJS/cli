@@ -1,8 +1,7 @@
 'use strict';
 
 const readCmdShim = require('read-cmd-shim');
-const { logger, fs } = require('@micro-app/shared-utils');
-const path = require('path');
+const { path, logger, fs } = require('@micro-app/shared-utils');
 
 module.exports = resolveSymlink;
 

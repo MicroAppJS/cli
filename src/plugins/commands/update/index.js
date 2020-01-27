@@ -1,19 +1,15 @@
 'use strict';
 
+// TODO 待重构优化
+
 const shelljs = require('shelljs');
 const path = require('path');
 const chalk = require('chalk');
 
 module.exports = function updateCommand(api, opts) {
 
-    api.registerMethod('beforeCommandUpdate', {
-        type: api.API_TYPE.EVENT,
-        description: '开始更新前事件',
-    });
-    api.registerMethod('afterCommandUpdate', {
-        type: api.API_TYPE.EVENT,
-        description: '更新完毕后事件',
-    });
+    const registerMethods = require('./methods');
+    registerMethods(api);
 
     // start
     api.registerCommand('update', {
@@ -29,7 +25,7 @@ Examples:
     micro-app update
     ${chalk.gray('# only update <name>')}
     micro-app update -n <name>
-          `.trim(),
+        `.trim(),
     }, args => {
         const name = args.n;
         return updateMicro(api, name);

@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = function initTempDir(api) {
-    const path = require('path');
     const { fs, _ } = require('@micro-app/shared-utils');
 
     const allPackages = api.packages;
@@ -10,19 +9,12 @@ module.exports = function initTempDir(api) {
         return;
     }
 
-    let tempDir;
+    const tempDir = api.tempDir;
 
     // TODO 初始化临时文件
-    const scope = api.tempDirName;
-    if (_.isString(scope)) {
-        const _tempDir = path.resolve(api.root, scope);
-        if (!fs.existsSync(_tempDir)) {
-            fs.mkdirpSync(_tempDir);
-            api.logger.debug('create scope', _tempDir);
-        }
-        if (!tempDir) {
-            tempDir = _tempDir;
-        }
+    if (!fs.existsSync(tempDir)) {
+        fs.ensureDirSync(tempDir);
+        api.logger.debug('[bootstrap]', 'create scope', tempDir);
     }
 
     api.logger.debug('[bootstrap]', `tempDir: ${tempDir}`);

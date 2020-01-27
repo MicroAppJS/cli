@@ -5,12 +5,12 @@ module.exports = function extendServer(api, opts) {
     const registerMethods = require('./methods');
     registerMethods(api);
 
-    const _ = require('lodash');
-    const { smartMerge } = require('@micro-app/shared-utils');
+    const { _, smartMerge } = require('@micro-app/shared-utils');
 
     const logger = api.logger;
 
-    let tempArgvs = {}; // TODO 引用，带优化
+    // 环境变量参数引用（动态）
+    let tempArgvs = {};
     api.onRunCommand(({ args = {} }) => {
         tempArgvs = args;
     });
@@ -30,18 +30,12 @@ module.exports = function extendServer(api, opts) {
         const microConfig = api.selfConfig;
         const _originalConfig = microConfig.originalConfig || {};
         const _serverConfig = _originalConfig.server || {};
-        const { entry, options = {}, hooks } = _serverConfig;
         return {
-            entry,
-            hooks,
-            options,
+            ..._serverConfig,
             info: _.cloneDeep(microConfig),
             shared: microConfig.shared,
             sharedObj: microConfig.sharedObj,
             resolveShared: microConfig.resolveShared,
-            port: _serverConfig.port,
-            host: _serverConfig.host,
-            proxy: _serverConfig.proxy,
         };
     });
 
@@ -58,18 +52,12 @@ module.exports = function extendServer(api, opts) {
             if (microConfig) {
                 const _originalConfig = microConfig.originalConfig || {};
                 const _serverConfig = _originalConfig.server || {};
-                const { entry, options = {}, hooks } = _serverConfig;
                 config[key] = {
-                    entry,
-                    hooks,
-                    options,
+                    ..._serverConfig,
                     info: _.cloneDeep(microConfig),
                     shared: microConfig.shared,
                     sharedObj: microConfig.sharedObj,
                     resolveShared: microConfig.resolveShared,
-                    port: _serverConfig.port,
-                    host: _serverConfig.host,
-                    proxy: _serverConfig.proxy,
                 };
             } else {
                 logger.error('[microsServerConfig]', `Not Found micros: "${key}"`);
@@ -87,22 +75,21 @@ module.exports = function extendServer(api, opts) {
 
     // merge server config
     api.onInitWillDone(() => {
-        const serverMerge = require('../lib/merge-server');
-        const serverHooksMerge = require('../lib/merge-server-hooks');
         api.modifyDefaultServerConfig(_serverConfig => {
             const selfServerConfig = api.selfServerConfig;
             const microsServerConfig = api.microsServerConfig;
             const micros = api.micros;
-            const serverEntrys = serverMerge(...micros.map(key => microsServerConfig[key]), selfServerConfig);
-            const serverHooks = serverHooksMerge(...micros.map(key => microsServerConfig[key]), selfServerConfig);
-            return Object.assign(_serverConfig, {
-                ..._.pick(selfServerConfig, [
-                    'host',
-                    'port',
-                ]),
-                entrys: serverEntrys,
-                hooks: serverHooks,
-            });
+            // 组装 server 配置
+            const mergeConfig = smartMerge(...micros.map(key => {
+                const _msc = microsServerConfig[key];
+                if (!_msc) return {};
+                return _.pick(_msc, [
+                    'shared',
+                    'sharedObj',
+                    'resolveShared',
+                ]);
+            }), selfServerConfig);
+            return Object.assign(_serverConfig, mergeConfig);
         });
     });
 };

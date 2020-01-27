@@ -1,7 +1,5 @@
 'use strict';
 
-const path = require('path');
-
 const extendConfigs = [
     'server',
 ];
@@ -11,24 +9,29 @@ const commands = [
     'start',
     'serve',
     'update',
-    'init',
+    // 'init',
     'bootstrap',
     'check',
+    'build',
 ];
+
+const builtIn = Symbol.for('built-in');
 
 module.exports = function(service) {
 
     extendConfigs.forEach(name => {
         service.registerPlugin({
             id: `cli:plugin-extend-${name}`,
-            link: path.resolve(__dirname, './extends', name),
+            link: require.resolve(`./extends/${name}`),
+            [builtIn]: true,
         });
     });
 
     commands.forEach(name => {
         service.registerPlugin({
             id: `cli:plugin-command-${name}`,
-            link: path.resolve(__dirname, './commands', name),
+            link: require.resolve(`./commands/${name}`),
+            [builtIn]: true,
         });
     });
 

@@ -3,7 +3,6 @@
 module.exports = function startCommand(api, opts) {
 
     const registerMethods = require('./methods');
-
     registerMethods(api);
 
     const { _, chalk } = require('@micro-app/shared-utils');
@@ -21,7 +20,7 @@ module.exports = function startCommand(api, opts) {
         details: `
 Examples:
     micro-app start
-          `.trim(),
+        `.trim(),
     }, args => {
         const logger = api.logger;
 
@@ -31,13 +30,13 @@ Examples:
             logger.warn('you should be use "--type <type>"!!!');
         }
 
-        for (const key of [ 'type', 'mode' ]) {
+        for (const key of [ 'type' ]) {
             if (args[key] == null) {
                 args[key] = api[key];
             }
         }
 
-        logger.info('Starting server...');
+        logger.info('[start]', `Starting ${api.mode} server...`);
 
         // custom server
         const createServer = api.applyPluginHooks('modifyCreateServer', () => {
@@ -51,15 +50,16 @@ Examples:
 
         api.applyPluginHooks('beforeServer', { args });
 
-        return createServer(api, args)
+        return createServer({ args })
             .then(({ host, port, url } = {}) => {
-                logger.success('>>> Starting Success >>>');
+                logger.success('>>> Starting Success !!!');
                 if (url && _.isString(url)) {
                     logger.info(`Open Browser, URL: ${chalk.yellow(url)}`);
                 }
                 api.applyPluginHooks('afterServer', { args, host, port, url });
             }).catch(err => {
-                logger.error('>>> Starting Error >>>', err);
+                logger.error('>>> Starting Error >>>');
+                logger.error(err);
                 api.applyPluginHooks('afterServer', { args, err });
             });
     });

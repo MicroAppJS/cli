@@ -20,6 +20,18 @@ module.exports = api => {
         type: api.API_TYPE.EVENT,
         description: '服务初始化时事件',
     });
+    api.registerMethod('beforeServerEntry', {
+        type: api.API_TYPE.EVENT,
+        description: '服务进入业务逻辑前事件',
+    });
+    api.registerMethod('onServerEntry', {
+        type: api.API_TYPE.EVENT,
+        description: '服务进入业务逻辑事件',
+    });
+    api.registerMethod('afterServerEntry', {
+        type: api.API_TYPE.EVENT,
+        description: '服务从业务逻辑出来后事件',
+    });
     api.registerMethod('onServerInitWillDone', {
         type: api.API_TYPE.EVENT,
         description: '服务初始化即将完成事件',
@@ -35,14 +47,6 @@ module.exports = api => {
     api.registerMethod('onServerRunFail', {
         type: api.API_TYPE.EVENT,
         description: '服务运行启动失败时事件',
-    });
-    api.registerMethod('beforeServerEntry', {
-        type: api.API_TYPE.EVENT,
-        description: '服务进入业务逻辑前事件',
-    });
-    api.registerMethod('afterServerEntry', {
-        type: api.API_TYPE.EVENT,
-        description: '服务从业务逻辑出来后事件',
     });
 
 };

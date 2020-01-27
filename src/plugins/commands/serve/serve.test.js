@@ -41,62 +41,13 @@ describe('Command serve', () => {
         expect(plugin[Symbol.for('api')]).not.toBeUndefined();
         expect(plugin[Symbol.for('api')]).not.toBeNull();
 
-        plugin[Symbol.for('api')].beforeServer(({ args }) => {
+        plugin[Symbol.for('api')].beforeDevServer(({ args }) => {
             expect(args).not.toBeUndefined();
             expect(args).not.toBeNull();
         });
-        plugin[Symbol.for('api')].afterServer(({ args }) => {
+        plugin[Symbol.for('api')].afterDevServer(({ args }) => {
             expect(args).not.toBeUndefined();
             expect(args).not.toBeNull();
-        });
-
-        plugin[Symbol.for('api')].onServerInit(({ args, app }) => {
-            expect(args).not.toBeUndefined();
-            expect(args).not.toBeNull();
-            expect(app).not.toBeUndefined();
-            expect(app).not.toBeNull();
-        });
-        plugin[Symbol.for('api')].onServerInitWillDone(({ args, app }) => {
-            expect(args).not.toBeUndefined();
-            expect(args).not.toBeNull();
-            expect(app).not.toBeUndefined();
-            expect(app).not.toBeNull();
-        });
-        plugin[Symbol.for('api')].onServerInitDone(({ args, app }) => {
-            expect(args).not.toBeUndefined();
-            expect(args).not.toBeNull();
-            expect(app).not.toBeUndefined();
-            expect(app).not.toBeNull();
-        });
-        plugin[Symbol.for('api')].onServerRunSuccess(({ args, host, port }) => {
-            expect(args).not.toBeUndefined();
-            expect(args).not.toBeNull();
-            expect(host).not.toBeUndefined();
-            expect(host).not.toBeNull();
-            expect(port).not.toBeUndefined();
-            expect(port).not.toBeNull();
-        });
-        plugin[Symbol.for('api')].onServerRunFail(({ args, host, port, err }) => {
-            expect(args).not.toBeUndefined();
-            expect(args).not.toBeNull();
-            expect(host).not.toBeUndefined();
-            expect(host).not.toBeNull();
-            expect(port).not.toBeUndefined();
-            expect(port).not.toBeNull();
-            expect(err).not.toBeUndefined();
-            expect(err).not.toBeNull();
-        });
-        plugin[Symbol.for('api')].beforeServerEntry(({ args, app }) => {
-            expect(args).not.toBeUndefined();
-            expect(args).not.toBeNull();
-            expect(app).not.toBeUndefined();
-            expect(app).not.toBeNull();
-        });
-        plugin[Symbol.for('api')].afterServerEntry(({ args, app }) => {
-            expect(args).not.toBeUndefined();
-            expect(args).not.toBeNull();
-            expect(app).not.toBeUndefined();
-            expect(app).not.toBeNull();
         });
 
         await service.runCommand('serve', getArgvs());

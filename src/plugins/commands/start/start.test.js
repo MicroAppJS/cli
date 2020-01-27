@@ -125,7 +125,7 @@ describe('Command start', () => {
 
         plugin[Symbol.for('api')].modifyCreateServer(() => {
 
-            return function(api, args) {
+            return function({ args }) {
 
                 expect(args).not.toBeNull();
                 expect(args).not.toBeUndefined();

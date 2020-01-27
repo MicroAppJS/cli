@@ -3,7 +3,6 @@
 module.exports = function serveCommand(api, opts) {
 
     const registerMethods = require('./methods');
-
     registerMethods(api);
 
     const { _, chalk } = require('@micro-app/shared-utils');
@@ -26,7 +25,7 @@ Examples:
     micro-app serve
     ${chalk.gray('# mode: development')}
     micro-app serve --mode development
-          `.trim(),
+        `.trim(),
     }, args => {
         const logger = api.logger;
 
@@ -36,13 +35,13 @@ Examples:
             logger.warn('you should be use "--type <type>"!!!');
         }
 
-        for (const key of [ 'type', 'mode' ]) {
+        for (const key of [ 'type' ]) {
             if (args[key] == null) {
                 args[key] = api[key];
             }
         }
 
-        logger.info('Starting development server...');
+        logger.info('[serve]', `Starting ${api.mode} server...`);
 
         // custom server
         const createServer = api.applyPluginHooks('modifyCreateDevServer', () => {
@@ -58,13 +57,14 @@ Examples:
 
         return createServer({ args })
             .then(({ host, port, url } = {}) => {
-                logger.success('>>> Starting Success >>>');
+                logger.success('>>> Starting Success !!!');
                 if (url && _.isString(url)) {
                     logger.info(`Open Browser, URL: ${chalk.yellow(url)}`);
                 }
                 api.applyPluginHooks('afterDevServer', { args, host, port, url });
             }).catch(err => {
-                logger.error('>>> Starting Error >>>', err);
+                logger.error('>>> Starting Error >>>');
+                logger.error(err);
                 api.applyPluginHooks('afterDevServer', { args, err });
             });
     });

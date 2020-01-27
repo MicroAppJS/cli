@@ -1,6 +1,6 @@
 {
     "name": "@micro-app/cli",
-    "version": "0.3.0-alpha.3",
+    "version": "0.3.0-alpha.5",
     "description": "[CLI] Pluggable micro application framework.",
     "main": "src/index.js",
     "bin": {
@@ -9,9 +9,11 @@
         "micro-app-start": "bin/micro-app-start"
     },
     "scripts": {
+        "prepublishOnly": "npm run test",
         "lint": "eslint .",
         "lint:fix": "npm run lint -- --fix",
-        "test": "jest"
+        "test": "jest",
+        "publish:next": "npm publish --tag next"
     },
     "homepage": "https://github.com/MicroAppJS/cli",
     "repository": {
@@ -57,20 +59,16 @@
         "eslint-config-2o3t": "^1.1.17",
         "husky": "^3.1.0",
         "jest": "^24.9.0",
-        "lint-staged": "^9.5.0",
-        "webpack": "^4.41.5"
+        "lint-staged": "^9.5.0"
     },
     "peerDependencies": {
-        "@micro-app/core": ">=0.3.1"
+        "@micro-app/core": ">=0.3.3"
     },
     "dependencies": {
-        "@micro-app/core": "^0.3.1",
+        "@micro-app/core": "^0.3.3",
+        "@micro-app/shared-utils": "^0.1.14",
         "@zkochan/cmd-shim": "^3.1.0",
-        "execa": "^3.4.0",
-        "koa": "^2.11.0",
         "read-cmd-shim": "^1.0.5",
-        "shelljs": "^0.8.3",
-        "signal-exit": "^3.0.2",
         "update-notifier": "^3.0.1",
         "yargs-parser": "^16.1.0"
     },
