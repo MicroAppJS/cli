@@ -13,7 +13,7 @@
         "lint": "eslint .",
         "lint:fix": "npm run lint -- --fix",
         "test": "jest",
-        "release": "micro-app release",
+        "release": "bin/micro-app release",
         "release:alpha": "npm run release -- --preRelease=alpha",
         "release:next": "npm run release -- --preRelease=next"
     },
