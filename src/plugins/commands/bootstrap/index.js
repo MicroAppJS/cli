@@ -125,12 +125,14 @@ class BootstrapCommand extends Command {
     }
 
     bootstrap({ force }) {
-        const { fs } = require('@micro-app/shared-utils');
+        const { fs, path } = require('@micro-app/shared-utils');
         const npmInstall = require('./npmInstall');
         const api = this.api;
-        if (fs.pathExistsSync(this.tempDir) && fs.readdirSync(this.tempDir).length > 0 && !force) {
-            api.logger.warn('[bootstrap]', `${this.tempDir} is not empty!`);
-            return;
+        if (!force) {
+            if (fs.pathExistsSync(this.tempDir) && fs.pathExistsSync(path.join(this.tempDir, 'node_modles'))) {
+                api.logger.warn('[bootstrap]', `${this.tempDir} is not empty!`);
+                return;
+            }
         }
         return npmInstall.micros(this.filteredPackages, this.tempDir, this.npmConfig);
     }

@@ -1,6 +1,6 @@
 {
     "name": "@micro-app/cli",
-    "version": "0.3.0-alpha.5",
+    "version": "0.3.0-alpha.7",
     "description": "[CLI] Pluggable micro application framework.",
     "main": "src/index.js",
     "bin": {
@@ -13,7 +13,9 @@
         "lint": "eslint .",
         "lint:fix": "npm run lint -- --fix",
         "test": "jest",
-        "publish:next": "npm publish --tag next"
+        "release": "micro-app release",
+        "release:alpha": "npm run release -- --preRelease=alpha",
+        "release:next": "npm run release -- --preRelease=next"
     },
     "homepage": "https://github.com/MicroAppJS/cli",
     "repository": {
@@ -43,30 +45,23 @@
     "license": "MIT",
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged"
+            "pre-commit": "npm run test"
         }
     },
-    "lint-staged": {
-        "*.js": [
-            "npm run lint:fix",
-            "git add"
-        ]
-    },
     "devDependencies": {
+        "@micro-app/plugin-deploy": "^0.0.4",
         "@types/jest": "^24.0.25",
         "babel-eslint": "^10.0.3",
         "eslint": "^5.16.0",
         "eslint-config-2o3t": "^1.1.17",
         "husky": "^3.1.0",
-        "jest": "^24.9.0",
-        "lint-staged": "^9.5.0"
+        "jest": "^24.9.0"
     },
     "peerDependencies": {
-        "@micro-app/core": ">=0.3.3"
+        "@micro-app/core": ">=0.3.5"
     },
     "dependencies": {
-        "@micro-app/core": "^0.3.3",
-        "@micro-app/shared-utils": "^0.1.14",
+        "@micro-app/core": "^0.3.5",
         "@zkochan/cmd-shim": "^3.1.0",
         "read-cmd-shim": "^1.0.5",
         "update-notifier": "^3.0.1",

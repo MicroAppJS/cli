@@ -12,13 +12,20 @@ module.exports = function initSymlinks(api, { filteredPackages }) {
     }
 
     const tempDirPackageGraph = api.tempDirPackageGraph;
-    const names = filteredPackages.map(item => item.name);
-    const pkgs = tempDirPackageGraph.filters(names);
-    const dependencies = pkgs.reduce((arrs, item) => {
-        const deps = item.dependencies || {};
-        return arrs.concat(Object.keys(deps).filter(name => !!name));
-    }, []);
-    const finallyDeps = tempDirPackageGraph.filters([].concat(dependencies, names));
+    let names = filteredPackages.map(item => item.name);
+
+    const dependencies = [];
+    while (names && names.length) {
+        const pkgs = tempDirPackageGraph.filters(names);
+        dependencies.push(...names);
+        const nexts = pkgs.reduce((arrs, item) => {
+            const deps = item.dependencies || {};
+            return arrs.concat(Object.keys(deps).filter(name => !!name));
+        }, []);
+        names = nexts.filter(item => !dependencies.includes(item));
+    }
+
+    const finallyDeps = tempDirPackageGraph.filters([].concat(dependencies));
 
     const dependencyLocation = api.nodeModulesPath;
 
