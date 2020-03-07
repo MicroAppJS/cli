@@ -39,7 +39,7 @@ module.exports = {
 
     strict: true,
 
-    micros: require('./micros.json'), // 被注册的容器
+    micros: {}, // 被注册的容器
 
     // 服务配置
     server: {

@@ -59,7 +59,7 @@ Examples:
                 api.applyPluginHooks('afterServer', { args, host, port, url });
             }).catch(err => {
                 logger.error('>>> Starting Error >>>');
-                logger.error(err);
+                console.error(err);
                 api.applyPluginHooks('afterServer', { args, err });
             });
     });

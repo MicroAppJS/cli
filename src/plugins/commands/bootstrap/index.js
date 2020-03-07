@@ -106,9 +106,13 @@ class BootstrapCommand extends Command {
     }
 
     initTempFiles() {
-        const initTempDir = require('./initTempDir');
+        const { _ } = require('@micro-app/shared-utils');
         const api = this.api;
-        this.tempDir = initTempDir(api);
+        const allPackages = api.packages;
+        if (_.isEmpty(allPackages)) {
+            return;
+        }
+        this.tempDir = api.tempDir;
     }
 
     initNodeModules() {
