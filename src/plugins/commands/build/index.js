@@ -12,8 +12,8 @@ module.exports = function buildCommand(api, opts) {
         description: 'build for production',
         usage: 'micro-app build [options]',
         options: {
-            '--mode': 'specify env mode (default: development)',
-            '--type <type>': 'adapter type, eg. [ webpack, etc. ].',
+            '--mode <mode>': 'specify env mode (default: "development")',
+            '--target <target>': 'app | lib | node etc. (default: "app")',
         },
         details: `
 Examples:
@@ -21,12 +21,6 @@ Examples:
             `.trim(),
     }, args => {
         const logger = api.logger;
-
-        // TODO 兼容, 下个版本删除
-        if (args.t && !args.type) {
-            args.type = args.t;
-            logger.warn('you should be use "--type <type>"!!!');
-        }
 
         logger.info('[build]', `Starting ${api.mode} build...`);
 

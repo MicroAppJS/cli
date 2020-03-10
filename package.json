@@ -27,7 +27,6 @@
     },
     "files": [
         "bin",
-        "plugins",
         "src"
     ],
     "keywords": [
@@ -51,17 +50,15 @@
     "devDependencies": {
         "@micro-app/plugin-deploy": "^0.0.4",
         "@types/jest": "^24.9.1",
-        "babel-eslint": "^10.1.0",
-        "eslint": "^5.16.0",
-        "eslint-config-2o3t": "^1.1.17",
+        "eslint-config-2o3t": "^2.0.1",
         "husky": "^3.1.0",
         "jest": "^24.9.0"
     },
     "peerDependencies": {
-        "@micro-app/core": ">=0.3.6"
+        "@micro-app/core": ">=0.3.7"
     },
     "dependencies": {
-        "@micro-app/core": "^0.3.6",
+        "@micro-app/core": "^0.3.7",
         "@zkochan/cmd-shim": "^3.1.0",
         "read-cmd-shim": "^1.0.5",
         "update-notifier": "^3.0.1",

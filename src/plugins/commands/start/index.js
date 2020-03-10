@@ -12,8 +12,8 @@ module.exports = function startCommand(api, opts) {
         description: 'runs server for production',
         usage: 'micro-app start [options]',
         options: {
-            '--mode': 'specify env mode (default: development)',
-            '--type <type>': 'adapter type, eg. [ webpack, etc. ].',
+            '--mode <mode>': 'specify env mode (default: "development")',
+            '--target <target>': 'app | lib | node etc. (default: "app")',
             '--host <host>': 'node server host.',
             '--port <port>': 'node server port.',
         },
@@ -23,18 +23,6 @@ Examples:
         `.trim(),
     }, args => {
         const logger = api.logger;
-
-        // TODO 兼容, 下个版本删除
-        if (args.t && !args.type) {
-            args.type = args.t;
-            logger.warn('you should be use "--type <type>"!!!');
-        }
-
-        for (const key of [ 'type' ]) {
-            if (args[key] == null) {
-                args[key] = api[key];
-            }
-        }
 
         logger.info('[start]', `Starting ${api.mode} server...`);
 
