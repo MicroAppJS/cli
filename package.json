@@ -54,11 +54,8 @@
         "husky": "^3.1.0",
         "jest": "^24.9.0"
     },
-    "peerDependencies": {
-        "@micro-app/core": ">=0.3.7"
-    },
     "dependencies": {
-        "@micro-app/core": "^0.3.7",
+        "@micro-app/core": "^0.3.10",
         "@zkochan/cmd-shim": "^3.1.0",
         "read-cmd-shim": "^1.0.5",
         "update-notifier": "^3.0.1",

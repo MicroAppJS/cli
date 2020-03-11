@@ -5,7 +5,7 @@ module.exports = function extendServer(api, opts) {
     const registerMethods = require('./methods');
     registerMethods(api);
 
-    const { _, smartMerge } = require('@micro-app/shared-utils');
+    const { _, smartMerge, yParser } = require('@micro-app/shared-utils');
 
     const logger = api.logger;
 
@@ -18,7 +18,6 @@ module.exports = function extendServer(api, opts) {
     api.extendMethod('parseArgv', {
         description: 'resolve parse command argv.',
     }, function() {
-        const yParser = require('yargs-parser');
         const argv = yParser(process.argv.slice(2)) || {};
         return smartMerge({}, argv, tempArgvs);
     });

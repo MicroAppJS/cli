@@ -6,12 +6,11 @@ if (!checker.checkNode()) {
 }
 checker.checkUpgrade();
 
-const yParser = require('yargs-parser');
+const { _, logger, fs, tryRequire, path, yParser } = require('@micro-app/shared-utils');
 const cmd = process.argv[2];
 const argv = yParser(process.argv.slice(3));
 
 const Service = require('@micro-app/core');
-const { _, logger, fs, tryRequire, path } = require('@micro-app/shared-utils');
 
 const service = new Service(_.cloneDeep(argv));
 

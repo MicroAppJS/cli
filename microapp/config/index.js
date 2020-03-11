@@ -1,20 +1,17 @@
 'use strict';
 
 module.exports = {
-    name: '@micro-app/demo',
-    description: '',
-    version: '0.0.1',
     type: '', // types 类型
 
     entry: {
         main: './test/index.js',
     },
 
-    htmls: [
-        {
-            template: './test/index.js',
-        },
-    ],
+    // htmls: [
+    //     {
+    //         template: './test/index.js',
+    //     },
+    // ],
 
     // staticPath: '',
 
@@ -24,20 +21,18 @@ module.exports = {
     //     },
     // ],
 
-    alias: { // 前端
-        api: 'abc',
-        config: {
-            link: 'abc',
-            description: '配置',
-        },
-        service: {
-            link: 'abc',
-            description: '接口',
-            type: 'server',
-        },
-    },
-
-    strict: true,
+    // alias: { // 前端
+    //     api: 'abc',
+    //     config: {
+    //         link: 'abc',
+    //         description: '配置',
+    //     },
+    //     service: {
+    //         link: 'abc',
+    //         description: '接口',
+    //         type: 'server',
+    //     },
+    // },
 
     micros: {}, // 被注册的容器
 
