@@ -15,12 +15,6 @@ module.exports = {
 
     // staticPath: '',
 
-    // dlls: [
-    //     {
-    //         context: __dirname,
-    //     },
-    // ],
-
     // alias: { // 前端
     //     api: 'abc',
     //     config: {
@@ -43,12 +37,5 @@ module.exports = {
 
     plugins: [
         '@micro-app/plugin-deploy',
-        [{
-            id: 'test',
-            description: '这是test',
-            link: __dirname + '/test/testPlugin',
-        }, {
-            a: 1,
-        }],
     ],
 };

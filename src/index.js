@@ -10,23 +10,30 @@ const { _, logger, fs, tryRequire, path, yParser } = require('@micro-app/shared-
 const cmd = process.argv[2];
 const argv = yParser(process.argv.slice(3));
 
-const Service = require('@micro-app/core');
+// create instance
+function createService(_argv) {
 
-const service = new Service(_.cloneDeep(argv));
+    const Service = require('@micro-app/core');
 
-// 注册插件
-require('./plugins/register')(service);
+    const service = new Service(_argv || _.cloneDeep(argv));
 
-// 预加载插件
-// ZAP --pre-register-plugin
-if (argv.preRegisterPlugin && _.isString(argv.preRegisterPlugin)) {
-    const preRegisterPluginPath = path.resolve(service.root, argv.preRegisterPlugin);
-    if (fs.pathExistsSync(preRegisterPluginPath)) {
-        const preRegisterPlugin = tryRequire(preRegisterPluginPath);
-        if (_.isFunction(preRegisterPlugin)) {
-            preRegisterPlugin(service);
+    // 注册插件
+    require('./plugins/register')(service);
+
+    // 预加载插件
+    // ZAP --pre-register-plugin
+    if (argv.preRegisterPlugin && _.isString(argv.preRegisterPlugin)) {
+        const preRegisterPluginPath = path.resolve(service.root, argv.preRegisterPlugin);
+        if (fs.pathExistsSync(preRegisterPluginPath)) {
+            const preRegisterPlugin = tryRequire(preRegisterPluginPath);
+            if (_.isFunction(preRegisterPlugin)) {
+                preRegisterPlugin(service);
+            }
         }
     }
+    return service;
 }
 
-module.exports = { cmd, argv, service, logger };
+const service = createService();
+
+module.exports = { cmd, argv, service, logger, createService };

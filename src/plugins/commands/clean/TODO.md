@@ -1,5 +1,5 @@
 # clean
 
-## clean .microapp/node_modules
+## clean microapp/.temp
 
 反向 bootstrap
