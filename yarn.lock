@@ -354,19 +354,19 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@micro-app/core@^0.3.10":
-  version "0.3.10"
-  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.3.10.tgz#edcc2b25517ea6251e1874c99e10b569b10f4736"
-  integrity sha512-edMezbsnMTGD/kiNY3iSLo+CstOaMbPKYhJOfQ3mlatBM2aw6ODj186tn+Xv73ZPockAxMKwL7mFh0TrL0Ssaw==
+"@micro-app/core@^0.3.11":
+  version "0.3.11"
+  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.3.11.tgz#118241ef89935f2592884386272cb252cb679009"
+  integrity sha512-ElM6SymqaAKzpMGnJKVhzisrP4NtHauW972EpAy3+2GEjWTVFCFi9E1w9g4AIyCbvxRvM3MTWxPDUZFZH3HlNA==
   dependencies:
     "@micro-app/shared-utils" "^0.1.15"
     dotenv "^8.2.0"
     dotenv-expand "^5.1.0"
 
-"@micro-app/plugin-deploy@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@micro-app/plugin-deploy/-/plugin-deploy-0.0.4.tgz#0125b16ed43e3668bdeb27ee6ff8db646d0ffed4"
-  integrity sha512-3hEFZvb5LuTu0N/TalV3Scr2GIJYpc9G2B+qL2VLf+K3GvF0c94uwjTGjT0OsFeJ3UtRC2xVll89FmieJpVWfA==
+"@micro-app/plugin-deploy@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@micro-app/plugin-deploy/-/plugin-deploy-0.0.5.tgz#5fc98861023e2d712b5f9aecb4e990a3900c74ab"
+  integrity sha512-e8ycu/h02XhRqjLIKz2mrer05fVFFDQlSvxZxsKRk6GNTqb4ZZ9xsmbfDDI3omp+56WPmbK3FElr/9piB+S1OQ==
   dependencies:
     "@release-it/conventional-changelog" "^1.1.0"
     release-it "^12.4.3"

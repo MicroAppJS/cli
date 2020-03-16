@@ -1,4 +1,4 @@
 'use strict';
 
-const { cmd, argv, service } = require('../bin/base');
+const { cmd, argv, service } = require('../');
 service.run(cmd, argv);

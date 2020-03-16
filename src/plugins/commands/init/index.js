@@ -1,17 +1,21 @@
 'use strict';
 
-// module.exports = function initCommand(api, opts) {
+module.exports = function initCommand(api, opts) {
 
-// const { _, chalk, fs, prompt, smartMerge } = require('@micro-app/shared-utils');
+    // const { _, chalk, fs, prompt, smartMerge } = require('@micro-app/shared-utils');
 
-// api.addCommandInit((last, old) => {
-//     console.warn('last: ', last);
-//     console.warn('old: ', old);
-//     return {};
-// });
-// };
+    // api.addCommandInit((last, old) => {
+    //     console.warn('last: ', last);
+    //     console.warn('old: ', old);
+    //     return {};
+    // });
+
+    // api.addCommandInit({
+    //     abc: 'aa',
+    // });
+};
 
 
 module.exports.configuration = {
-    description: '初始化命令行',
+    description: '增加初始化命令行',
 };

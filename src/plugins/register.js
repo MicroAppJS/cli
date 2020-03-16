@@ -9,10 +9,11 @@ const commands = [
     'start',
     'serve',
     'update',
-    // 'init',
+    'init',
     'bootstrap',
     'check',
     'build',
+    'clean',
 ];
 
 const builtIn = Symbol.for('built-in');
