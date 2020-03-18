@@ -1,3 +1,5 @@
+## [0.3.7](https://github.com/MicroAppJS/cli/compare/v0.3.6...v0.3.7) (2020-03-18)
+
 ## [0.3.6](https://github.com/MicroAppJS/cli/compare/v0.1.0...v0.3.6) (2020-03-16)
 
 
