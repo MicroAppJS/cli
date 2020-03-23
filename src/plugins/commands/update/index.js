@@ -37,7 +37,7 @@ function updateMicro(api, name) {
     const microAppConfig = api.selfConfig;
     const micros = api.micros;
     const microsConfig = api.microsConfig;
-    const currentNodeModules = microAppConfig.nodeModules;
+    const currentNodeModulesPath = microAppConfig.nodeModulesPath;
     const currentPkgInfo = microAppConfig.package;
 
     api.applyPluginHooks('beforeCommandUpdate', { name, logger, microsConfig });
@@ -46,7 +46,7 @@ function updateMicro(api, name) {
         const microConfig = microsConfig[name];
         if (microConfig) {
             const root = microConfig.originalRoot || microConfig.root;
-            if (!root.startsWith(currentNodeModules)) {
+            if (!root.startsWith(currentNodeModulesPath)) {
                 // 丢弃非 node_modules 中的地址
                 return;
             }
@@ -68,7 +68,7 @@ function updateMicro(api, name) {
             const microConfig = microsConfig[key];
             if (microConfig) {
                 const root = microConfig.root;
-                if (!root.startsWith(currentNodeModules)) {
+                if (!root.startsWith(currentNodeModulesPath)) {
                     // 丢弃软链接
                     return false;
                 }

@@ -6,7 +6,8 @@
     "bin": {
         "micro-app": "bin/micro-app",
         "micro-app-dev": "bin/micro-app-dev",
-        "micro-app-start": "bin/micro-app-start"
+        "micro-app-start": "bin/micro-app-start",
+        "micro-app-build": "./bin/micro-app-build"
     },
     "scripts": {
         "prepublishOnly": "npm run test",
@@ -57,7 +58,7 @@
         "jest": "^24.9.0"
     },
     "dependencies": {
-        "@micro-app/core": "^0.3.15",
+        "@micro-app/core": "^0.3.16",
         "@zkochan/cmd-shim": "^4.3.0",
         "read-cmd-shim": "^2.0.0",
         "update-notifier": "^4.1.0"
