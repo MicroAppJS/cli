@@ -16,7 +16,7 @@ const commands = [
     'clean',
 ];
 
-const builtIn = Symbol.for('built-in');
+const BUILT_IN = Symbol.for('built-in');
 
 module.exports = function(service) {
 
@@ -24,7 +24,7 @@ module.exports = function(service) {
         service.registerPlugin({
             id: `cli:plugin-extend-${name}`,
             link: require.resolve(`./extends/${name}`),
-            [builtIn]: true,
+            [BUILT_IN]: true,
         });
     });
 
@@ -32,7 +32,7 @@ module.exports = function(service) {
         service.registerPlugin({
             id: `cli:plugin-command-${name}`,
             link: require.resolve(`./commands/${name}`),
-            [builtIn]: true,
+            [BUILT_IN]: true,
         });
     });
 

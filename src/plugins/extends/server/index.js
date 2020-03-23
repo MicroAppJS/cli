@@ -5,21 +5,14 @@ module.exports = function extendServer(api, opts) {
     const registerMethods = require('./methods');
     registerMethods(api);
 
-    const { _, smartMerge, yParser } = require('@micro-app/shared-utils');
+    const { _, smartMerge } = require('@micro-app/shared-utils');
 
     const logger = api.logger;
-
-    // 环境变量参数引用（动态）
-    let tempArgvs = {};
-    api.onRunCommand(({ args = {} }) => {
-        tempArgvs = args;
-    });
 
     api.extendMethod('parseArgv', {
         description: 'resolve parse command argv.',
     }, function() {
-        const argv = yParser(process.argv.slice(2)) || {};
-        return smartMerge({}, argv, tempArgvs);
+        return _.cloneDeep(api.context);
     });
 
     api.extendConfig('selfServerConfig', {
@@ -31,7 +24,7 @@ module.exports = function extendServer(api, opts) {
         const _serverConfig = _originalConfig.server || {};
         return {
             ..._serverConfig,
-            info: _.cloneDeep(microConfig),
+            info: microConfig.toJSON(),
             shared: microConfig.shared,
             sharedObj: microConfig.sharedObj,
             resolveShared: microConfig.resolveShared,
@@ -66,31 +59,28 @@ module.exports = function extendServer(api, opts) {
         return config;
     });
 
+    // ZAP: 需要优化时机 和 内容
+    // merge server config
     api.extendConfig('serverConfig', {
+        cache: true,
         description: '当前工程下服务端配置集合',
     }, function() {
-        return api.applyPluginHooks('modifyDefaultServerConfig', {});
+        const selfServerConfig = api.selfServerConfig;
+        const microsServerConfig = api.microsServerConfig;
+        const micros = api.micros;
+        // 组装 server 配置
+        const mergeConfig = smartMerge(...micros.map(key => {
+            const _msc = microsServerConfig[key];
+            if (!_msc) return {};
+            return _.pick(_msc, [
+                'shared',
+                'sharedObj',
+                'resolveShared',
+            ]);
+        }), selfServerConfig);
+        return Object.assign({}, mergeConfig);
     });
 
-    // merge server config
-    api.onInitWillDone(() => {
-        api.modifyDefaultServerConfig(_serverConfig => {
-            const selfServerConfig = api.selfServerConfig;
-            const microsServerConfig = api.microsServerConfig;
-            const micros = api.micros;
-            // 组装 server 配置
-            const mergeConfig = smartMerge(...micros.map(key => {
-                const _msc = microsServerConfig[key];
-                if (!_msc) return {};
-                return _.pick(_msc, [
-                    'shared',
-                    'sharedObj',
-                    'resolveShared',
-                ]);
-            }), selfServerConfig);
-            return Object.assign(_serverConfig, mergeConfig);
-        });
-    });
 };
 
 

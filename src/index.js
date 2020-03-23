@@ -10,10 +10,14 @@ const { _, logger, fs, tryRequire, path, yParser } = require('@micro-app/shared-
 const cmd = process.argv[2];
 const argv = yParser(process.argv.slice(3));
 
-// create instance
-function createService(_argv) {
+const Service = require('@micro-app/core');
 
-    const Service = require('@micro-app/core');
+/**
+ * create instance
+ * @param {Object} _argv context
+ * @return {Service} service instance
+ */
+function createService(_argv) {
 
     const service = new Service(_argv || _.cloneDeep(argv));
 

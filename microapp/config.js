@@ -38,4 +38,6 @@ module.exports = {
     plugins: [
         '@micro-app/plugin-deploy',
     ],
+
+    options: {}, // 合并
 };

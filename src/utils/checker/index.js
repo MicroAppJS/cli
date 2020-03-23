@@ -8,7 +8,7 @@ const pkg = require('../../../package.json');
 
 exports.checkUpgrade = function() {
     // Notify package upgrade. Check version once a week
-    updateNotifier({
+    return updateNotifier({
         pkg,
         updateCheckInterval: 1000 * 60 * 60 * 24 * 7,
     }).notify({

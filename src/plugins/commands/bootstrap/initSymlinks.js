@@ -11,7 +11,7 @@ module.exports = function initSymlinks(api, { filteredPackages }) {
         return Promise.resolve();
     }
 
-    const tempDirPackageGraph = api.tempDirPackageGraph;
+    const tempDirPackageGraph = api.getTempDirPackageGraph();
     let names = filteredPackages.map(item => item.name);
 
     const dependencies = [];

@@ -17,5 +17,5 @@ module.exports = function initCommand(api, opts) {
 
 
 module.exports.configuration = {
-    description: '增加初始化命令行',
+    description: '增强初始化命令行',
 };
