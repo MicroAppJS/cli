@@ -6,7 +6,7 @@ if (!checker.checkNode()) {
 }
 checker.checkUpgrade();
 
-const { _, logger, fs, tryRequire, path, yParser } = require('@micro-app/shared-utils');
+const { _, logger, fs, tryRequire, path, yParser, smartMerge } = require('@micro-app/shared-utils');
 const cmd = process.argv[2];
 const argv = yParser(process.argv.slice(3));
 
@@ -19,7 +19,7 @@ const Service = require('@micro-app/core');
  */
 function createService(_argv) {
 
-    const service = new Service(_argv || _.cloneDeep(argv));
+    const service = new Service(smartMerge(_.cloneDeep(argv), _argv));
 
     // 注册插件
     require('./plugins/register')(service);
