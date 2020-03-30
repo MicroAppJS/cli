@@ -25,7 +25,7 @@ function createService(_argv) {
     require('./plugins/register')(service);
 
     // 预加载插件
-    // ZAP --pre-register-plugin
+    // --pre-register-plugin
     if (argv.preRegisterPlugin && _.isString(argv.preRegisterPlugin)) {
         const preRegisterPluginPath = path.resolve(service.root, argv.preRegisterPlugin);
         if (fs.pathExistsSync(preRegisterPluginPath)) {
