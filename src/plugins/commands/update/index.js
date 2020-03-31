@@ -17,7 +17,7 @@ module.exports = function updateCommand(api, opts) {
         usage: 'micro-app update [options]',
         options: {
             '-': 'update all.',
-            '-n <name>': 'only update <name>.',
+            '--name <name>': 'only update <name>.',
         },
         details: `
 Examples:
@@ -27,7 +27,7 @@ Examples:
     micro-app update -n <name>
         `.trim(),
     }, args => {
-        const name = args.n;
+        const name = args.name;
         return updateMicro(api, name);
     });
 };
@@ -40,31 +40,32 @@ function updateMicro(api, name) {
     const currentNodeModulesPath = microAppConfig.nodeModulesPath;
     const currentPkgInfo = microAppConfig.package;
 
-    api.applyPluginHooks('beforeCommandUpdate', { name, logger, microsConfig });
+    const options = {
+        name, micros,
+    };
+    api.applyPluginHooks('beforeCommandUpdate', options);
+    const _name = options.name;
+    const _micros = options.micros;
 
-    if (micros.includes(name)) {
-        const microConfig = microsConfig[name];
+    if (_micros.includes(_name)) {
+        const microConfig = microsConfig[_name];
         if (microConfig) {
             const root = microConfig.originalRoot || microConfig.root;
-            if (!root.startsWith(currentNodeModulesPath)) {
-                // 丢弃非 node_modules 中的地址
-                return;
-            }
-
-            const gitPath = (currentPkgInfo.devDependencies && currentPkgInfo.devDependencies[microConfig.packageName]) || (currentPkgInfo.dependencies && currentPkgInfo.dependencies[microConfig.packageName]) || false;
-            if (gitPath) {
-                logger.logo(`${chalk.yellow('Delete')}: ${root}`);
-                shelljs.rm('-rf', root);
-                shelljs.rm('-rf', path.join(microAppConfig.root, 'package-lock.json'));
-                const spinner = logger.spinner(`Updating ${name} ...`);
-                spinner.start();
-                shelljs.exec(`npm install -D "${gitPath}"`);
-                spinner.succeed(`${chalk.green('Update Finish!')}`);
-                return;
+            if (root.startsWith(currentNodeModulesPath)) { // 丢弃非 node_modules 中的地址
+                const gitPath = (currentPkgInfo.devDependencies && currentPkgInfo.devDependencies[microConfig.packageName]) || (currentPkgInfo.dependencies && currentPkgInfo.dependencies[microConfig.packageName]) || false;
+                if (gitPath) {
+                    logger.logo(`${chalk.yellow('Delete')}: ${root}`);
+                    shelljs.rm('-rf', root);
+                    shelljs.rm('-rf', path.join(microAppConfig.root, 'package-lock.json'));
+                    const spinner = logger.spinner(`Updating ${_name} ...`);
+                    spinner.start();
+                    shelljs.exec(`npm install -D "${gitPath}"`);
+                    spinner.succeed(`${chalk.green('Update Finish!')}`);
+                }
             }
         }
-    } else if (!name) { // all
-        const gitPaths = micros.map(key => {
+    } else if (!_name) { // all
+        const gitPaths = _micros.map(key => {
             const microConfig = microsConfig[key];
             if (microConfig) {
                 const root = microConfig.root;
@@ -96,14 +97,12 @@ function updateMicro(api, name) {
         }
 
         logger.logo(`${chalk.green('Finish!')}`);
-        return;
     } else {
-        logger.error('[update]', `Not Found micros: "${name}"`);
+        logger.error('[update]', `Not Found micros: "${_name}"`);
     }
 
-    api.applyPluginHooks('afterCommandUpdate', { name, logger, microsConfig });
+    api.applyPluginHooks('afterCommandUpdate', options);
 }
-
 
 module.exports.configuration = {
     description: '强制更新 micros 依赖服务命令行',
