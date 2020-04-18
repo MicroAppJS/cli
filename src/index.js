@@ -8,7 +8,12 @@ checker.checkUpgrade();
 
 const { _, logger, fs, tryRequire, path, yParser, smartMerge } = require('@micro-app/shared-utils');
 const cmd = process.argv[2];
-const argv = yParser(process.argv.slice(3));
+const argv = yParser(process.argv.slice(3), {
+    array: [ 'skip-plugins' ],
+    configuration: {
+        'greedy-arrays': true,
+    },
+});
 
 const Service = require('@micro-app/core');
 

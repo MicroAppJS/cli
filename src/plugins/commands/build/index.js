@@ -24,6 +24,8 @@ Examples:
 
         logger.info('[build]', `Starting ${api.mode} build...`);
 
+        api.applyPluginHooks('beforeBuild', { args });
+
         // custom BuildProcess
         const createBuildProcess = api.applyPluginHooks('modifyCreateBuildProcess', () => {
             logger.warn('[Plugin]', 'you should be use api.modifyCreateBuildProcess() !');
@@ -33,8 +35,6 @@ Examples:
         if (!createBuildProcess || !_.isFunction(createBuildProcess)) {
             logger.throw('[Plugin]', 'api.modifyCreateBuildProcess() must be return function !');
         }
-
-        api.applyPluginHooks('beforeBuild', { args });
 
         return createBuildProcess({ args })
             .then(() => {

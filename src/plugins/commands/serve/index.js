@@ -31,6 +31,8 @@ Examples:
 
         logger.info('[serve]', `Starting ${api.mode} server...`);
 
+        api.applyPluginHooks('beforeDevServer', { args });
+
         // custom server
         const createServer = api.applyPluginHooks('modifyCreateDevServer', () => {
             logger.warn('[Plugin]', 'you should be use api.modifyCreateDevServer() !');
@@ -40,8 +42,6 @@ Examples:
         if (!createServer || !_.isFunction(createServer)) {
             logger.throw('[Plugin]', 'api.modifyCreateDevServer() must be return function !');
         }
-
-        api.applyPluginHooks('beforeDevServer', { args });
 
         return createServer({ args })
             .then(({ host, port, url } = {}) => {
