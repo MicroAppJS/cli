@@ -365,10 +365,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@micro-app/core@^0.3.29":
-  version "0.3.29"
-  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.3.29.tgz#855f0ee436b554dec486286bdd7d21acada71fa5"
-  integrity sha512-IHMCEhs2qX506yc7LiUSTDnzDDAfYsU0brMx0gTFQijPE1gLk+VB2F55fSwKMcLJDC+poJcc2xYht+Rmsxpzfg==
+"@micro-app/core@^0.3.30":
+  version "0.3.30"
+  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.3.30.tgz#11b13d1578c951797b615c478f422982fdac6d25"
+  integrity sha512-TRQSmb0Y2p/LbQOpmsCpLN0/ZiIpRHvMfGqeEMRQYmVbDLh2bb8XuCoUZ9sEm5EbEIlAHLv2Yi0OOL/Hn/1cZA==
   dependencies:
     "@micro-app/shared-utils" "^0.1.19"
     dotenv "^8.2.0"
