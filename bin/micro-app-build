@@ -7,4 +7,4 @@ const { yParser } = require('@micro-app/shared-utils');
 const argv = yParser(process.argv.slice(2));
 const { service } = require('./base');
 
-service.run('start', argv);
+service.run('build', argv);
