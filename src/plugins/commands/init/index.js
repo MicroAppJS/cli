@@ -11,7 +11,11 @@ module.exports = function initCommand(api, opts) {
     // });
 
     // api.addCommandInit({
-    //     abc: 'aa',
+    //     type: 'master',
+    // });
+
+    // api.beforeCommandInit(({ args }) => {
+    //     console.warn(args);
     // });
 };
 

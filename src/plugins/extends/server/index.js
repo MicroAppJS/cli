@@ -78,7 +78,7 @@ module.exports = function extendServer(api, opts) {
                 'resolveShared',
             ]);
         }), selfServerConfig);
-        return Object.assign({}, mergeConfig);
+        return Object.assign({}, mergeConfig, { root: api.root });
     });
 
 };

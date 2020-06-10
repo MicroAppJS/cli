@@ -31,12 +31,16 @@ function createService(_argv) {
 
     // 预加载插件
     // --pre-register-plugin
+    // 约定默认配置为 microapp/preRegisterPlugin
+    argv.preRegisterPlugin = argv.preRegisterPlugin || 'microapp/pre-plugins';
     if (argv.preRegisterPlugin && _.isString(argv.preRegisterPlugin)) {
         const preRegisterPluginPath = path.resolve(service.root, argv.preRegisterPlugin);
         if (fs.pathExistsSync(preRegisterPluginPath)) {
             const preRegisterPlugin = tryRequire(preRegisterPluginPath);
             if (_.isFunction(preRegisterPlugin)) {
                 preRegisterPlugin(service);
+            } else {
+                logger.warn('[CLI]', '"--pre-register-plugin" must be return a function(service){}');
             }
         }
     }
