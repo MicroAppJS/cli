@@ -365,12 +365,12 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@micro-app/core@^0.3.30":
-  version "0.3.30"
-  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.3.30.tgz#11b13d1578c951797b615c478f422982fdac6d25"
-  integrity sha512-TRQSmb0Y2p/LbQOpmsCpLN0/ZiIpRHvMfGqeEMRQYmVbDLh2bb8XuCoUZ9sEm5EbEIlAHLv2Yi0OOL/Hn/1cZA==
+"@micro-app/core@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.4.0.tgz#00a8e598e03da7b45728fc5937a47ae9b3f9dd88"
+  integrity sha512-MxWreOw6kH2JDeLGcUyj6chYnXSRIsIu3b3SwM3T2jU4xGjQJUwFP6XGwI64HuXPkxPXq98UjC9+2zkib/f9og==
   dependencies:
-    "@micro-app/shared-utils" "^0.1.19"
+    "@micro-app/shared-utils" "^0.1.21"
     dotenv "^8.2.0"
     dotenv-expand "^5.1.0"
 
@@ -382,10 +382,10 @@
     "@release-it/conventional-changelog" "^1.1.0"
     release-it "^13.1.1"
 
-"@micro-app/shared-utils@^0.1.19":
-  version "0.1.19"
-  resolved "https://registry.yarnpkg.com/@micro-app/shared-utils/-/shared-utils-0.1.19.tgz#0bfa8b5b179a2634c783b872a11eb0dc034b4e5f"
-  integrity sha512-HrrhB4GcqmpFreq4v699Wcr2AL1ymLxeLp3DZwo5l/rr/iO8DnFXXP/n7NC75PolsVyZBgmX02N0LrYcYjLMOQ==
+"@micro-app/shared-utils@^0.1.21":
+  version "0.1.21"
+  resolved "https://registry.yarnpkg.com/@micro-app/shared-utils/-/shared-utils-0.1.21.tgz#3c168c08e7708a2f1e41dc517b94f76142e7d7b1"
+  integrity sha512-uVyRJkKZPdhrf/Nn6UL8cadzI8y8FwmV1KD5mcD1U59Dc8u6PP9vn22Dh0Zydpj81YcliurDcwMt2A+aM8XOdA==
   dependencies:
     ajv "^6.12.0"
     ajv-keywords "^3.4.1"
@@ -402,6 +402,7 @@
     hash-sum "^2.0.0"
     import-fresh "^3.2.1"
     inquirer "^7.1.0"
+    is-docker "^2.0.0"
     is-glob "^4.0.1"
     lodash "^4.17.15"
     lru-cache "^5.1.1"
