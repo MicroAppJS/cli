@@ -1,3 +1,15 @@
+# [0.4.0](https://github.com/MicroAppJS/cli/compare/v0.3.17...v0.4.0) (2020-06-10)
+
+
+### Bug Fixes
+
+* 修复 ([347e2ff](https://github.com/MicroAppJS/cli/commit/347e2ff007ccbf22d919a0aad382af1846e1d40d))
+
+
+### Features
+
+* add `micro-app-serve` bin ([019262d](https://github.com/MicroAppJS/cli/commit/019262d0da998318a8a0b53d9e6af981a70f9020))
+
 ## [0.3.17](https://github.com/MicroAppJS/cli/compare/v0.3.16...v0.3.17) (2020-04-21)
 
 ## [0.3.16](https://github.com/MicroAppJS/cli/compare/v0.3.15...v0.3.16) (2020-04-18)
