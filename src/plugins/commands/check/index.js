@@ -39,3 +39,7 @@ Examples:
         }
     });
 };
+
+module.exports.configuration = {
+    description: '检测依赖是否冲突',
+};

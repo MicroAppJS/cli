@@ -5,7 +5,7 @@ module.exports = function extendServer(api, opts) {
     const registerMethods = require('./methods');
     registerMethods(api);
 
-    const { _, smartMerge } = require('@micro-app/shared-utils');
+    const { _, smartMerge, path } = require('@micro-app/shared-utils');
 
     const logger = api.logger;
 
@@ -22,13 +22,16 @@ module.exports = function extendServer(api, opts) {
         const microConfig = api.selfConfig;
         const _originalConfig = microConfig.originalConfig || {};
         const _serverConfig = _originalConfig.server || {};
-        return {
+        const _config = {
             ..._serverConfig,
             info: microConfig.toJSON(),
             shared: microConfig.shared,
             sharedObj: microConfig.sharedObj,
             resolveShared: microConfig.resolveShared,
         };
+        // 兼容 entry, 创建一个 entries
+        _config.entries = _config.entry ? [ path.resolve(microConfig.root, _config.entry) ] : [];
+        return _config;
     });
 
     api.extendConfig('microsServerConfig', {
@@ -51,6 +54,8 @@ module.exports = function extendServer(api, opts) {
                     sharedObj: microConfig.sharedObj,
                     resolveShared: microConfig.resolveShared,
                 };
+                // 兼容 entry, 创建一个 entries
+                config[key].entries = config[key].entry ? [ path.resolve(microConfig.root, config[key].entry) ] : [];
             } else {
                 logger.error('[microsServerConfig]', `Not Found micros: "${key}"`);
             }
@@ -76,8 +81,10 @@ module.exports = function extendServer(api, opts) {
                 'shared',
                 'sharedObj',
                 'resolveShared',
+                'entries',
             ]);
         }), selfServerConfig);
+
         return Object.assign({}, mergeConfig, { root: api.root });
     });
 
