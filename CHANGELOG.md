@@ -1,3 +1,11 @@
+## [0.4.1](https://github.com/MicroAppJS/cli/compare/v0.4.0...v0.4.1) (2021-08-04)
+
+
+### Features
+
+* update deps ([577df0a](https://github.com/MicroAppJS/cli/commit/577df0ae16a415092d34e6b22c4b5b6a5f24afe5))
+* 增加适配多服务入口配置逻辑 ([a11d481](https://github.com/MicroAppJS/cli/commit/a11d48155aa933ecfee6d6fab424e1da34e074ff))
+
 # [0.4.0](https://github.com/MicroAppJS/cli/compare/v0.3.17...v0.4.0) (2020-06-10)
 
 
