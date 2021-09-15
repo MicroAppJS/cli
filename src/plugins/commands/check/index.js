@@ -34,7 +34,9 @@ Examples:
                 return checkDependencies(api, { title, selfConfig, micros, microsConfig });
             }
             default:
-                api.logger.error(`Not Support options: "${type}" !`);
+                if (type) {
+                    api.logger.error(`Not Support options: "${type}" !`);
+                }
                 return api.runCommand('help', { _: [ 'check' ] });
         }
     });

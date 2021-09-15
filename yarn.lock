@@ -394,13 +394,13 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@micro-app/core@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.4.1.tgz#e86758df25bc421f0743ee565e251cedac253209"
-  integrity sha512-aKMtpVTcp31+fugFGkGDgQRTo7tb5XMQFOG9h64/Z/NWE2w1GscYHjvcJZwmfyNCbGk0WwXuREPl8CoF/TNfEw==
+"@micro-app/core@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@micro-app/core/-/core-0.4.2.tgz#64d5cdbea47bf44c94af1d8ae1d5b292db5ab693"
+  integrity sha512-ShwznvfEXC+cVWGTqnwDV2A47AskJSmvjFq8WjnnRlrIUB7wFaRQeumsWWlA9+pubPM660BnLOPw5P8gupbJ8Q==
   dependencies:
-    "@micro-app/shared-utils" "^0.1.24"
-    dotenv "^8.2.0"
+    "@micro-app/shared-utils" "^0.1.25"
+    dotenv "^8.6.0"
     dotenv-expand "^5.1.0"
 
 "@micro-app/plugin-deploy@^0.0.8":
@@ -411,27 +411,27 @@
     "@release-it/conventional-changelog" "^2.0.1"
     release-it "^14.4.1"
 
-"@micro-app/shared-utils@^0.1.24":
-  version "0.1.24"
-  resolved "https://registry.yarnpkg.com/@micro-app/shared-utils/-/shared-utils-0.1.24.tgz#6018f4cb5d0944367a1f58c482917f30c443ba07"
-  integrity sha512-buJlvd2lbJfA1gvA+MDYaHhAzvmFvbJCZa9GFp8K53LhvWLCPdU6h7BWPWOcU9FqZFCHXoTzNSlu5kWKU6CstQ==
+"@micro-app/shared-utils@^0.1.25":
+  version "0.1.25"
+  resolved "https://registry.yarnpkg.com/@micro-app/shared-utils/-/shared-utils-0.1.25.tgz#34e3b7b5debbccafad3e8bf731736ca9312a4a2f"
+  integrity sha512-E9kks45qP6czadanVlbIDLLk6uCYKqRdr2xgj8woRB0p6tFaksYEyszis/N0aZ5UXM4ONYoYq/1YugwbxFZsig==
   dependencies:
     ajv "^6.12.6"
     ajv-keywords "^3.5.2"
     assert "^2.0.0"
     chalk "^3.0.0"
-    cheerio "^1.0.0-rc.3"
-    debug "^4.3.1"
+    cheerio "1.0.0-rc.10"
+    debug "^4.3.2"
     dedent "^0.7.0"
     execa "^3.4.0"
     fs-extra "^8.1.0"
     git-url-parse "^11.1.2"
-    glob-parent "^5.1.1"
+    glob-parent "^5.1.2"
     globby "^10.0.2"
     hash-sum "^2.0.0"
-    import-fresh "^3.2.1"
+    import-fresh "^3.3.0"
     inquirer "^7.3.3"
-    is-docker "^2.0.0"
+    is-docker "^2.2.1"
     is-glob "^4.0.1"
     lodash "^4.17.15"
     lru-cache "^5.1.1"
@@ -448,7 +448,8 @@
     stream-to-string "^1.2.0"
     stringify-object "^3.3.0"
     try-require "^1.2.1"
-    yaml "^1.9.0"
+    uuid "^8.3.2"
+    yaml "^1.10.2"
     yargs-parser "^18.1.3"
     yargs-unparser "^1.6.4"
 
@@ -1503,7 +1504,7 @@ cheerio-select@^1.5.0:
     domhandler "^4.2.0"
     domutils "^2.7.0"
 
-cheerio@^1.0.0-rc.3:
+cheerio@1.0.0-rc.10:
   version "1.0.0-rc.10"
   resolved "https://registry.yarnpkg.com/cheerio/-/cheerio-1.0.0-rc.10.tgz#2ba3dcdfcc26e7956fc1f440e61d51c643379f3e"
   integrity sha512-g0J0q/O6mW8z5zxQ3A8E8J1hUgp4SMOvEoW/x84OwyHKe/Zccz83PVT4y5Crcr530FV6NgmKI1qvGTKVl9XXVw==
@@ -1971,7 +1972,7 @@ dateformat@^3.0.0:
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
   integrity sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==
 
-debug@4.3.2, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1:
+debug@4.3.2, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.2.tgz#f0a49c18ac8779e31d4a0c6029dfb76873c7428b"
   integrity sha512-mOp8wKcvj7XxC78zLgw/ZA+6TSgkoE2C/ienthhRD298T7UNwAg9diBpLRxC0mOezLl4B0xV7M0cCO6P/O0Xhw==
@@ -2188,7 +2189,7 @@ dotenv-expand@^5.1.0:
   resolved "https://registry.yarnpkg.com/dotenv-expand/-/dotenv-expand-5.1.0.tgz#3fbaf020bfd794884072ea26b1e9791d45a629f0"
   integrity sha512-YXQl1DSa4/PQyRfgrv6aoNjhasp/p4qs9FjJ4q4cQk+8m4r6k4ZSiEyytKG8f8W9gi8WsQtIObNmKd+tMzNTmA==
 
-dotenv@^8.2.0:
+dotenv@^8.6.0:
   version "8.6.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.6.0.tgz#061af664d19f7f4d8fc6e4ff9b584ce237adcb8b"
   integrity sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==
@@ -3055,7 +3056,7 @@ gitconfiglocal@^1.0.0:
   dependencies:
     ini "^1.3.2"
 
-glob-parent@^5.0.0, glob-parent@^5.1.1, glob-parent@^5.1.2:
+glob-parent@^5.0.0, glob-parent@^5.1.2:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.2.tgz#869832c58034fe68a4093c17dc15e8340d8401c4"
   integrity sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==
@@ -3393,7 +3394,7 @@ import-fresh@^2.0.0:
     caller-path "^2.0.0"
     resolve-from "^3.0.0"
 
-import-fresh@^3.0.0, import-fresh@^3.2.1:
+import-fresh@^3.0.0, import-fresh@^3.2.1, import-fresh@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/import-fresh/-/import-fresh-3.3.0.tgz#37162c25fcb9ebaa2e6e53d5b4d88ce17d9e0c2b"
   integrity sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==
@@ -3630,7 +3631,7 @@ is-directory@^0.3.1:
   resolved "https://registry.yarnpkg.com/is-directory/-/is-directory-0.3.1.tgz#61339b6f2475fc772fd9c9d83f5c8575dc154ae1"
   integrity sha1-YTObbyR1/Hcv2cnYP1yFddwVSuE=
 
-is-docker@^2.0.0:
+is-docker@^2.0.0, is-docker@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/is-docker/-/is-docker-2.2.1.tgz#33eeabe23cfe86f14bde4408a02c0cfb853acdaa"
   integrity sha512-F+i2BKsFrH66iaUFc0woD8sLy8getkwTwtOBjvs56Cx4CgJDeKQeqfz8wAYiSb8JOprWhHH5p77PbmYCvvUuXQ==
@@ -6950,7 +6951,7 @@ util@^0.12.0:
     safe-buffer "^5.1.2"
     which-typed-array "^1.1.2"
 
-uuid@8.3.2:
+uuid@8.3.2, uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
@@ -7218,7 +7219,7 @@ yallist@^4.0.0:
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
-yaml@1.10.2, yaml@^1.10.0, yaml@^1.9.0:
+yaml@1.10.2, yaml@^1.10.0, yaml@^1.10.2:
   version "1.10.2"
   resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
   integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
