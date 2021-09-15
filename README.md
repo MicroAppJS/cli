@@ -4,15 +4,15 @@ Pluggable micro application framework.
 
 基于webpack多入口的多仓库业务模块开发的插件应用框架脚手架.
 
+[![Github Actions Coveralls][Github-Actions-Coveralls]][Github-Actions-Coveralls-url]
 [![Coverage Status][Coverage-img]][Coverage-url]
-[![CircleCI][CircleCI-img]][CircleCI-url]
 [![NPM Version][npm-img]][npm-url]
 [![NPM Download][download-img]][download-url]
 
-[Coverage-img]: https://coveralls.io/repos/github/MicrosApp/MicroApp-CLI/badge.svg?branch=master
-[Coverage-url]: https://coveralls.io/github/MicrosApp/MicroApp-CLI?branch=master
-[CircleCI-img]: https://circleci.com/gh/MicrosApp/MicroApp-CLI/tree/master.svg?style=svg
-[CircleCI-url]: https://circleci.com/gh/MicrosApp/MicroApp-CLI/tree/master
+[Github-Actions-Coveralls]: https://github.com/MicroAppJS/cli/workflows/Coveralls/badge.svg
+[Github-Actions-Coveralls-url]: https://github.com/MicroAppJS/cli
+[Coverage-img]: https://coveralls.io/repos/github/MicroAppJS/cli/badge.svg?branch=master
+[Coverage-url]: https://coveralls.io/github/MicroAppJS/cli?branch=master
 [npm-img]: https://img.shields.io/npm/v/@micro-app/cli.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/@micro-app/cli
 [download-img]: https://img.shields.io/npm/dm/@micro-app/cli.svg?style=flat-square
@@ -59,12 +59,6 @@ module.exports = {
         },
     ],
 
-    // dlls: [
-    //     {
-    //         context: __dirname,
-    //     },
-    // ],
-
     alias: { // 别名配置
         api: '',
         config: {
@@ -84,11 +78,9 @@ module.exports = {
 
     // 服务配置
     server: {
+        hooks: '',
         entry: '', // 服务端入口
         port: 8088, // 服务端口号
-        options: {
-            // 服务端回调参数
-        },
     },
 
     plugins: [ // 自定义插件
@@ -103,7 +95,7 @@ module.exports = {
 };
 ```
 
-### 在 `package.json` 中加载其他模块, 例如:
+### 在 `package.json` 中加载其他模块, 例如
 
 ```json
     "dependencies": {
@@ -175,15 +167,6 @@ module.exports = function(api, opts) {
     api.onPluginInitDone(item => {
         console.log('onPluginInitDone', item);
     });
-    api.beforeMergeWebpackConfig(item => {
-        console.log('beforeMergeWebpackConfig', item);
-    });
-    api.afterMergeWebpackConfig(item => {
-        console.log('afterMergeWebpackConfig', item);
-    });
-    // api.onChainWebpcakConfig(webpackChainConfig => {
-    //     console.log('onChainWebpcakConfig', webpackChainConfig);
-    // });
 };
 ```
 
@@ -209,10 +192,6 @@ npx micro-app show methods
      * modifyCommand               ( System Build-in )
      * onRunCommand                ( System Build-in )
      * modifyCommandHelp           ( System Build-in )
-     * beforeMergeWebpackConfig    ( 合并 webpack 配置之前事件 )
-     * afterMergeWebpackConfig     ( 合并 webpack 配置之后事件 )
-     * modifyChainWebpcakConfig    ( 合并之后提供 webpack-chain 进行再次修改事件 )
-     * onChainWebpcakConfig        ( 修改之后提供 webpack-chain 进行查看事件 )
      * modifyWebpackConfig         ( 合并之后提供 webpack config 进行再次修改事件 )
      * onServerInit                ( 服务初始化时事件 )
      * onServerInitWillDone        ( 服务初始化即将完成事件 )
