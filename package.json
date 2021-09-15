@@ -1,6 +1,6 @@
 {
     "name": "@micro-app/cli",
-    "version": "0.4.1",
+    "version": "0.4.2",
     "description": "[CLI] Pluggable micro application framework.",
     "main": "src/index.js",
     "bin": {
