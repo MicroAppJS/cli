@@ -52,14 +52,14 @@
         }
     },
     "devDependencies": {
-        "@micro-app/plugin-deploy": "^0.0.8",
+        "@micro-app/plugin-deploy": "^0.0.9",
         "@types/jest": "^24.9.1",
         "eslint-config-2o3t": "^2.0.2",
         "husky": "^3.1.0",
         "jest": "^24.9.0"
     },
     "dependencies": {
-        "@micro-app/core": "^0.4.2",
+        "@micro-app/core": "^0.4.3",
         "@zkochan/cmd-shim": "^4.3.0",
         "read-cmd-shim": "^2.0.0",
         "update-notifier": "^4.1.3"

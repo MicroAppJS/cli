@@ -16,23 +16,24 @@ module.exports = function updateCommand(api, opts) {
         description: 'update package.json',
         usage: 'micro-app update [options]',
         options: {
-            '-': 'update all.',
+            '--all': 'update all.',
             '--name <name>': 'only update <name>.',
         },
         details: `
 Examples:
     ${chalk.gray('# update all')}
-    micro-app update
+    micro-app update --all
     ${chalk.gray('# only update <name>')}
-    micro-app update -n <name>
+    micro-app update --name <name>
         `.trim(),
     }, args => {
         const name = args.name;
-        return updateMicro(api, name);
+        const isAll = args.all;
+        return updateMicro(api, name, isAll);
     });
 };
 
-function updateMicro(api, name) {
+function updateMicro(api, name, isAll) {
     const logger = api.logger;
     const microAppConfig = api.selfConfig;
     const micros = api.micros;
@@ -64,7 +65,7 @@ function updateMicro(api, name) {
                 }
             }
         }
-    } else if (!_name) { // all
+    } else if (isAll) { // all
         const gitPaths = _micros.map(key => {
             const microConfig = microsConfig[key];
             if (microConfig) {
@@ -97,7 +98,7 @@ function updateMicro(api, name) {
         }
 
         logger.logo(`${chalk.green('Finish!')}`);
-    } else {
+    } else if (_name) {
         logger.error('[update]', `Not Found micros: "${_name}"`);
     }
 

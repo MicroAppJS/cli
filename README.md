@@ -234,18 +234,18 @@ npx micro-app show methods
         description: 'update package.json',
         usage: 'micro-app update [options]',
         options: {
-            '-': 'update all.',
+            '--all': 'update all.',
             '-n <name>': 'only update <name>.',
         },
         details: `
 Examples:
     ${chalk.gray('# update all')}
-    micro-app update
+    micro-app update --all
     ${chalk.gray('# only update <name>')}
-    micro-app update -n <name>
+    micro-app update -name <name>
           `.trim(),
     }, args => {
-        const name = args.n;
+        const name = args.name;
         return updateMicro(api, name);
     });
 
