@@ -1,3 +1,11 @@
+# [0.5.0](https://github.com/MicroAppJS/cli/compare/v0.4.2...v0.5.0) (2022-02-06)
+
+
+### Features
+
+* update scripts ([77bc931](https://github.com/MicroAppJS/cli/commit/77bc931938593a289901462f9d7b9e41b2fde6c7))
+* 更新部分逻辑 ([48ce796](https://github.com/MicroAppJS/cli/commit/48ce796aea187f984b9450db9461fe581da35c72))
+
 ## [0.4.2](https://github.com/MicroAppJS/cli/compare/v0.4.1...v0.4.2) (2021-09-15)
 
 ## [0.4.1](https://github.com/MicroAppJS/cli/compare/v0.4.0...v0.4.1) (2021-08-04)
