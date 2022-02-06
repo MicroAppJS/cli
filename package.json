@@ -59,7 +59,7 @@
         "jest": "^24.9.0"
     },
     "dependencies": {
-        "@micro-app/core": "^0.4.3",
+        "@micro-app/core": "^0.5.0",
         "@zkochan/cmd-shim": "^4.3.0",
         "read-cmd-shim": "^2.0.0",
         "update-notifier": "^4.1.3"
