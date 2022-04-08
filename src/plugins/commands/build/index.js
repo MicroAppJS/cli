@@ -39,14 +39,15 @@ Examples:
         return createBuildProcess({ args })
             .then(() => {
                 logger.success('>>> Build Success !!!');
-                return { args };
+
+                api.applyPluginHooks('afterBuild', { args });
+                return Promise.resolve({ args });
             }).catch(err => {
                 logger.error('>>> Build Error >>>');
                 logger.error(err);
-                return { args, err };
-            })
-            .then(result => {
-                api.applyPluginHooks('afterBuild', result);
+
+                api.applyPluginHooks('afterBuild', { args, err });
+                return Promise.reject({ args, err });
             });
     });
 };

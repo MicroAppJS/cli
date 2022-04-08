@@ -50,10 +50,14 @@ Examples:
                     logger.info(`Open Browser, URL: ${chalk.yellow(url)}`);
                 }
                 api.applyPluginHooks('afterDevServer', { args, host, port, url });
+
+                return Promise.resolve({ args, host, port, url });
             }).catch(err => {
                 logger.error('>>> Starting Error >>>');
                 console.error(err);
                 api.applyPluginHooks('afterDevServer', { args, err });
+
+                return Promise.reject({ args, err });
             });
     });
 };
